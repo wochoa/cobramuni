@@ -1,0 +1,230 @@
+<template>
+<div>
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">{{ $route.name }}</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item">
+                            <router-link :to="'/'">Dashboard</router-link>
+                        </li>
+                        <li class="breadcrumb-item active">{{ $route.name }}</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <div class="content">
+        <div class="container-fluid">
+            <!-- Info boxes -->
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">TOTAL DE TRAMITES REALIZADOS</span>
+                            <span class="info-box-number">
+                                10
+                                <small>%</small>
+                            </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
+                        <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">TOTAL TRAMITES DE MPV</span>
+                            <span class="info-box-number">41,410</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+
+                <!-- fix for small devices only -->
+                <div class="clearfix hidden-md-up"></div>
+
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
+                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">TOTAL TRAMITES POR RECIBIR</span>
+                            <span class="info-box-number">760</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
+                        <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">TOTAL TRAMITES ARCHIVADOS</span>
+                            <span class="info-box-number">2,000</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+            </div>
+
+            <div class="card pt-3 pb-3 card-primary card-outline">
+                <div class="row ">
+                    <div class="col-md-3" align="center">
+
+                        <router-link :to="'/Tramites/Enproceso'" class="text-decoration-none">
+                            <h4>Documentos en Proceso de la Oficina</h4>
+                            <radial-progress-bar :diameter="180" :completed-steps="getInicio.derivadosProceso" :total-steps="getInicio.totalProceso == 0 ? 1 : getInicio.totalProceso" startColor="#007bff" stopColor="#007bff" innerStrokeColor="#d3d3d3" stroke-linecap="round">
+
+                                <p><strong>Total: </strong>{{ getInicio.totalProceso }}</p>
+                                <p><strong>Derivados: </strong>{{ getInicio.derivadosProceso }}</p>
+                                <p><strong>Pendientes: </strong>{{ getInicio.totalProceso - getInicio.derivadosProceso }}</p>
+                            </radial-progress-bar>
+                        </router-link>
+
+                    </div>
+
+                    <div class="col-md-3" align="center">
+
+                        <router-link :to="'/Tramites/Enproceso'" class="text-decoration-none">
+                            <h4>Documentos en proceso</h4>
+                            <radial-progress-bar :diameter="180" :completed-steps="getInicio.usuarioDerivadosProceso" :total-steps="getInicio.usuarioProceso == 0 ? 1 : getInicio.usuarioProceso" startColor="#20c997" stopColor="#20c997" innerStrokeColor="#d3d3d3" stroke-linecap="round">
+
+                                <p><strong>Total: </strong> {{ getInicio.usuarioProceso }}</p>
+                                <p><strong>Derivados: </strong>{{ getInicio.usuarioDerivadosProceso }}</p>
+                                <!-- <a :href="routes['tramite.enproceso.index'].route + '#pendiente'"> -->
+                                <strong>Pendientes: </strong>{{ getInicio.usuarioProceso - getInicio.usuarioDerivadosProceso }}
+                                <!-- </a> -->
+                            </radial-progress-bar>
+                        </router-link>
+
+                    </div>
+
+                    <div class="col-md-3" align="center">
+
+                        <router-link :to="'/Tramites/Porrecibir'" class="text-decoration-none">
+                            <h4>Documentos por recibir</h4>
+                            <radial-progress-bar :diameter="180" :completed-steps="getInicio.usuarioRecibir" :total-steps="getInicio.totalRecibir == 0 ? 1 : getInicio.totalRecibir" startColor="#6f42c1" stopColor="#6f42c1" innerStrokeColor="#d3d3d3">
+                                <p><strong>Total: </strong>{{ getInicio.totalRecibir }}</p>
+                                <p><strong>Personal: </strong>{{ getInicio.usuarioRecibir }}</p>
+                            </radial-progress-bar>
+                        </router-link>
+
+                    </div>
+
+                    <div class="col-md-3" align="center">
+
+                        <router-link :to="'/Tramites/Archivados'" class="text-decoration-none">
+                            <h4>Documentos archivados</h4>
+
+                            <radial-progress-bar :diameter="180" :completed-steps="getInicio.usuarioArchivados" :total-steps="getInicio.totalArchivado == 0 ? 1 : getInicio.totalArchivado" startColor="#dc3545" stopColor="#dc3545" innerStrokeColor="#d3d3d3">
+                                <p><strong>Total: </strong>{{ getInicio.totalArchivado }}</p>
+                                <p><strong>Personal: </strong>{{ getInicio.usuarioArchivados }}</p>
+                                <strong>Temporal: </strong>{{ getInicio.usuariosArchivadosTemporal }}
+                            </radial-progress-bar>
+                        </router-link>
+
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-md-3">
+                    <small class="bg-info pl-2 pr-2 rounded">Total Documento ingresado MPV: {{ getInicio.totalMpv }}</small><br>
+                    <small class="bg-warning pl-2 pr-2 rounded">Documento ingresado MPV para el Usuario: {{ getInicio.usuariosMpv }}</small>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
+
+</div>
+</template>
+
+<script>
+import RadialProgressBar from 'vue-radial-progress'
+
+export default {
+    name: 'StdvIndex',
+
+    data() {
+        return {
+            completedSteps: 5,
+            totalSteps: 10,
+            gradientAnimation: 10,
+            getInicio: {
+                totalDocGenerados: 1,
+                usuarioDocGenerados: 0,
+                totalPlantilla: 1,
+                usuarioPlantilla: 0,
+                totalArchivados: 1,
+                usuarioArchivados: 0,
+                totalRecibir: 1,
+                usuarioRecibir: 0,
+                totalProceso: 1,
+                derivadosProceso: 0,
+                usuarioProceso: 1,
+                usuarioDerivadosProceso: 0,
+                usuariosArchivadosTemporal: 0,
+                totalMpv: 0,
+                usuariosMpv: 0
+            }
+        };
+    },
+
+    components: {
+        RadialProgressBar
+    },
+
+    mounted() {
+        this.datosparagrafico();
+
+    },
+
+    methods: {
+        datosparagrafico() {
+            var url = '/tramite/obtenerTotal';
+            axios.get(url)
+                .then(response => {
+                    this.getInicio.totalProceso = response.data.totalProceso
+                    this.getInicio.derivadosProceso = response.data.derivadosProceso
+                    this.getInicio.usuarioProceso = response.data.usuarioProceso
+                    this.getInicio.totalRecibir = response.data.totalRecibir
+                    this.getInicio.usuarioRecibir = response.data.usuarioRecibir
+                    this.getInicio.totalArchivado = response.data.totalArchivado
+                    this.getInicio.usuarioArchivados = response.data.usuarioArchivados
+                    this.getInicio.usuarioDerivadosProceso = response.data.usuarioDerivadosProceso
+                    this.getInicio.usuariosArchivadosTemporal = response.data.usuariosArchivadosTemporal
+                    this.getInicio.totalMpv = response.data.totalMpv
+                    this.getInicio.usuariosMpv = response.data.usuariosMpv
+                });
+        }
+
+    },
+};
+</script>
+
+<style lang="scss" scoped>
+.col-centered {
+    float: none;
+    margin: 0 auto;
+}
+</style>
