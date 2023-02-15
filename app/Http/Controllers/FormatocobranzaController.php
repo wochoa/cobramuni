@@ -38,9 +38,14 @@ class FormatocobranzaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function nuevoformato(Request $request)
     {
-        //
+        $dat=$request->all();
+        $datos=new Formatocobranza();
+        $datos->nomformato=$request->formato;
+        $datos->numeracion=$request->numeracion;
+        $datos->save();
+        return $dat;
     }
 
     /**

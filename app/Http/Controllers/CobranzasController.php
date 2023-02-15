@@ -18,9 +18,10 @@ class CobranzasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function listacobranza()
     {
-        //
+        $lista=Cobranzas::get();
+        return response()->json($lista, 200);
     }
 
     /**

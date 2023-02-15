@@ -37,7 +37,34 @@
     
                                 <div class="row">
     
-                                   ....
+                                   <table class="table table-bordered table-sm table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>ITEM</th>
+                                            <th>RECIBO CAJA</th>
+                                            <th>FECHA DE EMISION</th>
+                                            <th>DNI/RUC</th>
+                                            <th>NOMBRE O RAZON SOCIAL</th>
+                                            <th>TOTAL</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(item, index) in listacobranza" :key="item.idcobrazas">
+                                            <td>{{ index+1}}</td>
+                                            <td>{{ item.codigorecibo}}</td>
+                                            <td>{{ item.fechaemision}}</td>
+                                            <td v-if="item.ruc=='null'">{{ item.dni}}</td>
+                                            <td v-else>{{ item.ruc}}</td>
+                                            <td>{{ item.nom_razonsocial}}</td>
+                                            <td>{{ item.montonumero}}</td>
+                                            <td>
+                                                <router-link :to="'/'" class="btn btn-outline-primary btn-sm"> <i class="fa fa-edit"></i> </router-link>
+                                                <router-link class="btn btn-outline-danger btn-sm" :to="'/imprimecobranza/'+item.idcobrazas" target="_blank"> <i class="fa fa-print"></i> </router-link>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                   </table>
                                 </div>
     
                             </div>
@@ -81,21 +108,30 @@
     </template>
 
 <script>
+
 export default {
     name: 'Cobranzas',
 
     data() {
         return {
+            listacobranza:[],
+
             
         };
     },
 
     mounted() {
-        
+        this.cargalistacobra();
     },
 
     methods: {
-        
+        cargalistacobra(){
+            var url='/listacobranza';
+            axios.get(url)
+            .then(response=>{
+                this.listacobranza=response.data
+            });
+        }
     },
 };
 </script>

@@ -30,10 +30,10 @@
                         <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">TOTAL DE TRAMITES REALIZADOS</span>
+                            <span class="info-box-text">TOTAL DE COBRANZAS</span>
                             <span class="info-box-number">
-                                10
-                                <small>%</small>
+                                <small>S/. </small>{{ resumen.totalcobranzas }}
+                                <!-- <small>%</small> -->
                             </span>
                         </div>
                         <!-- /.info-box-content -->
@@ -46,8 +46,8 @@
                         <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">TOTAL TRAMITES DE MPV</span>
-                            <span class="info-box-number">41,410</span>
+                            <span class="info-box-text">TOTAL CONCEPTOS</span>
+                            <span class="info-box-number">{{ resumen.totalconcepto }}</span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -63,8 +63,8 @@
                         <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">TOTAL TRAMITES POR RECIBIR</span>
-                            <span class="info-box-number">760</span>
+                            <span class="info-box-text">TOTAL DE FORMATOS</span>
+                            <span class="info-box-number">{{ resumen.totalformatos }}</span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -76,8 +76,8 @@
                         <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">TOTAL TRAMITES ARCHIVADOS</span>
-                            <span class="info-box-number">2,000</span>
+                            <span class="info-box-text">TOTAL DE USUARIOS</span>
+                            <span class="info-box-number">{{ resumen.totalusuarios }}</span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -86,7 +86,7 @@
                 <!-- /.col -->
             </div>
 
-            <div class="card pt-3 pb-3 card-primary card-outline">
+            <!-- <div class="card pt-3 pb-3 card-primary card-outline">
                 <div class="row ">
                     <div class="col-md-3" align="center">
 
@@ -110,9 +110,9 @@
 
                                 <p><strong>Total: </strong> {{ getInicio.usuarioProceso }}</p>
                                 <p><strong>Derivados: </strong>{{ getInicio.usuarioDerivadosProceso }}</p>
-                                <!-- <a :href="routes['tramite.enproceso.index'].route + '#pendiente'"> -->
+                                
                                 <strong>Pendientes: </strong>{{ getInicio.usuarioProceso - getInicio.usuarioDerivadosProceso }}
-                                <!-- </a> -->
+                                
                             </radial-progress-bar>
                         </router-link>
 
@@ -144,15 +144,15 @@
 
                     </div>
                 </div>
-            </div>
-            <!-- /.row -->
-            <div class="row">
+            </div> -->
+            
+            <!-- <div class="row">
                 <div class="col-md-3">
                     <small class="bg-info pl-2 pr-2 rounded">Total Documento ingresado MPV: {{ getInicio.totalMpv }}</small><br>
                     <small class="bg-warning pl-2 pr-2 rounded">Documento ingresado MPV para el Usuario: {{ getInicio.usuariosMpv }}</small>
                 </div>
-            </div>
-        </div><!-- /.container-fluid -->
+            </div> -->
+        </div>
     </div>
     <!-- /.content -->
 
@@ -186,6 +186,12 @@ export default {
                 usuariosArchivadosTemporal: 0,
                 totalMpv: 0,
                 usuariosMpv: 0
+            },
+            resumen:{
+                totalcobranzas:0,
+                totalconcepto:0,
+                totalformatos:0,
+                totalusuarios:0
             }
         };
     },
@@ -196,6 +202,7 @@ export default {
 
     mounted() {
         this.datosparagrafico();
+        this.cargaresumen();
 
     },
 
@@ -216,6 +223,19 @@ export default {
                     this.getInicio.totalMpv = response.data.totalMpv
                     this.getInicio.usuariosMpv = response.data.usuariosMpv
                 });
+        },
+        cargaresumen()
+        {
+            var url='/resumen';
+            axios.get(url)
+            .then(response=>{
+                var datos=response.data.datos;
+                console.log(response.data.totalcobranza)
+                this.resumen.totalcobranzas=response.data.totalcobranza;
+                this.resumen.totalconcepto=response.data.totalconceptos;
+                this.resumen.totalformatos=response.data.totalformato;
+                this.resumen.totalusuarios=response.data.totalusuarios;
+            });
         }
 
     },

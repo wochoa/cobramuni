@@ -12,6 +12,8 @@ use App\Http\Controllers\Tipodocumento\TipodocumentoController;
 use App\Http\Controllers\FormatocobranzaController;
 use App\Http\Controllers\ConceptocobranzaController;
 use App\Http\Controllers\CobranzasController;
+use App\Http\Controllers\Resumen;
+use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -76,16 +78,23 @@ route::get('tramite/obtenerTotal',[TramitesController::class, 'obtenerTotal'])->
 
 
 
-// cobranzas
+// fromato cobranza
 route::get('listaformatos',[FormatocobranzaController::class, 'index'])->name('listaformatos');//listaformatos
 route::get('listaformatos/{id}',[FormatocobranzaController::class, 'buscar'])->name('buscar');
+route::post('nuevoformato',[FormatocobranzaController::class, 'nuevoformato'])->name('nuevoformato');
+
+//concepto
 route::get('conceptocobranzas',[ConceptocobranzaController::class, 'index'])->name('conceptocobranzas');
 route::get('conceptocobranzas/{id}',[ConceptocobranzaController::class, 'busqueda'])->name('busqueda');
+route::post('nuevoconcepto',[ConceptocobranzaController::class, 'nuevoconcepto'])->name('nuevoconcepto');
 
 // generar cobranza
+route::get('/listacobranza',[CobranzasController::class, 'listacobranza'])->name('listacobranza');
 route::post('generarcobranza',[CobranzasController::class, 'generarcobranza'])->name('generarcobranza');
 // impresion cobranza
 route::get('imprimecobranza/{id}',[CobranzasController::class, 'imprimecobranza'])->name('imprimecobranza');
 
+route::get('/resumen',[Resumen::class, 'index'])->name('resumen');
+
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/{any?}', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->where('any','.*');
+Route::get('/{any?}', [HomeController::class, 'index'])->name('home')->where('any','.*');

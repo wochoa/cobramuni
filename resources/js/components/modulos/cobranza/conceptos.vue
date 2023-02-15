@@ -33,23 +33,29 @@
                 <div class="col-sm-4">
                     <div class="card card-primary card-outline card-revenue-budget">
                         <div class="card-header">
-                            <h4> Agregar formatos</h4>
+                            <h4> Agregar Concepto</h4>
                         </div>
                         <div class="card-body">
-                            <div class="form-group">
-                                <label for="">Ingresar formato</label>
-                                <input type="text" name="" id="" class="form-control form-control-sm">
-                            </div>
-                            <div class="form-gruop">
-                                <button class="btn btn-sm btn-primary">Agregar</button>
-                            </div>
+                            <form @submit.prevent="guardarconcepto">
+                                <div class="form-group">
+                                    <label for="">Ingresar Concepto</label>
+                                    <input type="text" name="" id="" class="form-control form-control-sm text-uppercase" v-model="formconcepto" required >
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Ingresar monto</label>
+                                    <input type="nomber" name="" id="" class="form-control form-control-sm" v-model="monto" required>
+                                </div>
+                                <div class="form-gruop">
+                                    <button type="submit" class="btn btn-sm btn-primary">Agregar</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-8">
                     <div class="card card-primary card-outline card-revenue-budget">
                         <div class="card-header">
-                            <h4> Listado de formatos</h4>
+                            <h4> Listado de Concepto</h4>
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered table-hover table-sm">
@@ -81,46 +87,34 @@
             </div>
         </div>
 
-        <!-- RESULTADO DE LA CREACION DE Documento -->
-        <div id="resultadodoc" class="modal-dialog" style="max-width:350px !important; display: none">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="modal-title">
-                        <i class="glyphicon glyphicon-menu-right"></i>&#160;&#160; ReFirma Invoker
-                    </div>
-                </div>
-                <div class="modal-body">
-                    <div class="row" style="display: inherit;">
-                        <div class="col-sm-12 text-center">
-                            <br />
-
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12 text-center">
-                            <br />
-                            <div id="status">ss</div>
-                            <br />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- <docu-invoker ref="foo" :iframe="iframe" :route-invoker-get="routeInvokerGet" :route-invoker-post="routeInvokerPost" :ruta="ruta" @firmado="firmado" /> -->
-
     </div>
 </div>
 </template>
 
-    
 <script>
+import Swal from 'sweetalert2';
+window.$ = window.jQuery = require('jquery')
+
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    onOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        //toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+});
+
 export default {
     name: 'formatos',
 
     data() {
         return {
             listaconceptos: [],
+            formconcepto: '',
+            monto: 0
         };
     },
 
@@ -129,11 +123,33 @@ export default {
     },
 
     methods: {
+        toast(texto_anuncio, icono) {
+
+            Toast.fire({
+                // title:texto_titulo,
+                title: '<small><strong>' + texto_anuncio + '</strong></small>',
+                icon: icono,
+                // text: texto_anuncio
+            });
+        },
         alllistaconceptos() {
             var url = '/conceptocobranzas';
             axios.get(url)
                 .then(response => {
                     this.listaconceptos = response.data;
+                });
+        },
+        guardarconcepto() {
+            var url = '/nuevoconcepto';
+
+            axios.post(url, {
+                    'concepto': this.formconcepto,
+                    'monto': this.monto
+                })
+                .then(response => {
+                    // console.log(response.data);
+                    this.toast('Fue agregado el nuevo concepto', 'success');
+                    this.alllistaconceptos();
                 });
         }
 
@@ -141,7 +157,6 @@ export default {
 };
 </script>
 
-    
 <style lang="scss" scoped>
 
     </style>

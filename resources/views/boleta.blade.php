@@ -49,7 +49,7 @@ $medidaTicket = 180;
 
         .ordenado{
             text-align:justify;
-            padding-left: 2px;
+            padding-left: 3px;
         }
         .centrado {
             text-align: center;
@@ -87,7 +87,7 @@ $medidaTicket = 180;
         <img src="{{asset('/img/logo.png')}}"  alt="">
         <h2>R.U.C. 20447367727</h2>
         <p>Fecha imp.: {{$fechaimpresion}}</p>
-        
+        <br>
     </div>
     <div class="ordenado">
         <p> <strong> RECIBO DE CAJA N°</strong> {{$cobra[0]->codigorecibo}}</p>
@@ -101,6 +101,7 @@ $medidaTicket = 180;
             </p>
             <p> <strong> NOMBRE O RAZON SOCIAL:</strong><br> {{strtoupper($cobra[0]->nom_razonsocial)}}</p>
     </div>
+    <br>
     <div class="ticket">
         
 

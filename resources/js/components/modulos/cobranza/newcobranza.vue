@@ -407,7 +407,7 @@ export default {
                     console.log(response.data);
                     // mostramos el success de la creacion del documento
                     this.idcobranza = response.data
-                    this.toast('Fue generado su trámite exitosamente', 'success');
+                    this.toast('Fue generado la cobranza exitosamente', 'success');
 
                     // $("#resultadodoc").modal("show");
                     $('#resultadodoc').modal({

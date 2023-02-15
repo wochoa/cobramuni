@@ -41,9 +41,15 @@ class ConceptocobranzaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function nuevoconcepto(Request $request)
     {
-        //
+        $datos=$request->all();
+        $newconcepto=new Conceptocobranza();
+        $newconcepto->text_concepto=strtoupper($request->concepto);
+        $newconcepto->nomto_concepto=$request->monto;
+        $newconcepto->estado_concepto=1;
+        $newconcepto->save();
+        return $datos;
     }
 
     /**
