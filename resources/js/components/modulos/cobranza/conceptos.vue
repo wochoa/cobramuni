@@ -148,6 +148,7 @@
 
                 </div>
                 <div class="modal-footer">
+                    
                     <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
                     <!-- <a class="btn btn-outline-primary" :href="'/cobranzas/nuevo'"><i class="fa-regular fa-file fa-2x"></i><br>Nueva cobranza</a> -->
                     <a class="btn btn-outline-danger" :href="'/imprimecobranza/'+idcobranza" target="_blank">Guardar</a>
