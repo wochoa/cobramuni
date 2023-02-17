@@ -25,6 +25,7 @@ import cobranzas  from './components/modulos/cobranza/index'
 import formatos  from './components/modulos/cobranza/formatos'
 import conceptos  from './components/modulos/cobranza/conceptos'
 import nuevocobranza  from './components/modulos/cobranza/newcobranza'
+import clasificador  from './components/modulos/cobranza/clasificador'
 // Administracion
 //dependencias
 import Dependencia  from './components/modulos/administracion/dependencia/index'// listar
@@ -88,6 +89,12 @@ export default new Router({
             name:'Nueva cobranza',
             component:nuevocobranza 
         },
+        {
+            path:'/cobranzas/clasificador',
+            name:'Nuevo clasificador',
+            component:clasificador 
+        },
+        
         // administracion
          // Dependencia->listar
          {   

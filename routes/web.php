@@ -13,7 +13,8 @@ use App\Http\Controllers\FormatocobranzaController;
 use App\Http\Controllers\ConceptocobranzaController;
 use App\Http\Controllers\CobranzasController;
 use App\Http\Controllers\Resumen;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ClasificadorController;
+use App\Http\Controllers\HomeController;//ClasificadorController
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -87,6 +88,10 @@ route::post('nuevoformato',[FormatocobranzaController::class, 'nuevoformato'])->
 route::get('conceptocobranzas',[ConceptocobranzaController::class, 'index'])->name('conceptocobranzas');
 route::get('conceptocobranzas/{id}',[ConceptocobranzaController::class, 'busqueda'])->name('busqueda');
 route::post('nuevoconcepto',[ConceptocobranzaController::class, 'nuevoconcepto'])->name('nuevoconcepto');
+
+// clasificador
+route::get('clasificador',[ClasificadorController::class, 'index'])->name('clasificador');
+route::post('nuevoclasificador',[ClasificadorController::class, 'nuevoclasificador'])->name('nuevoclasificador');
 
 // generar cobranza
 route::get('/listacobranza',[CobranzasController::class, 'listacobranza'])->name('listacobranza');

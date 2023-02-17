@@ -62,7 +62,7 @@
                                                 <input type="number" placeholder="Nro doc" class="form-control form-control-sm" v-model="nrodocumento" required>
                                             </div>
                                             <div class="col-sm-2">
-                                                <button class="btn btn-xs btn-primary" @click.prevent="consultadoc"><i class="fa fa-search"></i></button>
+                                                <button class="btn btn-primary btn-sm" @click.prevent="consultadoc"><i class="fa fa-search"></i></button>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -85,7 +85,7 @@
                                                 </el-select>
                                             </div>
                                             <div class="col-sm-2">
-                                                <button class="btn btn-primary btn-sm" @click.prevent="agregarlista">Agregar</button>
+                                                <button class="btn btn-primary btn-sm" @click.prevent="agregarlista"><i class="fa-solid fa-plus"></i> Agregar</button>
                                             </div>
                                         </div>
 
@@ -122,9 +122,9 @@
                                 </div>
 
                             </div>
-                            <div class="modal-footer justify-content-between">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary">Realizar cobro</button>
+                            <div class="modal-footer justify-content-right">
+                                <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button> -->
+                                <button type="submit" class="btn btn-warning"><i class="fa-solid fa-piggy-bank"></i> Realizar cobro</button>
                             </div>
                         </form>
                     </div>
@@ -150,8 +150,8 @@
                             <div class="col-sm-9">{{ nrodocumento }}</div>
                         </div>
                         <div class="group row">
-                            <div class="col-sm-3">NOMBRE O RAZON SOCIAL:</div>
-                            <div class="col-sm-9">{{ nombreorazon }}</div>
+                            <div class="col-sm-12">NOMBRE O RAZON SOCIAL:</div>
+                            <div class="col-sm-12">{{ nombreorazon }}</div>
                         </div>
                         <div class="group row">
                             <!-- <div class="col-sm-3">CONCEPTO:</div> -->

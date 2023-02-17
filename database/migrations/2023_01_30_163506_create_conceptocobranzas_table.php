@@ -15,6 +15,7 @@ class CreateConceptocobranzasTable extends Migration
     {
         Schema::create('conceptocobranzas', function (Blueprint $table) {
             $table->increments('idconceptocobranza');
+            $table->integer('codclasificador')->nullable();//idclasificador
             $table->text('text_concepto');//EXPEDIENCION DE PARTIDAS
             $table->decimal('nomto_concepto');//10.60
             $table->integer('estado_concepto');//activo 1: desactivado:0

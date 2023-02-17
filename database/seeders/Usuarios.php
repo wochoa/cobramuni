@@ -4,6 +4,7 @@ namespace Database\Seeders;
 use Illuminate\Support\Facades\DB;
 use App\Models\Formatocobranza;
 use App\Models\Conceptocobranza;
+use App\Models\Clasificador;
 use Illuminate\Database\Seeder;
 
 class Usuarios extends Seeder
@@ -68,12 +69,31 @@ class Usuarios extends Seeder
         );
         Conceptocobranza::insert([
             ['text_concepto'=>'EXPEDICION DE PARTIDAS: EXPEDICION DE PARTIDA NACIOMIENTO',
+             'codclasificador'=>1,
              'nomto_concepto'=>10.60,
              'estado_concepto'=>1
             ],
             ['text_concepto'=>'EXPEDICION DE PARTIDAS: EXPEDICION DE PARTIDA MATRIMONIO',
+             'codclasificador'=>1,
              'nomto_concepto'=>20.60,
              'estado_concepto'=>1
+            ],
+        ]
+            
+        );
+
+        Clasificador::insert([
+            ['text_clasificador'=>'REGISTRO CIVIL',
+             'codigoclasificador'=>'1.3.2.1.1.1',
+             'estado_cla'=>1
+            ],
+            ['text_clasificador'=>'CERTIFICADOS DOMICILIARIOS',
+             'codigoclasificador'=>'1.3.2.1.4.1',
+             'estado_cla'=>1
+            ],
+            ['text_clasificador'=>'CERTIFICACIONES DIVERSAS',
+             'codigoclasificador'=>'1.3.2.10.1.5',
+             'estado_cla'=>1
             ],
         ]
             

@@ -15,7 +15,7 @@ class ConceptocobranzaController extends Controller
     public function index()
     {
         //
-        $datos=Conceptocobranza::get();
+        $datos=Conceptocobranza::join('clasificador','conceptocobranzas.codclasificador','=','clasificador.idclasificador')->get();
         return response()->json($datos, 200);
     }
 
@@ -46,6 +46,7 @@ class ConceptocobranzaController extends Controller
         $datos=$request->all();
         $newconcepto=new Conceptocobranza();
         $newconcepto->text_concepto=strtoupper($request->concepto);
+        $newconcepto->codclasificador=$request->clasificador;
         $newconcepto->nomto_concepto=$request->monto;
         $newconcepto->estado_concepto=1;
         $newconcepto->save();

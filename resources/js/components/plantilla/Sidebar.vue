@@ -106,7 +106,13 @@
                     <li class="nav-item">
                         <router-link :to="'/cobranzas/conceptos'" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>Conceptos</p>
+                            <p>Conceptos TUPA</p>
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link :to="'/cobranzas/clasificador'" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Clasificardores TUPA</p>
                         </router-link>
                     </li>
                     
