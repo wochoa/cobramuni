@@ -89,7 +89,7 @@
                                         </td>
                                         <td v-else class="text-center text-danger"><i class="fa-solid fa-toggle-off"></i></td>
                                         <td>
-                                            <button class="btn btn-primary btn-sm" @click.prevent="abrir(lis.idconceptocobranza)"> <i class="fa fa-edit"></i> </button>
+                                            <button class="btn btn-primary btn-sm" @click.prevent="abrir(lis.idconceptocobranza,lis.codclasificador,lis.text_concepto,lis.nomto_concepto)"> <i class="fa fa-edit"></i> </button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -103,56 +103,42 @@
 
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="resultadodoc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editconcepto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Editar concepto</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <div class="modal-body">
-                    <div class="group row">
-                        <div class="col-sm-3">DNI/RUC:</div>
-                        <div class="col-sm-9">{{ nrodocumento }}</div>
+                <form @submit.prevent="guardarUPconcepto">
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <el-select v-model="formupdate.idclasificador" filterable placeholder="Seleccione el clasificador" size="small" style="width: 100%;">
+                                <!-- <select class="form-control form-control-sm" v-model="idconceptos" @change="datosconceptoxitem"> -->
+                                <el-option v-for="con in listaclasificador" :key="con.idclasificador" :label="con.codigoclasificador+' - '+con.text_clasificador" :value="con.idclasificador" required>
+                                </el-option>
+
+                                <!-- <option v-for="con in listaconceptos" :value="con.idconceptocobranza">{{ con.text_concepto }} ({{ con.nomto_concepto }})</option> -->
+                            </el-select>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Ingresar Concepto</label>
+                            <input type="text" name="" id="" class="form-control form-control-sm text-uppercase" v-model="formupdate.textconcepto" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Ingresar monto</label>
+                            <input type="nomber" name="" id="" class="form-control form-control-sm" v-model="formupdate.montoup" required>
+                        </div>
+                        
                     </div>
-                    <div class="group row">
-                        <div class="col-sm-12">NOMBRE O RAZON SOCIAL:</div>
-                        <div class="col-sm-12">{{ nombreorazon }}</div>
+                    <div class="modal-footer">
+
+                        <button type="submit" class="btn btn-sm btn-primary">Actualizar</button>
                     </div>
-                    <div class="group row">
-                        <!-- <div class="col-sm-3">CONCEPTO:</div> -->
-                        <table id="tabla" class="table table-bordered table-hover table-sm">
-                            <thead>
-                                <tr class="bg-info disabled color-palette">
-                                    <th><small>N</small></th>
-                                    <th><small>CONCEPTO</small></th>
-                                    <th><small>TOTAL</small></th>
-
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="(der, index) in array_concepto">
-
-                                    <td><small>{{ index+1}}</small></td>
-                                    <td><small>{{ der.textconcepto }}</small></td>
-                                    <td><small>{{ der.montoconcepto }}</small></td>
-
-                                    <td><button class="btn btn-default btn-sm" @click.prevent="eliminaconceptolista(index)"><i class="fa-solid fa-trash-can"></i></button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    
-                    <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-                    <!-- <a class="btn btn-outline-primary" :href="'/cobranzas/nuevo'"><i class="fa-regular fa-file fa-2x"></i><br>Nueva cobranza</a> -->
-                    <a class="btn btn-outline-danger" :href="'/imprimecobranza/'+idcobranza" target="_blank">Guardar</a>
-                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -185,7 +171,13 @@ export default {
             listaclasificador: [],
             formconcepto: '',
             monto: 0,
-            id_clasificador: ''
+            id_clasificador: '',
+            formupdate: {
+                idclasificador: '',
+                idconcepto: '',
+                textconcepto: '',
+                montoup: 0,
+            }
         };
     },
 
@@ -237,11 +229,29 @@ export default {
                 this.toast('No Fue agregado el nuevo concepto', 'error');
             }
         },
-        abrir() {
-            $('#resultadodoc').modal({
-                        backdrop: 'static',
-                        keyboard: false
-                    })
+        abrir(idconcep, idclasi, texcon, mont) {
+            $('#editconcepto').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+            this.formupdate.idconcepto = idconcep
+            this.formupdate.idclasificador = idclasi
+            this.formupdate.textconcepto = texcon
+            this.formupdate.montoup = mont
+        },
+        guardarUPconcepto(){
+            var url='/updateconcepto'
+            var up={
+                'idconcepto':this.formupdate.idconcepto,
+                'idclasificador':this.formupdate.idclasificador,
+                'textconcepto':this.formupdate.textconcepto,
+                'montoup':this.formupdate.montoup
+            }
+            axios.post(url,up)
+            .then(response=>{
+                this.toast('Fue Actualizado el nuevo concepto', 'info');
+                        this.alllistaconceptos();
+            })
         }
 
     },

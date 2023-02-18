@@ -109,6 +109,7 @@ class CobranzasController extends Controller
 
         $pdf = PDF::loadView('boleta', compact('cobra','detcobra','fechaimpresion'));
         return $pdf->stream('archivo-pdf.pdf');
+        //return view('boleta',['cobra'=>$cobra,'detcobra'=>$detcobra,'fechaimpresion'=>$fechaimpresion]);
     }
 
     /**
@@ -117,9 +118,21 @@ class CobranzasController extends Controller
      * @param  \App\Models\Cobranzas  $cobranzas
      * @return \Illuminate\Http\Response
      */
-    public function show(Cobranzas $cobranzas)
+    public function reniec($dni)//rruc
     {
-        //
+        $url='http://app.regionhuanuco.gob.pe/soap_pruebas/reniec.php?cdni='.$dni;
+
+        //$wsdl = file_get_contents($url);
+        $wsdl = getRemoteFile($url);
+        return $wsdl;
+    }
+    public function ruc($rruc)//
+    {
+        $url='http://app.regionhuanuco.gob.pe/soap_pruebas/sunat.php?ruc='.$rruc;
+
+        //$wsdl = file_get_contents($url);
+        $wsdl = getRemoteFile($url);
+        return $wsdl;
     }
 
     /**

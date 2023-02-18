@@ -82,9 +82,22 @@ class ConceptocobranzaController extends Controller
      * @param  \App\Models\Conceptocobranza  $conceptocobranza
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Conceptocobranza $conceptocobranza)
+    public function update(Request $request)
     {
         //
+        $post = Conceptocobranza::find($request->idconcepto);
+        $post->codclasificador = $request->idclasificador;
+        $post->text_concepto = $request->textconcepto;
+        $post->nomto_concepto = $request->montoup;
+        $post->save();
+
+        // $affectedRows = Conceptocobranza::where('idconceptocobranza', $request->idconcepto)->update(array(
+        //     ['codclasificador'=>$request->idclasificador,
+        //     'text_concepto'=>$request->textconcepto,
+        //     'nomto_concepto'=>$request->montoup,
+        //     ]
+        // ));
+
     }
 
     /**

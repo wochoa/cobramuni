@@ -88,6 +88,7 @@ route::post('nuevoformato',[FormatocobranzaController::class, 'nuevoformato'])->
 route::get('conceptocobranzas',[ConceptocobranzaController::class, 'index'])->name('conceptocobranzas');
 route::get('conceptocobranzas/{id}',[ConceptocobranzaController::class, 'busqueda'])->name('busqueda');
 route::post('nuevoconcepto',[ConceptocobranzaController::class, 'nuevoconcepto'])->name('nuevoconcepto');
+route::post('updateconcepto',[ConceptocobranzaController::class, 'update'])->name('updateconcepto');
 
 // clasificador
 route::get('clasificador',[ClasificadorController::class, 'index'])->name('clasificador');
@@ -96,6 +97,10 @@ route::post('nuevoclasificador',[ClasificadorController::class, 'nuevoclasificad
 // generar cobranza
 route::get('/listacobranza',[CobranzasController::class, 'listacobranza'])->name('listacobranza');
 route::post('generarcobranza',[CobranzasController::class, 'generarcobranza'])->name('generarcobranza');
+
+//pide consultas
+route::get('reniec/{dni}',[CobranzasController::class, 'reniec'])->name('reniec');
+route::get('ruc/{rruc}',[CobranzasController::class, 'ruc'])->name('ruc');
 // impresion cobranza
 route::get('imprimecobranza/{id}',[CobranzasController::class, 'imprimecobranza'])->name('imprimecobranza');
 

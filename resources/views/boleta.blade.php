@@ -1,7 +1,4 @@
-@php
-$medidaTicket = 180;
 
-@endphp
 <!DOCTYPE html>
 <html>
 
@@ -13,13 +10,9 @@ $medidaTicket = 180;
             font-family: 'DejaVu Sans', serif;
         }
 
-        h1 {
-            font-size: 18px;
-        }
+      
 
-        .ticket {
-            margin: 2px;
-        }
+        
 
         td,
         th,
@@ -119,7 +112,7 @@ $medidaTicket = 180;
                     $total = 0;
                     $i=0
                     @endphp
-                    @foreach ($detcobra as $det) {
+                    @foreach ($detcobra as $det) 
                         <tr>
                         @php $i++; @endphp
                         <td class="cantidad">{{$i}}</td>

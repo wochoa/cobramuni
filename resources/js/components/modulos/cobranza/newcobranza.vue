@@ -59,10 +59,10 @@
                                         <div class="form-group row">
                                             <label for="" class="col-sm-4">RUC/DNI:</label>
                                             <div class="col-sm-6">
-                                                <input type="number" placeholder="Nro doc" class="form-control form-control-sm" v-model="nrodocumento" required>
+                                                <input type="number" placeholder="Nro doc" class="form-control form-control-sm" v-model="nrodocumento" @keyup.enter="consultadoc" required>
                                             </div>
                                             <div class="col-sm-2">
-                                                <button class="btn btn-primary btn-sm" @click.prevent="consultadoc"><i class="fa fa-search"></i></button>
+                                                <button type="button" class="btn btn-primary btn-sm" @click.prevent="consultadoc"><i class="fa fa-search"></i></button>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -177,7 +177,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        
+
                     </div>
                     <div class="modal-footer">
                         <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
@@ -231,7 +231,7 @@ export default {
             array_concepto: [],
             showtablaconcepto: false,
             nrodocumento: null, //nro de DNI o NRO RUC
-            nombreorazon: null,
+            nombreorazon: '',
             importetotal: 0,
             idcobranza: null
 
@@ -279,11 +279,13 @@ export default {
             };
 
             let Jsonvhtml = '{"idconcepto":"' + this.idconceptos + '","idformato":"' + this.idformato + '","textconcepto":"' + this.concepto.text_conceptoc + '","montoconcepto":"' + this.concepto.nomto_conceptoc + '"}';
+            if (this.idconceptos != null) {
+                this.array_concepto.push(vhtml);
 
-            this.array_concepto.push(vhtml);
-
-            this.Json_concepto.push(Jsonvhtml);
-            this.showtablaconcepto = true;
+                this.Json_concepto.push(Jsonvhtml);
+                this.showtablaconcepto = true;
+            }
+            this.idconceptos=null
 
         },
         sumPrecios(items) {
@@ -346,25 +348,37 @@ export default {
         },
         consultadoc() {
             if (this.nrodocumento.length <= 8) {
-                this.consultadni(this.nrodocumento)
+                
+                if(this.nrodocumento.length==8){
+                    this.consultadni(this.nrodocumento)
+                }
+                else{
+                    alert('No corresponde a Nro. DNI')
+                }
             } else {
-                this.consultaruc(this.nrodocumento)
+                if(this.nrodocumento.length==11){
+                    this.consultaruc(this.nrodocumento)
+                }
+                else{
+                    alert('No corresponde a Nro. RUC')
+                }
             }
         },
         consultadni(dni) {
-            // var url = 'http://goredigital.regionhuanuco.gob.pe/dni/' + dni
-            // axios.get(url)
-            //     .then(response => {
-            //         this.nombreorazon = response.data.ddp_nombre
-            //     })
+            var url = '/reniec/' + dni
+            axios.get(url)
+                .then(response => {
+                    this.nombreorazon = response.data.prenombres + ' ' + response.data.apPrimer + ' ' + response.data.apSegundo
+                })
         },
         consultaruc(ruc) {
 
-            var url = 'http://app.regionhuanuco.gob.pe/soap_pruebas/sunat.php?ruc=' + ruc
+            var url = '/ruc/' + ruc
             axios.get(url)
                 .then(response => {
                     //this.nombreorazon = response.data.ddp_nombre
                     console.log(response.data)
+                    this.nombreorazon = response.data.ddp_nombre
                 })
 
         },
