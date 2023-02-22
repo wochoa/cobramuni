@@ -15,7 +15,7 @@ class FormatocobranzaController extends Controller
     public function index()
     {
         //
-        $datos=Formatocobranza::get();
+        $datos=Formatocobranza::orderBy('idformato','asc')->get();
         return response()->json($datos, 200);
     }
 
@@ -77,9 +77,12 @@ class FormatocobranzaController extends Controller
      * @param  \App\Models\Formatocobranza  $formatocobranza
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Formatocobranza $formatocobranza)
+    public function update(Request $request)
     {
-        //
+        $post = Formatocobranza::find($request->idfor);
+        $post->nomformato = $request->textformato;
+        $post->numeracion = $request->numero;
+        $post->save();
     }
 
     /**

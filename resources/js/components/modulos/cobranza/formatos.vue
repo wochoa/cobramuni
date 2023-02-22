@@ -73,7 +73,9 @@
                                         <td>{{ lis.idformato }}</td>
                                         <td>{{ lis.nomformato }}</td>
                                         <td>{{ zfill(lis.numeracion,6) }}</td>
-                                        <td></td>
+                                        <td>
+                                            <button class="btn btn-primary btn-sm" @click.prevent="abrir(lis.idformato,lis.nomformato,lis.numeracion)"> <i class="fa fa-edit"></i> </button>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -84,33 +86,37 @@
             </div>
         </div>
 
-        <!-- RESULTADO DE LA CREACION DE Documento -->
-        <div id="resultadodoc" class="modal-dialog" style="max-width:350px !important; display: none">
+    <!-- Modal -->
+    <div class="modal fade" id="editformato" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <div class="modal-title">
-                        <i class="glyphicon glyphicon-menu-right"></i>&#160;&#160; ReFirma Invoker
-                    </div>
+                    <h5 class="modal-title" id="exampleModalLabel">Editar formato</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <div class="modal-body">
-                    <div class="row" style="display: inherit;">
-                        <div class="col-sm-12 text-center">
-                            <br />
+                <form @submit.prevent="guardarUPformato">
+                    <div class="modal-body">
 
+                        <div class="form-group">
+                            <label for="">Ingresar formato</label>
+                            <input type="text" class="form-control form-control-sm text-uppercase" v-model="formupdate.nombre" required>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12 text-center">
-                            <br />
-                            <div id="status">ss</div>
-                            <br />
+                        <div class="form-group">
+                            <label for="">Ingresar numeración</label>
+                            <input type="text" class="form-control form-control-sm" v-model="formupdate.numera" required>
                         </div>
+
                     </div>
-                </div>
+                    <div class="modal-footer">
+
+                        <button type="submit" class="btn btn-sm btn-primary">Actualizar</button>
+                    </div>
+                </form>
             </div>
         </div>
-
-        <!-- <docu-invoker ref="foo" :iframe="iframe" :route-invoker-get="routeInvokerGet" :route-invoker-post="routeInvokerPost" :ruta="ruta" @firmado="firmado" /> -->
+    </div>
 
     </div>
 </div>
@@ -138,7 +144,12 @@ export default {
         return {
             listaformatos: [],
             formato: '',
-            numeracion:''
+            numeracion:'',
+            formupdate:{
+                idform:'',
+                nombre:'',
+                numera:''
+            }
         };
     },
 
@@ -193,6 +204,28 @@ export default {
                 }
             }
         },
+        abrir(idfor, nom, num) {
+            $('#editformato').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+            this.formupdate.idform = idfor
+            this.formupdate.nombre = nom
+            this.formupdate.numera = num
+        },
+        guardarUPformato(){
+            var url = '/updateformato'
+            var up = {
+                'idfor': this.formupdate.idform,
+                'textformato': this.formupdate.nombre,
+                'numero': this.formupdate.numera
+            }
+            axios.post(url, up)
+                .then(response => {
+                    this.toast('Fue Actualizado el formato', 'info');
+                    this.allformatos();
+                })
+        }
 
     },
 };

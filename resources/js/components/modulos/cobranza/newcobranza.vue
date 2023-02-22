@@ -74,17 +74,34 @@
 
                                     <div class="col-md-7 ">
                                         <div class="fom-group row border-bottom pb-2">
-                                            <label for="" class="col-sm-4">Agregar Concepto</label>
-                                            <div class="col-sm-6">
+                                            <label for="" class="col-sm-4">Buscar concepto</label>
+                                            <div class="col-sm-8">
                                                 <el-select v-model="idconceptos" filterable placeholder="Seleccione el concepto" @change="datosconceptoxitem" size="small" style="width: 100%;">
                                                     <!-- <select class="form-control form-control-sm" v-model="idconceptos" @change="datosconceptoxitem"> -->
-                                                    <el-option v-for="con in listaconceptos" :key="con.idconceptocobranza" :label="con.text_concepto" :value="con.idconceptocobranza">
+                                                    <el-option v-for="con in listaconceptos" :key="con.idconceptocobranza" v-if="con.estado_concepto==1" :label="con.text_concepto" :value="con.idconceptocobranza">
                                                     </el-option>
 
                                                     <!-- <option v-for="con in listaconceptos" :value="con.idconceptocobranza">{{ con.text_concepto }} ({{ con.nomto_concepto }})</option> -->
                                                 </el-select>
                                             </div>
+                                            <!-- <div class="col-sm-2">
+                                                <button class="btn btn-primary btn-sm" @click.prevent="agregarlista"><i class="fa-solid fa-plus"></i> Agregar</button>
+                                            </div> -->
+                                        </div>
+                                        <div class="row border-bottom pb-2">
+                                            <div class="col-sm-8">
+                                                <div class="form-group">
+                                                    <label for="">Concepto:</label>
+                                                    <input type="text" class="form-control form-control-sm" v-model="concepto.text_conceptoc">
+                                                </div>
+                                            </div>
                                             <div class="col-sm-2">
+                                                <div class="form-group">
+                                                    <label for="">Monto:</label>
+                                                    <input type="number" class="form-control form-control-sm" v-model="concepto.nomto_conceptoc" step="any">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2 mt-4">
                                                 <button class="btn btn-primary btn-sm" @click.prevent="agregarlista"><i class="fa-solid fa-plus"></i> Agregar</button>
                                             </div>
                                         </div>
@@ -146,12 +163,12 @@
                     </div>
                     <div class="modal-body">
                         <div class="group row">
-                            <div class="col-sm-3">DNI/RUC:</div>
+                            <div class="col-sm-3"><strong>DNI/RUC:</strong></div>
                             <div class="col-sm-9">{{ nrodocumento }}</div>
                         </div>
                         <div class="group row">
-                            <div class="col-sm-12">NOMBRE O RAZON SOCIAL:</div>
-                            <div class="col-sm-12">{{ nombreorazon }}</div>
+                            <div class="col-sm-6"><strong>NOMBRE O RAZON SOCIAL:</strong></div>
+                            <div class="col-sm-6">{{ nombreorazon }}</div>
                         </div>
                         <div class="group row">
                             <!-- <div class="col-sm-3">CONCEPTO:</div> -->
@@ -279,6 +296,7 @@ export default {
             };
 
             let Jsonvhtml = '{"idconcepto":"' + this.idconceptos + '","idformato":"' + this.idformato + '","textconcepto":"' + this.concepto.text_conceptoc + '","montoconcepto":"' + this.concepto.nomto_conceptoc + '"}';
+
             if (this.idconceptos != null) {
                 this.array_concepto.push(vhtml);
 

@@ -43,9 +43,9 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="">Ingresar Clasificador</label>
-                                    <input type="text" name="" id="" class="form-control form-control-sm text-uppercase" v-model="formClasificador" required >
+                                    <input type="text" name="" id="" class="form-control form-control-sm text-uppercase" v-model="formClasificador" required>
                                 </div>
-                                
+
                                 <div class="form-gruop">
                                     <button type="submit" class="btn btn-sm btn-primary">Agregar</button>
                                 </div>
@@ -64,21 +64,25 @@
                                     <tr>
                                         <th>N°</th>
                                         <th>Código Clasificador</th>
-                                        <th>Clasificador</th>                                        
+                                        <th>Clasificador</th>
                                         <th>Estado</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-for="lis in listaClasificadors">
-                                        <td>{{ lis.idclasificador }}</td>                                        
+                                        <td>{{ lis.idclasificador }}</td>
                                         <td>{{ lis.codigoclasificador }}</td>
                                         <td>{{ lis.text_clasificador }}</td>
                                         <td v-if="lis.estado_cla==1" class="text-center text-success">
-                                            <i class="fa-solid fa-toggle-on"></i>
+                                            <a @click="cambiaestado(lis.idclasificador,0)"><i class="fa-solid fa-toggle-on"></i></a>
                                         </td>
-                                        <td v-else class="text-center text-danger"><i class="fa-solid fa-toggle-off"></i></td>
-                                        <td></td>
+                                        <td v-else class="text-center text-danger">
+                                            <a @click="cambiaestado(lis.idclasificador,1)"><i class="fa-solid fa-toggle-off"></i></a>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-primary btn-sm" @click.prevent="abrir(lis.idclasificador,lis.text_clasificador,lis.codigoclasificador)"> <i class="fa fa-edit"></i> </button>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -89,6 +93,37 @@
             </div>
         </div>
 
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="editclasificador" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar clasificador</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form @submit.prevent="guardarUPclasificador">
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label for="">código</label>
+                            <input type="text" class="form-control form-control-sm text-uppercase" v-model="formupdate.codigo" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Nombre Clasificador</label>
+                            <input type="text" class="form-control form-control-sm" v-model="formupdate.textclasificador" required>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="submit" class="btn btn-sm btn-primary">Actualizar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 </template>
@@ -116,7 +151,12 @@ export default {
         return {
             listaClasificadors: [],
             formClasificador: '',
-            codigo: ''
+            codigo: '',
+            formupdate: {
+                idcla: '',
+                textclasificador: '',
+                codigo: ''
+            }
         };
     },
 
@@ -152,8 +192,41 @@ export default {
                     // console.log(response.data);
                     this.toast('Fue agregado el nuevo Clasificador', 'success');
                     this.alllistaClasificadors();
-                    this.formClasificador=''
-                    this.codigo=''
+                    this.formClasificador = ''
+                    this.codigo = ''
+                });
+        },
+        abrir(idclasi, texcla, cod) {
+            $('#editclasificador').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+            this.formupdate.idcla = idclasi
+            this.formupdate.textclasificador = texcla
+            this.formupdate.codigo = cod
+        },
+        guardarUPclasificador() {
+            var url = '/updateclasificador'
+            var up = {
+                'idcla': this.formupdate.idcla,
+                'textclasificador': this.formupdate.textclasificador,
+                'codigo': this.formupdate.codigo
+            }
+            axios.post(url, up)
+                .then(response => {
+                    this.toast('Fue Actualizado el clasificador', 'info');
+                    this.alllistaClasificadors();
+                })
+        },
+        cambiaestado(idco, estado) {
+            var url = '/updateclasificador-estado';
+            axios.post(url, {
+                    'idcon': idco,
+                    'estado': estado
+                })
+                .then(response => {
+                    this.toast('Se actualizó el estado del xlasificador', 'info');
+                    this.alllistaClasificadors();
                 });
         }
 

@@ -83,16 +83,20 @@ route::get('tramite/obtenerTotal',[TramitesController::class, 'obtenerTotal'])->
 route::get('listaformatos',[FormatocobranzaController::class, 'index'])->name('listaformatos');//listaformatos
 route::get('listaformatos/{id}',[FormatocobranzaController::class, 'buscar'])->name('buscar');
 route::post('nuevoformato',[FormatocobranzaController::class, 'nuevoformato'])->name('nuevoformato');
+route::post('updateformato',[FormatocobranzaController::class, 'update'])->name('updateformato');
 
 //concepto
 route::get('conceptocobranzas',[ConceptocobranzaController::class, 'index'])->name('conceptocobranzas');
 route::get('conceptocobranzas/{id}',[ConceptocobranzaController::class, 'busqueda'])->name('busqueda');
 route::post('nuevoconcepto',[ConceptocobranzaController::class, 'nuevoconcepto'])->name('nuevoconcepto');
 route::post('updateconcepto',[ConceptocobranzaController::class, 'update'])->name('updateconcepto');
+route::post('updateconcepto-estado',[ConceptocobranzaController::class, 'updateestado'])->name('updateestado');
 
 // clasificador
 route::get('clasificador',[ClasificadorController::class, 'index'])->name('clasificador');
 route::post('nuevoclasificador',[ClasificadorController::class, 'nuevoclasificador'])->name('nuevoclasificador');
+route::post('updateclasificador',[ClasificadorController::class, 'update'])->name('updateclasificador');
+route::post('updateclasificador-estado',[ClasificadorController::class, 'updateestado'])->name('updateestadocla');
 
 // generar cobranza
 route::get('/listacobranza',[CobranzasController::class, 'listacobranza'])->name('listacobranza');

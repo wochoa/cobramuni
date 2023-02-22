@@ -15,7 +15,7 @@ class ConceptocobranzaController extends Controller
     public function index()
     {
         //
-        $datos=Conceptocobranza::join('clasificador','conceptocobranzas.codclasificador','=','clasificador.idclasificador')->get();
+        $datos=Conceptocobranza::join('clasificador','conceptocobranzas.codclasificador','=','clasificador.idclasificador')->orderBy('idconceptocobranza','asc')->get();
         return response()->json($datos, 200);
     }
 
@@ -98,6 +98,12 @@ class ConceptocobranzaController extends Controller
         //     ]
         // ));
 
+    }
+    public function updateestado(Request $request)
+    {
+        $post = Conceptocobranza::find($request->idcon);
+        $post->estado_concepto = $request->estado;
+        $post->save();
     }
 
     /**

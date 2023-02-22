@@ -136,7 +136,7 @@
         <p class="centrado">
             SON: {{$cobra[0]->montotexto}}
         </p><br>
-        <p class="centrado">¡Pillco Marca renace contigo!
+        <p class="centrado">¡Pillco Marca, renace contigo!
             </p>
         </div>
     

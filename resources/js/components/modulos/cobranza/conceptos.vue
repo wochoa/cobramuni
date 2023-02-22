@@ -40,7 +40,7 @@
                                 <div class="form-group">
                                     <el-select v-model="id_clasificador" filterable placeholder="Seleccione el clasificador" size="small" style="width: 100%;">
                                         <!-- <select class="form-control form-control-sm" v-model="idconceptos" @change="datosconceptoxitem"> -->
-                                        <el-option v-for="con in listaclasificador" :key="con.idclasificador" :label="con.codigoclasificador+' - '+con.text_clasificador" :value="con.idclasificador" required>
+                                        <el-option v-for="con in listaclasificador" :key="con.idclasificador" v-if="con.estado_cla==1" :label="con.codigoclasificador+' - '+con.text_clasificador" :value="con.idclasificador" required>
                                         </el-option>
 
                                         <!-- <option v-for="con in listaconceptos" :value="con.idconceptocobranza">{{ con.text_concepto }} ({{ con.nomto_concepto }})</option> -->
@@ -84,10 +84,12 @@
                                         <td>{{ lis.codigoclasificador }} - {{ lis.text_clasificador }}</td>
                                         <td>{{ lis.text_concepto }}</td>
                                         <td>{{ lis.nomto_concepto }}</td>
-                                        <td v-if="lis.estado_concepto==1" class="text-center text-success">
-                                            <i class="fa-solid fa-toggle-on"></i>
+                                        <td v-if="lis.estado_concepto==1" class="text-center text-success" >
+                                            <a  @click="cambiaestado(lis.idconceptocobranza,0)"><i class="fa-solid fa-toggle-on"></i></a>
                                         </td>
-                                        <td v-else class="text-center text-danger"><i class="fa-solid fa-toggle-off"></i></td>
+                                        <td v-else class="text-center text-danger" >
+                                            <a  @click="cambiaestado(lis.idconceptocobranza,1)"><i class="fa-solid fa-toggle-off"></i></a>
+                                        </td>
                                         <td>
                                             <button class="btn btn-primary btn-sm" @click.prevent="abrir(lis.idconceptocobranza,lis.codclasificador,lis.text_concepto,lis.nomto_concepto)"> <i class="fa fa-edit"></i> </button>
                                         </td>
@@ -147,6 +149,7 @@
 </template>
 
 <script>
+
 import Swal from 'sweetalert2';
 window.$ = window.jQuery = require('jquery')
 
@@ -252,6 +255,20 @@ export default {
                 this.toast('Fue Actualizado el nuevo concepto', 'info');
                         this.alllistaconceptos();
             })
+        },
+        cambiaestado(idco,estado)
+        {
+            var url='/updateconcepto-estado';
+            axios.post(url,
+            {
+                'idcon':idco,
+                'estado':estado
+            })
+            .then(response=>
+            {
+                this.toast('Se actualizó el estado del concepto', 'info');  
+                this.alllistaconceptos(); 
+            });
         }
 
     },

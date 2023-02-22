@@ -14,7 +14,7 @@ class ClasificadorController extends Controller
      */
     public function index()
     {
-        $datos=Clasificador::get();
+        $datos=Clasificador::orderBy('idclasificador','asc')->get();
         return response()->json($datos, 200);
     }
 
@@ -74,7 +74,16 @@ class ClasificadorController extends Controller
      */
     public function update(Request $request, Clasificador $clasificador)
     {
-        //
+        $post = Clasificador::find($request->idcla);
+        $post->text_clasificador = $request->textclasificador;
+        $post->codigoclasificador = $request->codigo;
+        $post->save();
+    }
+    public function updateestado(Request $request)
+    {
+        $post = Clasificador::find($request->idcon);
+        $post->estado_cla = $request->estado;
+        $post->save();
     }
 
     /**
