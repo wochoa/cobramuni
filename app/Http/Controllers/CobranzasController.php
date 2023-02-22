@@ -108,6 +108,8 @@ class CobranzasController extends Controller
         $detcobra=Detallecobranza::where('codcobranza',$id)->get();
 
         $pdf = PDF::loadView('boleta', compact('cobra','detcobra','fechaimpresion'));
+        $paper_size = array(0,0,280,680);
+        $pdf->set_paper($paper_size);
         return $pdf->stream('archivo-pdf.pdf');
         //return view('boleta',['cobra'=>$cobra,'detcobra'=>$detcobra,'fechaimpresion'=>$fechaimpresion]);
     }

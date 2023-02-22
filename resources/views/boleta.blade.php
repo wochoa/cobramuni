@@ -47,11 +47,13 @@
         .centrado {
             text-align: center;
             align-content: center;
+            padding: 5px;
         }
 
         .ticket {
-            width: 300px;
-            max-width: 300px;
+            width: 320px;
+            max-width: 320px;
+            padding: 5px;
         }
 
         img {
@@ -75,7 +77,7 @@
     </style>
 </head>
 
-<body>
+<body >
     <div class="ticket centrado">
         <img src="{{asset('/img/logo.png')}}"  alt="">
         <h2>R.U.C. 20447367727</h2>
@@ -95,13 +97,13 @@
             <p> <strong> NOMBRE O RAZON SOCIAL:</strong><br> {{strtoupper($cobra[0]->nom_razonsocial)}}</p>
     </div>
     <br>
-    <div class="ticket">
+    <div class="centrado">
         
 
-        <table style="padding: 2px">
+        <table style="padding: 2px" align="center">
             <thead>
-                <tr class="centrado" style="background: #ccc">
-                    <th class="cantidad">ITEM</th>
+                <tr  style="background: #ccc">
+                    <th class="cantidad">N°</th>
                     <th class="producto">CONCEPTO</th>
                     <th class="precio">MONTO</th>
                 </tr>
@@ -116,7 +118,7 @@
                         <tr>
                         @php $i++; @endphp
                         <td class="cantidad">{{$i}}</td>
-                        <td style="padding-left: 2px">{{$det->concepto}}</td>
+                        <td width="100%">{{$det->concepto}}</td>
                         <td class="precio">{{$det->monto}}</td>
                     </tr>
                     @endforeach
