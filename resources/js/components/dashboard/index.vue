@@ -86,13 +86,13 @@
                 <!-- /.col -->
             </div>
 
-            <!-- <div class="card pt-3 pb-3 card-primary card-outline">
+            <div class="card pt-3 pb-3">
                 <div class="row ">
-                    <div class="col-md-3" align="center">
+                    <!-- <div class="col-md-3" align="center">
 
                         <router-link :to="'/Tramites/Enproceso'" class="text-decoration-none">
                             <h4>Documentos en Proceso de la Oficina</h4>
-                            <radial-progress-bar :diameter="180" :completed-steps="getInicio.derivadosProceso" :total-steps="getInicio.totalProceso == 0 ? 1 : getInicio.totalProceso" startColor="#007bff" stopColor="#007bff" innerStrokeColor="#d3d3d3" stroke-linecap="round">
+                            <radial-progress-bar :diameter="180" :completed-steps="resumen.totalcobranzas" :total-steps="getInicio.totalProceso == 0 ? 1 : getInicio.totalProceso" startColor="#007bff" stopColor="#007bff" innerStrokeColor="#d3d3d3" stroke-linecap="round">
 
                                 <p><strong>Total: </strong>{{ getInicio.totalProceso }}</p>
                                 <p><strong>Derivados: </strong>{{ getInicio.derivadosProceso }}</p>
@@ -100,51 +100,50 @@
                             </radial-progress-bar>
                         </router-link>
 
-                    </div>
+                    </div> -->
 
                     <div class="col-md-3" align="center">
 
-                        <router-link :to="'/Tramites/Enproceso'" class="text-decoration-none">
-                            <h4>Documentos en proceso</h4>
-                            <radial-progress-bar :diameter="180" :completed-steps="getInicio.usuarioDerivadosProceso" :total-steps="getInicio.usuarioProceso == 0 ? 1 : getInicio.usuarioProceso" startColor="#20c997" stopColor="#20c997" innerStrokeColor="#d3d3d3" stroke-linecap="round">
+                        <!-- <router-link :to="'/'" class="text-decoration-none"> -->
+                            <h5>Cobranzas formato 8</h5>
+                            <radial-progress-bar :diameter="180" :completed-steps="resumen.totalformato8s" :total-steps="resumen.totalcobranzas == 0 ? 1 : resumen.totalcobranzas" startColor="#20c997" stopColor="#20c997" innerStrokeColor="#d3d3d3" stroke-linecap="round">
 
-                                <p><strong>Total: </strong> {{ getInicio.usuarioProceso }}</p>
-                                <p><strong>Derivados: </strong>{{ getInicio.usuarioDerivadosProceso }}</p>
+                                <p><strong>Total S/. </strong> {{ resumen.totalcobranzas }}</p>
+                                <p><strong>Formato 8 S/. </strong>{{ resumen.totalformato8s }}</p>
                                 
-                                <strong>Pendientes: </strong>{{ getInicio.usuarioProceso - getInicio.usuarioDerivadosProceso }}
+                                <!-- <strong>Pendientes: </strong>{{ getInicio.usuarioProceso - getInicio.usuarioDerivadosProceso }} -->
                                 
                             </radial-progress-bar>
-                        </router-link>
+                        <!-- </router-link> -->
 
                     </div>
 
                     <div class="col-md-3" align="center">
 
-                        <router-link :to="'/Tramites/Porrecibir'" class="text-decoration-none">
-                            <h4>Documentos por recibir</h4>
-                            <radial-progress-bar :diameter="180" :completed-steps="getInicio.usuarioRecibir" :total-steps="getInicio.totalRecibir == 0 ? 1 : getInicio.totalRecibir" startColor="#6f42c1" stopColor="#6f42c1" innerStrokeColor="#d3d3d3">
-                                <p><strong>Total: </strong>{{ getInicio.totalRecibir }}</p>
-                                <p><strong>Personal: </strong>{{ getInicio.usuarioRecibir }}</p>
+                        <!-- <router-link :to="'/'" class="text-decoration-none"> -->
+                            <h5>Cobranzas formato 9</h5>
+                            <radial-progress-bar :diameter="180" :completed-steps="resumen.totalformato9s" :total-steps="resumen.totalcobranzas == 0 ? 1 : resumen.totalcobranzas" startColor="#6f42c1" stopColor="#6f42c1" innerStrokeColor="#d3d3d3">
+                                <p><strong>Total S/. </strong> {{ resumen.totalcobranzas }}</p>
+                                <p><strong>Formato 9 S/. </strong>{{ resumen.totalformato9s }}</p>
                             </radial-progress-bar>
-                        </router-link>
+                        <!-- </router-link> -->
 
                     </div>
 
-                    <div class="col-md-3" align="center">
+                    <!-- <div class="col-md-3" align="center">
 
                         <router-link :to="'/Tramites/Archivados'" class="text-decoration-none">
                             <h4>Documentos archivados</h4>
 
                             <radial-progress-bar :diameter="180" :completed-steps="getInicio.usuarioArchivados" :total-steps="getInicio.totalArchivado == 0 ? 1 : getInicio.totalArchivado" startColor="#dc3545" stopColor="#dc3545" innerStrokeColor="#d3d3d3">
-                                <p><strong>Total: </strong>{{ getInicio.totalArchivado }}</p>
-                                <p><strong>Personal: </strong>{{ getInicio.usuarioArchivados }}</p>
-                                <strong>Temporal: </strong>{{ getInicio.usuariosArchivadosTemporal }}
+                                <p><strong>Total S/. </strong> {{ resumen.totalcobranzas }}</p>
+                                <p><strong>Formato 8 S/. </strong>{{ resumen.totalformato9s }}</p>
                             </radial-progress-bar>
                         </router-link>
 
-                    </div>
+                    </div> -->
                 </div>
-            </div> -->
+            </div>
             
             <!-- <div class="row">
                 <div class="col-md-3">
@@ -170,28 +169,31 @@ export default {
             completedSteps: 5,
             totalSteps: 10,
             gradientAnimation: 10,
-            getInicio: {
-                totalDocGenerados: 1,
-                usuarioDocGenerados: 0,
-                totalPlantilla: 1,
-                usuarioPlantilla: 0,
-                totalArchivados: 1,
-                usuarioArchivados: 0,
-                totalRecibir: 1,
-                usuarioRecibir: 0,
-                totalProceso: 1,
-                derivadosProceso: 0,
-                usuarioProceso: 1,
-                usuarioDerivadosProceso: 0,
-                usuariosArchivadosTemporal: 0,
-                totalMpv: 0,
-                usuariosMpv: 0
-            },
+            // getInicio: {
+            //     totalDocGenerados: 1,
+            //     usuarioDocGenerados: 0,
+            //     totalPlantilla: 1,
+            //     usuarioPlantilla: 0,
+            //     totalArchivados: 1,
+            //     usuarioArchivados: 0,
+            //     totalRecibir: 1,
+            //     usuarioRecibir: 0,
+            //     totalProceso: 1,
+            //     derivadosProceso: 0,
+            //     usuarioProceso: 1,
+            //     usuarioDerivadosProceso: 0,
+            //     usuariosArchivadosTemporal: 0,
+            //     totalMpv: 0,
+            //     usuariosMpv: 0
+            // },
             resumen:{
                 totalcobranzas:0,
                 totalconcepto:0,
                 totalformatos:0,
-                totalusuarios:0
+                totalclasificadores:0,
+                totalusuarios:0,
+                totalformato8s:0,
+                totalformato9s:0
             }
         };
     },
@@ -201,29 +203,29 @@ export default {
     },
 
     mounted() {
-        this.datosparagrafico();
+        // this.datosparagrafico();
         this.cargaresumen();
 
     },
 
     methods: {
-        datosparagrafico() {
-            var url = '/tramite/obtenerTotal';
-            axios.get(url)
-                .then(response => {
-                    this.getInicio.totalProceso = response.data.totalProceso
-                    this.getInicio.derivadosProceso = response.data.derivadosProceso
-                    this.getInicio.usuarioProceso = response.data.usuarioProceso
-                    this.getInicio.totalRecibir = response.data.totalRecibir
-                    this.getInicio.usuarioRecibir = response.data.usuarioRecibir
-                    this.getInicio.totalArchivado = response.data.totalArchivado
-                    this.getInicio.usuarioArchivados = response.data.usuarioArchivados
-                    this.getInicio.usuarioDerivadosProceso = response.data.usuarioDerivadosProceso
-                    this.getInicio.usuariosArchivadosTemporal = response.data.usuariosArchivadosTemporal
-                    this.getInicio.totalMpv = response.data.totalMpv
-                    this.getInicio.usuariosMpv = response.data.usuariosMpv
-                });
-        },
+        // datosparagrafico() {
+        //     var url = '/tramite/obtenerTotal';
+        //     axios.get(url)
+        //         .then(response => {
+        //             this.getInicio.totalProceso = response.data.totalProceso
+        //             this.getInicio.derivadosProceso = response.data.derivadosProceso
+        //             this.getInicio.usuarioProceso = response.data.usuarioProceso
+        //             this.getInicio.totalRecibir = response.data.totalRecibir
+        //             this.getInicio.usuarioRecibir = response.data.usuarioRecibir
+        //             this.getInicio.totalArchivado = response.data.totalArchivado
+        //             this.getInicio.usuarioArchivados = response.data.usuarioArchivados
+        //             this.getInicio.usuarioDerivadosProceso = response.data.usuarioDerivadosProceso
+        //             this.getInicio.usuariosArchivadosTemporal = response.data.usuariosArchivadosTemporal
+        //             this.getInicio.totalMpv = response.data.totalMpv
+        //             this.getInicio.usuariosMpv = response.data.usuariosMpv
+        //         });
+        // },
         cargaresumen()
         {
             var url='/resumen';
@@ -231,10 +233,13 @@ export default {
             .then(response=>{
                 var datos=response.data.datos;
                 console.log(response.data.totalcobranza)
-                this.resumen.totalcobranzas=response.data.totalcobranza;
+                this.resumen.totalcobranzas=parseFloat(response.data.totalcobranza);
                 this.resumen.totalconcepto=response.data.totalconceptos;
                 this.resumen.totalformatos=response.data.totalformato;
+                this.resumen.totalclasificadores=response.data.totalclasificador;
                 this.resumen.totalusuarios=response.data.totalusuarios;
+                this.resumen.totalformato8s=parseFloat(response.data.totalformato8);
+                this.resumen.totalformato9s=parseFloat(response.data.totalformato9);
             });
         }
 

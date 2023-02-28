@@ -1,6 +1,7 @@
 
 <!DOCTYPE html>
 <html>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
 <head>
 
@@ -8,9 +9,7 @@
         * {
             font-size: 11px;
             font-family: 'DejaVu Sans', serif;
-        }
-
-      
+        }  
 
         
 
@@ -42,47 +41,34 @@
 
         .ordenado{
             text-align:justify;
-            padding-left: 3px;
+            padding: 2px;
         }
         .centrado {
             text-align: center;
             align-content: center;
-            padding: 5px;
+           
         }
 
-        .ticket {
-            width: 320px;
-            max-width: 320px;
-            padding: 5px;
-        }
-
-        img {
-            max-width: inherit;
-            width: inherit;
-        }
+        
+       
 
         * {
             margin: 0;
-            padding: 0;
+            padding: 0px 8px 0px 8px;
         }
 
-        .ticket {
-            margin: 0;
-            padding: 0;
-        }
+        
+       
 
-        body {
-            text-align: center;
-        }
+       
     </style>
 </head>
 
 <body >
-    <div class="ticket centrado">
-        <img src="{{asset('/img/logo.png')}}"  alt="">
+    <div class="ticket centrado" style="margin-top: 10px">
+        <img src="{{asset('/img/logo.png')}}"   alt="" width="320">
         <h2>R.U.C. 20447367727</h2>
         <p>Fecha imp.: {{$fechaimpresion}}</p>
-        <br>
     </div>
     <div class="ordenado">
         <p> <strong> RECIBO DE CAJA N°</strong> {{$cobra[0]->codigorecibo}}</p>
@@ -97,10 +83,10 @@
             <p> <strong> NOMBRE O RAZON SOCIAL:</strong><br> {{strtoupper($cobra[0]->nom_razonsocial)}}</p>
     </div>
     <br>
-    <div class="centrado">
+    <div >
         
 
-        <table style="padding: 2px" align="center">
+        <table style="padding: 5px" align="center" width="100%">
             <thead>
                 <tr  style="background: #ccc">
                     <th class="cantidad">N°</th>

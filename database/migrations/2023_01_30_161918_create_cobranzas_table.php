@@ -23,7 +23,7 @@ class CreateCobranzasTable extends Migration
             $table->text('dni');
             $table->text('nom_razonsocial');
             // $table->integer('iddetallecobranza');
-            $table->string('montonumero');//10.00
+            $table->decimal('montonumero');//10.00
             $table->text('montotexto');//SON: Diez con 60/100 soles
             $table->timestamps();
         });

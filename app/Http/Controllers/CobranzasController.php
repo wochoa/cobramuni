@@ -20,7 +20,7 @@ class CobranzasController extends Controller
      */
     public function listacobranza()
     {
-        $lista=Cobranzas::get();
+        $lista=Cobranzas::join('formatocobranzas','cobranzas.idtipoformato','=','formatocobranzas.idformato')->paginate(10);
         return response()->json($lista, 200);
     }
 
@@ -107,11 +107,17 @@ class CobranzasController extends Controller
         $cobra=Cobranzas::where('idcobrazas',$id)->get();
         $detcobra=Detallecobranza::where('codcobranza',$id)->get();
 
-        $pdf = PDF::loadView('boleta', compact('cobra','detcobra','fechaimpresion'));
+        $pdf = \PDF::loadView('boleta', compact('cobra','detcobra','fechaimpresion'));
         $paper_size = array(0,0,280,680);
         $pdf->set_paper($paper_size);
-        return $pdf->stream('archivo-pdf.pdf');
-        //return view('boleta',['cobra'=>$cobra,'detcobra'=>$detcobra,'fechaimpresion'=>$fechaimpresion]);
+        return $pdf->stream();
+        
+        // $pdf = \PDF::loadView('formato7', compact('resultados','datouser'))->setPaper('a4', 'landscape');
+        // //return $pdf->download($dni.'.pdf');
+        // //return $resultados;
+        // // return view('formato7',compact('datouser'));
+        // return $pdf->stream();
+
     }
 
     /**
