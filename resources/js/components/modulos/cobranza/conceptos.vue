@@ -200,7 +200,7 @@ export default {
             });
         },
         alllistaconceptos() {
-            var url = '/conceptocobranzas';
+            var url = '/listadoconcepto';
             axios.get(url)
                 .then(response => {
                     this.listaconceptos = response.data;

@@ -18,6 +18,11 @@ class ConceptocobranzaController extends Controller
         $datos=Conceptocobranza::join('clasificador','conceptocobranzas.codclasificador','=','clasificador.idclasificador')->where('idformat',$idformato)->orderBy('idconceptocobranza','asc')->get();
         return response()->json($datos, 200);
     }
+    public function listadoconcepto()
+    {
+        $datos=Conceptocobranza::join('clasificador','conceptocobranzas.codclasificador','=','clasificador.idclasificador')->orderBy('idconceptocobranza','asc')->get();
+        return response()->json($datos, 200);
+    }
 
     public function busqueda($id)
     {

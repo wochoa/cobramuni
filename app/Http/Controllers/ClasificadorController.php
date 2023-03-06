@@ -78,6 +78,7 @@ class ClasificadorController extends Controller
         $post = Clasificador::find($request->idcla);
         $post->text_clasificador = $request->textclasificador;
         $post->codigoclasificador = $request->codigo;
+        $post->idformat=$request->idformato;
         $post->save();
     }
     public function updateestado(Request $request)

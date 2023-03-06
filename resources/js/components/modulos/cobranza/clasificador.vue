@@ -89,7 +89,7 @@
                                             <a @click="cambiaestado(lis.idclasificador,1)"><i class="fa-solid fa-toggle-off"></i></a>
                                         </td>
                                         <td>
-                                            <button class="btn btn-primary btn-sm" @click.prevent="abrir(lis.idclasificador,lis.text_clasificador,lis.codigoclasificador)"> <i class="fa fa-edit"></i> </button>
+                                            <button class="btn btn-primary btn-sm" @click.prevent="abrir(lis.idclasificador,lis.text_clasificador,lis.codigoclasificador,lis.idformat)"> <i class="fa fa-edit"></i> </button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -114,6 +114,16 @@
                 </div>
                 <form @submit.prevent="guardarUPclasificador">
                     <div class="modal-body">
+
+                        <div class="form-group">
+                            <el-select v-model="id_formato" filterable placeholder="Seleccione el Formato" size="small" style="width: 100%;">
+                                    <!-- <select class="form-control form-control-sm" v-model="idconceptos" @change="datosconceptoxitem"> -->
+                                    <el-option v-for="con in listaformatos" :key="con.idformato" :label="con.nomformato" :value="con.idformato" required>
+                                    </el-option>
+
+                                    <!-- <option v-for="con in listaconceptos" :value="con.idconceptocobranza">{{ con.text_concepto }} ({{ con.nomto_concepto }})</option> -->
+                                </el-select>
+                        </div>
 
                         <div class="form-group">
                             <label for="">código</label>
@@ -158,9 +168,9 @@ export default {
     data() {
         return {
             listaClasificadors: [],
-            id_formato:'',
+            id_formato: '',
             listaformatos: [],
-            idformatos:'',
+            idformatos: '',
             formClasificador: '',
             codigo: '',
             formupdate: {
@@ -205,6 +215,7 @@ export default {
 
             axios.post(url, {
                     'Clasificador': this.formClasificador,
+                    'idformato':this.id_formato,
                     'codigo': this.codigo
                 })
                 .then(response => {
@@ -215,7 +226,7 @@ export default {
                     this.codigo = ''
                 });
         },
-        abrir(idclasi, texcla, cod) {
+        abrir(idclasi, texcla, cod,format) {
             $('#editclasificador').modal({
                 backdrop: 'static',
                 keyboard: false
@@ -223,12 +234,13 @@ export default {
             this.formupdate.idcla = idclasi
             this.formupdate.textclasificador = texcla
             this.formupdate.codigo = cod
+            this.id_formato=format
         },
         guardarUPclasificador() {
             var url = '/updateclasificador'
             var up = {
                 'idcla': this.formupdate.idcla,
-                'idformato':this.id_formato,
+                'idformato': this.id_formato,
                 'textclasificador': this.formupdate.textclasificador,
                 'codigo': this.formupdate.codigo
             }
