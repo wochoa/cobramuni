@@ -97,12 +97,7 @@
                             <p>Cobranzas</p>
                         </router-link>
                     </li>
-                    <li class="nav-item">
-                        <router-link :to="'/cobranzas/formatos'" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Formatos</p>
-                        </router-link>
-                    </li>
+                   
                     <li class="nav-item">
                         <router-link :to="'/cobranzas/conceptos'" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
@@ -113,6 +108,12 @@
                         <router-link :to="'/cobranzas/clasificador'" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Clasificardores TUPA</p>
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link :to="'/cobranzas/formatos'" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Formatos</p>
                         </router-link>
                     </li>
                     

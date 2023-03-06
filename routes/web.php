@@ -86,7 +86,7 @@ route::post('nuevoformato',[FormatocobranzaController::class, 'nuevoformato'])->
 route::post('updateformato',[FormatocobranzaController::class, 'update'])->name('updateformato');
 
 //concepto
-route::get('conceptocobranzas/{idformato?}',[ConceptocobranzaController::class, 'index'])->name('conceptocobranzas');
+route::get('conceptocobranza/{idformato}',[ConceptocobranzaController::class, 'index'])->name('conceptocobranzas');
 route::get('listadoconcepto',[ConceptocobranzaController::class, 'listadoconcepto'])->name('listadoconcepto');
 route::get('conceptocobranzas/{id}',[ConceptocobranzaController::class, 'busqueda'])->name('busqueda');
 route::post('nuevoconcepto',[ConceptocobranzaController::class, 'nuevoconcepto'])->name('nuevoconcepto');

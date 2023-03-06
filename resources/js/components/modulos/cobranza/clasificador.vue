@@ -70,7 +70,8 @@
                             <table class="table table-bordered table-hover table-sm">
                                 <thead>
                                     <tr>
-                                        <th>N°</th>
+                                        <th>ID</th>
+                                        <th>Formato</th>
                                         <th>Código Clasificador</th>
                                         <th>Clasificador</th>
                                         <th>Estado</th>
@@ -80,6 +81,7 @@
                                 <tbody>
                                     <tr v-for="lis in listaClasificadors">
                                         <td>{{ lis.idclasificador }}</td>
+                                        <td>{{ lis.nomformato }}</td>
                                         <td>{{ lis.codigoclasificador }}</td>
                                         <td>{{ lis.text_clasificador }}</td>
                                         <td v-if="lis.estado_cla==1" class="text-center text-success">

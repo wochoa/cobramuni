@@ -14,7 +14,7 @@ class ClasificadorController extends Controller
      */
     public function index()
     {
-        $datos=Clasificador::orderBy('idclasificador','asc')->get();
+        $datos=Clasificador::join('formatocobranzas','clasificador.idformat','=','formatocobranzas.idformato')->orderBy('idclasificador','asc')->get();
         return response()->json($datos, 200);
     }
 

@@ -72,7 +72,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-7 ">
+                                    <div class="col-md-8">
                                         <div class="fom-group row border-bottom pb-2">
                                             <label for="" class="col-sm-4">Buscar concepto</label>
                                             <div class="col-sm-8">
@@ -89,10 +89,50 @@
                                             </div> -->
                                         </div>
                                         <div class="row border-bottom pb-2">
-                                            <div class="col-sm-8">
+                                            <div class="col-sm-6" v-if="idformato==1">
                                                 <div class="form-group">
                                                     <label for="">Concepto:</label>
                                                     <input type="text" class="form-control form-control-sm" v-model="concepto.text_conceptoc">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-8" v-else>
+                                                <div class="form-group">
+                                                    <label for="">Concepto:</label>
+                                                    <input type="text" class="form-control form-control-sm" v-model="concepto.text_conceptoc">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2" v-if="idformato==1">
+                                                <div class="form-group">
+                                                    <label for="">cant. años:</label>
+                                                    <input type="number" class="form-control form-control-sm" v-model="concepto.num_anios" step="any">
+
+                                                    <div v-if="concepto.num_anios>1">
+                                                        <label for="">Ingrese los montos</label>
+                                                        <div v-if="concepto.num_anios==2">
+                                                            <input type="number" class="form-control form-control-sm" v-model="concepto.monto1" step="any" placeholder="S/.Monto1" @keyup="sumatotal">
+                                                            <input type="number" class="form-control form-control-sm" v-model="concepto.monto2" step="any" placeholder="S/.Monto2" @keyup="sumatotal">
+                                                        </div>
+                                                        <div v-if="concepto.num_anios==3">
+                                                            <input type="number" class="form-control form-control-sm" v-model="concepto.monto1" step="any" placeholder="S/.Monto1" @keyup="sumatotal">
+                                                            <input type="number" class="form-control form-control-sm" v-model="concepto.monto2" step="any" placeholder="S/.Monto2" @keyup="sumatotal">
+                                                            <input type="number" class="form-control form-control-sm" v-model="concepto.monto3" step="any" placeholder="S/.Monto3" @keyup="sumatotal">
+                                                        </div>
+                                                        <div v-if="concepto.num_anios==4">
+                                                            <input type="number" class="form-control form-control-sm" v-model="concepto.monto1" step="any" placeholder="S/.Monto1" @keyup="sumatotal">
+                                                            <input type="number" class="form-control form-control-sm" v-model="concepto.monto2" step="any" placeholder="S/.Monto2" @keyup="sumatotal">
+                                                            <input type="number" class="form-control form-control-sm" v-model="concepto.monto3" step="any" placeholder="S/.Monto3" @keyup="sumatotal">
+                                                            <input type="number" class="form-control form-control-sm" v-model="concepto.monto4" step="any" placeholder="S/.Monto4" @keyup="sumatotal">
+                                                        </div>
+                                                        <div v-if="concepto.num_anios==5">
+                                                            <input type="number" class="form-control form-control-sm" v-model="concepto.monto1" step="any" placeholder="S/.Monto1" @keyup="sumatotal">
+                                                            <input type="number" class="form-control form-control-sm" v-model="concepto.monto2" step="any" placeholder="S/.Monto2" @keyup="sumatotal">
+                                                            <input type="number" class="form-control form-control-sm" v-model="concepto.monto3" step="any" placeholder="S/.Monto3" @keyup="sumatotal">
+                                                            <input type="number" class="form-control form-control-sm" v-model="concepto.monto4" step="any" placeholder="S/.Monto4" @keyup="sumatotal">
+                                                            <input type="number" class="form-control form-control-sm" v-model="concepto.monto5" step="any" placeholder="S/.Monto5" @keyup="sumatotal">
+                                                        </div>
+
+                                                    </div>
+
                                                 </div>
                                             </div>
                                             <div class="col-sm-2">
@@ -242,7 +282,14 @@ export default {
             concepto: {
                 idconceptoc: null,
                 text_conceptoc: null,
-                nomto_conceptoc: null
+                nomto_conceptoc: null,
+                num_anios: 1,
+                sumamontos: 0,
+                monto1: 0,
+                monto2: 0,
+                monto3: 0,
+                monto4: 0,
+                monto5: 0
             },
             Json_concepto: [],
             array_concepto: [],
@@ -279,7 +326,8 @@ export default {
                 });
         },
         alllistaconceptos() {
-            var url = '/conceptocobranzas/'+this.idformato;
+
+            var url = '/conceptocobranza/' + this.idformato;
             axios.get(url)
                 .then(response => {
                     this.listaconceptos = response.data;
@@ -303,8 +351,13 @@ export default {
                 this.Json_concepto.push(Jsonvhtml);
                 this.showtablaconcepto = true;
             }
-            this.idconceptos=null
+            this.idconceptos = null
+            this.limpiaformulario();
 
+        },
+        sumatotal() {
+            const num = parseFloat(this.concepto.monto1) + parseFloat(this.concepto.monto2) + parseFloat(this.concepto.monto3) + parseFloat(this.concepto.monto4) + parseFloat(this.concepto.monto5)
+            this.concepto.nomto_conceptoc = num.toFixed(2);
         },
         sumPrecios(items) {
             return items.reduce((a, b) => {
@@ -316,6 +369,9 @@ export default {
             this.Json_concepto.splice(idder, 1);
         },
         datosconceptoxitem() {
+
+            this.limpiaformulario();
+
             var url = '/conceptocobranzas/' + this.idconceptos
             axios.get(url)
                 .then(response => {
@@ -323,6 +379,18 @@ export default {
                     this.concepto.text_conceptoc = response.data[0].text_concepto;
                     this.concepto.nomto_conceptoc = response.data[0].nomto_concepto;
                 })
+        },
+        limpiaformulario() {
+            this.concepto.idconceptoc = ''
+            this.concepto.text_conceptoc = ''
+            this.concepto.nomto_conceptoc = ''
+            this.concepto.num_anios = 1
+
+            this.concepto.monto1 = 0
+            this.concepto.monto2 = 0
+            this.concepto.monto3 = 0
+            this.concepto.monto4 = 0
+            this.concepto.monto5 = 0
         },
         fechasistema() {
             const hoy = new Date();
@@ -343,8 +411,9 @@ export default {
                 .then(response => {
                     console.log(response.data[0].numeracion)
                     this.codenumeracion = this.anioactual + '-' + this.zfill(response.data[0].numeracion, 6);
-                })
-                this.alllistaconceptos();
+                });
+
+            this.alllistaconceptos();
         },
         zfill(number, width) {
             var numberOutput = Math.abs(number); /* Valor absoluto del número */
@@ -367,18 +436,16 @@ export default {
         },
         consultadoc() {
             if (this.nrodocumento.length <= 8) {
-                
-                if(this.nrodocumento.length==8){
+
+                if (this.nrodocumento.length == 8) {
                     this.consultadni(this.nrodocumento)
-                }
-                else{
+                } else {
                     alert('No corresponde a Nro. DNI')
                 }
             } else {
-                if(this.nrodocumento.length==11){
+                if (this.nrodocumento.length == 11) {
                     this.consultaruc(this.nrodocumento)
-                }
-                else{
+                } else {
                     alert('No corresponde a Nro. RUC')
                 }
             }
