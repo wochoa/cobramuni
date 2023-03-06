@@ -23,7 +23,7 @@
         <div class="container-fluid">
             <div class="row mt-10">
                 <div class="col-lg-6 col-10">
-                    <router-link :to="'/cobranzas/nuevo'" class="btn btn-primary btn-sm"><i class="fa-regular fa-file"></i> Nueva cobranza</router-link>
+                    <router-link :to="'/cobranzas/nuevo'" class="btn btn-info btn-sm"><i class="fa-regular fa-file"></i> Nueva cobranza</router-link>
                 </div>
 
             </div>
@@ -34,6 +34,21 @@
                     <div class="card card-primary card-outline card-revenue-budget">
 
                         <div class="card-body">
+                            <div class="form-group row">
+
+                                <label for="" class="col.sm-2">Código recibo</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control form-control-sm" v-model="codrecibo" @keypress.enter="buscar">
+
+                                </div>
+                                <div class="col-sm-1 border-right">
+                                    <button class="btn btn-primary btn-sm" @click.prevent="buscar"><i class="fa fa-search"></i> Buscar</button>
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="date" class="form-control form-control-sm" v-model="bfecha" @change.prevent="buscar">
+                                </div>
+
+                            </div>
 
                             <div class="row">
 
@@ -121,8 +136,8 @@ export default {
 
     data() {
         return {
-            listacobranza: [],
-            listobjet:{
+            
+            listobjet: {
                 current_page: null,
                 data: [],
                 from: null,
@@ -133,26 +148,27 @@ export default {
                 prev_page_url: null,
                 to: null,
                 total: null
-            }
+            },
+            bfecha:'',
+            codrecibo:''
 
         };
     },
-    components:{
+    components: {
         'Pagination': LaravelVuePagination,
     },
-
 
     mounted() {
         this.cargalistacobra();
     },
 
     methods: {
-        cargalistacobra(Page=1) {
-            var url = '/listacobranza/?page=' + Page;//?page=' + page
+        cargalistacobra(Page = 1) {
+            var url = '/listacobranza/?page=' + Page; //?page=' + page
             axios.get(url)
                 .then(response => {
-                    // this.listacobranza = response.data
-                    this.listobjet=response.data
+                   
+                    this.listobjet = response.data
                 });
         },
         sumPrecios(items) {
@@ -160,6 +176,17 @@ export default {
                 return a + Number(b['montonumero']);
             }, 0);
         },
+        buscar()
+        {
+            var url='/buscarcobranza'
+            axios.get(url,{
+              'codrecibo':this.codrecibo,
+              'fecha':this.bfecha 
+            })
+            .then(response=>{
+                this.listobjet = response.data
+            })
+        }
     },
 };
 </script>

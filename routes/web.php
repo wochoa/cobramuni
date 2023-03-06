@@ -86,7 +86,7 @@ route::post('nuevoformato',[FormatocobranzaController::class, 'nuevoformato'])->
 route::post('updateformato',[FormatocobranzaController::class, 'update'])->name('updateformato');
 
 //concepto
-route::get('conceptocobranzas',[ConceptocobranzaController::class, 'index'])->name('conceptocobranzas');
+route::get('conceptocobranzas/{idformato?}',[ConceptocobranzaController::class, 'index'])->name('conceptocobranzas');
 route::get('conceptocobranzas/{id}',[ConceptocobranzaController::class, 'busqueda'])->name('busqueda');
 route::post('nuevoconcepto',[ConceptocobranzaController::class, 'nuevoconcepto'])->name('nuevoconcepto');
 route::post('updateconcepto',[ConceptocobranzaController::class, 'update'])->name('updateconcepto');
@@ -100,6 +100,7 @@ route::post('updateclasificador-estado',[ClasificadorController::class, 'updatee
 
 // generar cobranza
 route::get('/listacobranza',[CobranzasController::class, 'listacobranza'])->name('listacobranza');
+route::get('/buscarcobranza',[CobranzasController::class, 'buscarcobranza'])->name('buscarcobranza');
 route::post('generarcobranza',[CobranzasController::class, 'generarcobranza'])->name('generarcobranza');
 
 //pide consultas

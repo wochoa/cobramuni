@@ -24,6 +24,33 @@ class CobranzasController extends Controller
         return response()->json($lista, 200);
     }
 
+    public function buscarcobranza(Request $request)
+    {
+        $cod_recibo=$request->codrecibo;
+        $fecha=$request->fecha;
+
+        if($cod_recibo<>'' and $fecha<>'')
+        {
+            $lista=Cobranzas::join('formatocobranzas','cobranzas.idtipoformato','=','formatocobranzas.idformato')->where(['codigorecibo'=>$cod_recibo,'fechaemision'=>$fecha])->paginate(10);
+        }
+        
+            if($cod_recibo<>''and  $fecha==''){
+                $lista=Cobranzas::join('formatocobranzas','cobranzas.idtipoformato','=','formatocobranzas.idformato')->where(['codigorecibo'=>$cod_recibo])->paginate(10);
+            }
+            if($fecha<>'' and $cod_recibo=='')
+            {
+                $lista=Cobranzas::join('formatocobranzas','cobranzas.idtipoformato','=','formatocobranzas.idformato')->where(['fechaemision'=>$fecha])->paginate(10); 
+            }
+        
+            if($cod_recibo=='' and $fecha==''){
+                $lista=Cobranzas::join('formatocobranzas','cobranzas.idtipoformato','=','formatocobranzas.idformato')->paginate(10);  
+            }
+
+        
+        return response()->json($lista, 200);
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *

@@ -39,6 +39,7 @@ class ClasificadorController extends Controller
         $cla=new Clasificador();
         $cla->text_clasificador=strtoupper($request->Clasificador);
         $cla->codigoclasificador=strtoupper($request->codigo);
+        $cla->idformat=$request->idformato;
         $cla->save();
         return $request->all();
     }

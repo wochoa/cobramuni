@@ -256,7 +256,7 @@ export default {
     },
 
     mounted() {
-        this.alllistaconceptos();
+        //this.alllistaconceptos();
         this.allformatos();
         this.fechasistema();
     },
@@ -279,7 +279,7 @@ export default {
                 });
         },
         alllistaconceptos() {
-            var url = '/conceptocobranzas';
+            var url = '/conceptocobranzas/'+this.idformato;
             axios.get(url)
                 .then(response => {
                     this.listaconceptos = response.data;
@@ -344,6 +344,7 @@ export default {
                     console.log(response.data[0].numeracion)
                     this.codenumeracion = this.anioactual + '-' + this.zfill(response.data[0].numeracion, 6);
                 })
+                this.alllistaconceptos();
         },
         zfill(number, width) {
             var numberOutput = Math.abs(number); /* Valor absoluto del número */

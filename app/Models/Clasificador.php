@@ -9,7 +9,7 @@ class Clasificador extends Model
 {
     use HasFactory;
     protected $fillable = [
-		'text_clasificador', 'codigoclasificador', ];
+		'text_clasificador', 'codigoclasificador', 'idformat',];
     
         protected $table = 'clasificador';
     protected $primaryKey = 'idclasificador';

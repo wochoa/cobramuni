@@ -12,10 +12,10 @@ class ConceptocobranzaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($idformato)
     {
         //
-        $datos=Conceptocobranza::join('clasificador','conceptocobranzas.codclasificador','=','clasificador.idclasificador')->orderBy('idconceptocobranza','asc')->get();
+        $datos=Conceptocobranza::join('clasificador','conceptocobranzas.codclasificador','=','clasificador.idclasificador')->where('idformat',$idformato)->orderBy('idconceptocobranza','asc')->get();
         return response()->json($datos, 200);
     }
 

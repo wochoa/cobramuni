@@ -37,6 +37,14 @@
                         </div>
                         <div class="card-body">
                             <form @submit.prevent="guardarClasificador">
+                                <el-select v-model="id_formato" filterable placeholder="Seleccione el Formato" size="small" style="width: 100%;">
+                                    <!-- <select class="form-control form-control-sm" v-model="idconceptos" @change="datosconceptoxitem"> -->
+                                    <el-option v-for="con in listaformatos" :key="con.idformato" :label="con.nomformato" :value="con.idformato" required>
+                                    </el-option>
+
+                                    <!-- <option v-for="con in listaconceptos" :value="con.idconceptocobranza">{{ con.text_concepto }} ({{ con.nomto_concepto }})</option> -->
+                                </el-select>
+
                                 <div class="form-group">
                                     <label for="">Ingresar código</label>
                                     <input type="nomber" name="" id="" class="form-control form-control-sm" v-model="codigo" required autofocus>
@@ -150,6 +158,9 @@ export default {
     data() {
         return {
             listaClasificadors: [],
+            id_formato:'',
+            listaformatos: [],
+            idformatos:'',
             formClasificador: '',
             codigo: '',
             formupdate: {
@@ -162,6 +173,7 @@ export default {
 
     mounted() {
         this.alllistaClasificadors();
+        this.allformatos();
     },
 
     methods: {
@@ -179,6 +191,13 @@ export default {
             axios.get(url)
                 .then(response => {
                     this.listaClasificadors = response.data;
+                });
+        },
+        allformatos() {
+            var url = '/listaformatos';
+            axios.get(url)
+                .then(response => {
+                    this.listaformatos = response.data;
                 });
         },
         guardarClasificador() {
@@ -209,6 +228,7 @@ export default {
             var url = '/updateclasificador'
             var up = {
                 'idcla': this.formupdate.idcla,
+                'idformato':this.id_formato,
                 'textclasificador': this.formupdate.textclasificador,
                 'codigo': this.formupdate.codigo
             }
