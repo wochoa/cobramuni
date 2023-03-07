@@ -33,6 +33,7 @@ import Creardependencia  from './components/modulos/administracion/dependencia/c
 import Editardependencia  from './components/modulos/administracion/dependencia/editar'// editar
 import Veroficinas  from './components/modulos/administracion/dependencia/oficinas'// Veroficinas  
 import Crearoficina  from './components/modulos/administracion/dependencia/crearoficina'// Veroficinas
+import Reportes  from './components/modulos/cobranza/reportes'// reportes
 // usuarios
 import Usuarios  from './components/modulos/administracion/usuarios/index'// documentos por recepcionar
 import Editar  from './components/modulos/administracion/usuarios/editar'// documentos por recepcionar
@@ -93,6 +94,11 @@ export default new Router({
             path:'/cobranzas/clasificador',
             name:'Nuevo clasificador',
             component:clasificador 
+        },
+        {
+            path:'/reportes',
+            name:'Reportes',
+            component:Reportes 
         },
         
         // administracion

@@ -100,20 +100,27 @@
                    
                     <li class="nav-item">
                         <router-link :to="'/cobranzas/conceptos'" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
+                            <i class="fa-solid fa-cubes nav-icon"></i>
                             <p>Conceptos TUPA</p>
                         </router-link>
                     </li>
                     <li class="nav-item">
                         <router-link :to="'/cobranzas/clasificador'" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
+                            <i class="fa-solid fa-ranking-star nav-icon"></i>
                             <p>Clasificardores TUPA</p>
                         </router-link>
                     </li>
                     <li class="nav-item">
                         <router-link :to="'/cobranzas/formatos'" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
+                            <i class="fa-solid fa-layer-group nav-icon"></i>
                             <p>Formatos</p>
+                        </router-link>
+                    </li>
+
+                    <li class="nav-item">
+                        <router-link :to="'/reportes'" class="nav-link">
+                            <i class="fa-solid fa-signal nav-icon"></i>
+                            <p>Reportes</p>
                         </router-link>
                     </li>
                     

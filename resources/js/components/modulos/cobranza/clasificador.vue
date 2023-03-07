@@ -119,12 +119,12 @@
 
                         <div class="form-group">
                             <el-select v-model="id_formato" filterable placeholder="Seleccione el Formato" size="small" style="width: 100%;">
-                                    <!-- <select class="form-control form-control-sm" v-model="idconceptos" @change="datosconceptoxitem"> -->
-                                    <el-option v-for="con in listaformatos" :key="con.idformato" :label="con.nomformato" :value="con.idformato" required>
-                                    </el-option>
+                                <!-- <select class="form-control form-control-sm" v-model="idconceptos" @change="datosconceptoxitem"> -->
+                                <el-option v-for="con in listaformatos" :key="con.idformato" :label="con.nomformato" :value="con.idformato" required>
+                                </el-option>
 
-                                    <!-- <option v-for="con in listaconceptos" :value="con.idconceptocobranza">{{ con.text_concepto }} ({{ con.nomto_concepto }})</option> -->
-                                </el-select>
+                                <!-- <option v-for="con in listaconceptos" :value="con.idconceptocobranza">{{ con.text_concepto }} ({{ con.nomto_concepto }})</option> -->
+                            </el-select>
                         </div>
 
                         <div class="form-group">
@@ -217,7 +217,7 @@ export default {
 
             axios.post(url, {
                     'Clasificador': this.formClasificador,
-                    'idformato':this.id_formato,
+                    'idformato': this.id_formato,
                     'codigo': this.codigo
                 })
                 .then(response => {
@@ -228,7 +228,7 @@ export default {
                     this.codigo = ''
                 });
         },
-        abrir(idclasi, texcla, cod,format) {
+        abrir(idclasi, texcla, cod, format) {
             $('#editclasificador').modal({
                 backdrop: 'static',
                 keyboard: false
@@ -236,7 +236,7 @@ export default {
             this.formupdate.idcla = idclasi
             this.formupdate.textclasificador = texcla
             this.formupdate.codigo = cod
-            this.id_formato=format
+            this.id_formato = format
         },
         guardarUPclasificador() {
             var url = '/updateclasificador'

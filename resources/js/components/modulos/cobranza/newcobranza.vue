@@ -429,6 +429,7 @@ export default {
 
             //alert(this.array_concepto[ this.editarconceptos.index].textconcepto);
             $('#editarconceptoUP').modal("hide")
+            this.limpiaformulario();
         },
         fechasistema() {
             const hoy = new Date();
@@ -451,6 +452,18 @@ export default {
                     this.codenumeracion = this.anioactual + '-' + this.zfill(response.data, 6);
                 })
             //this.alllistaconceptos();
+        },
+        limpiaformulario() {
+            this.concepto.idconceptoc = ''
+            this.concepto.text_conceptoc = ''
+            this.concepto.nomto_conceptoc = ''
+            this.concepto.num_anios = 1
+
+            this.concepto.monto1 = 0
+            this.concepto.monto2 = 0
+            this.concepto.monto3 = 0
+            this.concepto.monto4 = 0
+            this.concepto.monto5 = 0
         },
         zfill(number, width) {
             var numberOutput = Math.abs(number); /* Valor absoluto del número */
