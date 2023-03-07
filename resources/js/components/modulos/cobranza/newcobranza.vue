@@ -38,14 +38,14 @@
                                 <div class="row">
 
                                     <div class="col-md-4 border-right">
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
                                             <label for="">Seleccione formato</label>
                                             <select class="form-control form-control-sm" v-model="idformato" @change="numeracion()" required>
                                                 <option v-for="lis in listaformatos" :value="lis.idformato">{{ lis.nomformato }}</option>
                                             </select>
-                                        </div>
+                                        </div> -->
                                         <div class="form-group row">
-                                            <label for="" class="col-sm-4">RECIBO DE CAJA N°</label>
+                                            <label for="" class="col-sm-4">RECIBO CAJA N°</label>
                                             <div class="col-sm-8">
                                                 <input type="text" placeholder="2022-007454" class="form-control form-control-sm" v-model="codenumeracion" required>
                                             </div>
@@ -74,8 +74,8 @@
 
                                     <div class="col-md-8">
                                         <div class="fom-group row border-bottom pb-2">
-                                            <label for="" class="col-sm-4">Buscar concepto</label>
-                                            <div class="col-sm-8">
+                                            <label for="" class="col-sm-3">Buscar concepto</label>
+                                            <div class="col-sm-7">
                                                 <el-select v-model="idconceptos" filterable placeholder="Seleccione el concepto" @change="datosconceptoxitem" size="small" style="width: 100%;">
                                                     <!-- <select class="form-control form-control-sm" v-model="idconceptos" @change="datosconceptoxitem"> -->
                                                     <el-option v-for="con in listaconceptos" :key="con.idconceptocobranza" v-if="con.estado_concepto==1" :label="con.text_concepto" :value="con.idconceptocobranza">
@@ -84,55 +84,15 @@
                                                     <!-- <option v-for="con in listaconceptos" :value="con.idconceptocobranza">{{ con.text_concepto }} ({{ con.nomto_concepto }})</option> -->
                                                 </el-select>
                                             </div>
-                                            <!-- <div class="col-sm-2">
+                                            <div class="col-sm-2">
                                                 <button class="btn btn-primary btn-sm" @click.prevent="agregarlista"><i class="fa-solid fa-plus"></i> Agregar</button>
-                                            </div> -->
+                                            </div>
                                         </div>
-                                        <div class="row border-bottom pb-2">
-                                            <div class="col-sm-6" v-if="idformato==1">
+                                        <div class="row border-bottom pb-2" style="display: none;">
+                                            <div class="col-sm-8" >
                                                 <div class="form-group">
                                                     <label for="">Concepto:</label>
                                                     <input type="text" class="form-control form-control-sm" v-model="concepto.text_conceptoc">
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-8" v-else>
-                                                <div class="form-group">
-                                                    <label for="">Concepto:</label>
-                                                    <input type="text" class="form-control form-control-sm" v-model="concepto.text_conceptoc">
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-2" v-if="idformato==1">
-                                                <div class="form-group">
-                                                    <label for="">cant. años:</label>
-                                                    <input type="number" class="form-control form-control-sm" v-model="concepto.num_anios" step="any">
-
-                                                    <div v-if="concepto.num_anios>1">
-                                                        <label for="">Ingrese los montos</label>
-                                                        <div v-if="concepto.num_anios==2">
-                                                            <input type="number" class="form-control form-control-sm" v-model="concepto.monto1" step="any" placeholder="S/.Monto1" @keyup="sumatotal">
-                                                            <input type="number" class="form-control form-control-sm" v-model="concepto.monto2" step="any" placeholder="S/.Monto2" @keyup="sumatotal">
-                                                        </div>
-                                                        <div v-if="concepto.num_anios==3">
-                                                            <input type="number" class="form-control form-control-sm" v-model="concepto.monto1" step="any" placeholder="S/.Monto1" @keyup="sumatotal">
-                                                            <input type="number" class="form-control form-control-sm" v-model="concepto.monto2" step="any" placeholder="S/.Monto2" @keyup="sumatotal">
-                                                            <input type="number" class="form-control form-control-sm" v-model="concepto.monto3" step="any" placeholder="S/.Monto3" @keyup="sumatotal">
-                                                        </div>
-                                                        <div v-if="concepto.num_anios==4">
-                                                            <input type="number" class="form-control form-control-sm" v-model="concepto.monto1" step="any" placeholder="S/.Monto1" @keyup="sumatotal">
-                                                            <input type="number" class="form-control form-control-sm" v-model="concepto.monto2" step="any" placeholder="S/.Monto2" @keyup="sumatotal">
-                                                            <input type="number" class="form-control form-control-sm" v-model="concepto.monto3" step="any" placeholder="S/.Monto3" @keyup="sumatotal">
-                                                            <input type="number" class="form-control form-control-sm" v-model="concepto.monto4" step="any" placeholder="S/.Monto4" @keyup="sumatotal">
-                                                        </div>
-                                                        <div v-if="concepto.num_anios==5">
-                                                            <input type="number" class="form-control form-control-sm" v-model="concepto.monto1" step="any" placeholder="S/.Monto1" @keyup="sumatotal">
-                                                            <input type="number" class="form-control form-control-sm" v-model="concepto.monto2" step="any" placeholder="S/.Monto2" @keyup="sumatotal">
-                                                            <input type="number" class="form-control form-control-sm" v-model="concepto.monto3" step="any" placeholder="S/.Monto3" @keyup="sumatotal">
-                                                            <input type="number" class="form-control form-control-sm" v-model="concepto.monto4" step="any" placeholder="S/.Monto4" @keyup="sumatotal">
-                                                            <input type="number" class="form-control form-control-sm" v-model="concepto.monto5" step="any" placeholder="S/.Monto5" @keyup="sumatotal">
-                                                        </div>
-
-                                                    </div>
-
                                                 </div>
                                             </div>
                                             <div class="col-sm-2">
@@ -164,7 +124,9 @@
                                                         <td><small>{{ der.textconcepto }}</small></td>
                                                         <td><small>{{ der.montoconcepto }}</small></td>
 
-                                                        <td><button class="btn btn-default btn-sm" @click.prevent="eliminaconceptolista(index)"><i class="fa-solid fa-trash-can"></i></button></td>
+                                                        <td><button class="btn btn-default btn-sm" @click.prevent="eliminaconceptolista(index)"><i class="fa-solid fa-trash-can"></i></button>
+                                                            <button class="btn btn-default btn-sm" @click.prevent="editarconcepto(index,der.textconcepto,der.montoconcepto,der.idconcepto,der.idformato)"><i class="fa-solid fa-edit"></i></button>
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -229,7 +191,10 @@
                                         <td><small>{{ der.textconcepto }}</small></td>
                                         <td><small>{{ der.montoconcepto }}</small></td>
 
-                                        <td><button class="btn btn-default btn-sm" @click.prevent="eliminaconceptolista(index)"><i class="fa-solid fa-trash-can"></i></button></td>
+                                        <td>
+                                            <button class="btn btn-default btn-sm" @click.prevent="eliminaconceptolista(index)"><i class="fa-solid fa-trash-can"></i></button>
+
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -240,6 +205,69 @@
                         <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
                         <a class="btn btn-outline-primary" :href="'/cobranzas/nuevo'"><i class="fa-regular fa-file fa-2x"></i><br>Nueva cobranza</a>
                         <a class="btn btn-outline-danger" :href="'/imprimecobranza/'+idcobranza" target="_blank"> <i class="fa-regular fa-file-pdf fa-2x"></i><br>Imprimir</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- editar concepto -->
+        <div class="modal fade" id="editarconceptoUP" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">EDITAR ITEM</h5>
+                        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button> -->
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="from-group">
+                            <label for="">Concepto</label>
+                            <textarea v-model="editarconceptos.concepto" cols="30" rows="4" class="form-control form-control-sm"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="">De cuantos años pagará:</label>
+                            <input type="number" class="form-control form-control-sm" v-model="concepto.num_anios" step="any">
+
+                            <div v-if="concepto.num_anios>1">
+                                <label for="">Ingrese los montos</label>
+                                <div v-if="concepto.num_anios==2">
+                                    <input type="number" class="form-control form-control-sm mb-1" v-model="concepto.monto1" step="any" placeholder="S/.Monto1" @keyup="sumatotal">
+                                    <input type="number" class="form-control form-control-sm mb-1" v-model="concepto.monto2" step="any" placeholder="S/.Monto2" @keyup="sumatotal">
+                                </div>
+                                <div v-if="concepto.num_anios==3">
+                                    <input type="number" class="form-control form-control-sm mb-1" v-model="concepto.monto1" step="any" placeholder="S/.Monto1" @keyup="sumatotal">
+                                    <input type="number" class="form-control form-control-sm mb-1" v-model="concepto.monto2" step="any" placeholder="S/.Monto2" @keyup="sumatotal">
+                                    <input type="number" class="form-control form-control-sm mb-1" v-model="concepto.monto3" step="any" placeholder="S/.Monto3" @keyup="sumatotal">
+                                </div>
+                                <div v-if="concepto.num_anios==4">
+                                    <input type="number" class="form-control form-control-sm mb-1" v-model="concepto.monto1" step="any" placeholder="S/.Monto1" @keyup="sumatotal">
+                                    <input type="number" class="form-control form-control-sm mb-1" v-model="concepto.monto2" step="any" placeholder="S/.Monto2" @keyup="sumatotal">
+                                    <input type="number" class="form-control form-control-sm mb-1" v-model="concepto.monto3" step="any" placeholder="S/.Monto3" @keyup="sumatotal">
+                                    <input type="number" class="form-control form-control-sm mb-1" v-model="concepto.monto4" step="any" placeholder="S/.Monto4" @keyup="sumatotal">
+                                </div>
+                                <div v-if="concepto.num_anios==5">
+                                    <input type="number" class="form-control form-control-sm mb-1" v-model="concepto.monto1" step="any" placeholder="S/.Monto1" @keyup="sumatotal">
+                                    <input type="number" class="form-control form-control-sm mb-1" v-model="concepto.monto2" step="any" placeholder="S/.Monto2" @keyup="sumatotal">
+                                    <input type="number" class="form-control form-control-sm mb-1" v-model="concepto.monto3" step="any" placeholder="S/.Monto3" @keyup="sumatotal">
+                                    <input type="number" class="form-control form-control-sm mb-1" v-model="concepto.monto4" step="any" placeholder="S/.Monto4" @keyup="sumatotal">
+                                    <input type="number" class="form-control form-control-sm mb-1" v-model="concepto.monto5" step="any" placeholder="S/.Monto5" @keyup="sumatotal">
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="from-group">
+                            <label for="">Monto</label>
+                            <input type="text" class="form-control" v-model="editarconceptos.monto">
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" @click="actualizaedit"><i class="fa-regular fa-file"></i> Actualizar</button>
+                        <!-- <a class="btn btn-outline-danger" :href="'/imprimecobranza/'+idcobranza" target="_blank"> <i class="fa-regular fa-file-pdf fa-2x"></i><br>Imprimir</a> -->
                     </div>
                 </div>
             </div>
@@ -273,7 +301,7 @@ export default {
     data() {
         return {
             listaconceptos: [],
-            listaformatos: [],
+            // listaformatos: [],
             idformato: null,
             idconceptos: null,
             fechacobranza: null,
@@ -291,6 +319,11 @@ export default {
                 monto4: 0,
                 monto5: 0
             },
+            editarconceptos: {
+                index: null,
+                concepto: null,
+                monto: 0
+            },
             Json_concepto: [],
             array_concepto: [],
             showtablaconcepto: false,
@@ -303,9 +336,10 @@ export default {
     },
 
     mounted() {
-        //this.alllistaconceptos();
-        this.allformatos();
+        this.alllistaconceptos();
+        // this.allformatos();
         this.fechasistema();
+        this.numeracion();
     },
 
     methods: {
@@ -318,16 +352,15 @@ export default {
                 // text: texto_anuncio
             });
         },
-        allformatos() {
-            var url = '/listaformatos';
-            axios.get(url)
-                .then(response => {
-                    this.listaformatos = response.data;
-                });
-        },
+        // allformatos() {
+        //     var url = '/listaformatos';
+        //     axios.get(url)
+        //         .then(response => {
+        //             this.listaformatos = response.data;
+        //         });
+        // },
         alllistaconceptos() {
-
-            var url = '/conceptocobranza/' + this.idformato;
+            var url = '/conceptocobranzas';
             axios.get(url)
                 .then(response => {
                     this.listaconceptos = response.data;
@@ -352,12 +385,11 @@ export default {
                 this.showtablaconcepto = true;
             }
             this.idconceptos = null
-            this.limpiaformulario();
 
         },
         sumatotal() {
             const num = parseFloat(this.concepto.monto1) + parseFloat(this.concepto.monto2) + parseFloat(this.concepto.monto3) + parseFloat(this.concepto.monto4) + parseFloat(this.concepto.monto5)
-            this.concepto.nomto_conceptoc = num.toFixed(2);
+            this.editarconceptos.monto = num.toFixed(2);
         },
         sumPrecios(items) {
             return items.reduce((a, b) => {
@@ -369,9 +401,6 @@ export default {
             this.Json_concepto.splice(idder, 1);
         },
         datosconceptoxitem() {
-
-            this.limpiaformulario();
-
             var url = '/conceptocobranzas/' + this.idconceptos
             axios.get(url)
                 .then(response => {
@@ -380,17 +409,26 @@ export default {
                     this.concepto.nomto_conceptoc = response.data[0].nomto_concepto;
                 })
         },
-        limpiaformulario() {
-            this.concepto.idconceptoc = ''
-            this.concepto.text_conceptoc = ''
-            this.concepto.nomto_conceptoc = ''
-            this.concepto.num_anios = 1
+        editarconcepto(indice, concepto, monto,idconcep,idofrm) {
+            this.editarconceptos.index = indice
+            this.editarconceptos.concepto = concepto
+            this.editarconceptos.monto = monto
+            this.idconceptos=idconcep
+            this.idformato=idofrm
 
-            this.concepto.monto1 = 0
-            this.concepto.monto2 = 0
-            this.concepto.monto3 = 0
-            this.concepto.monto4 = 0
-            this.concepto.monto5 = 0
+            $('#editarconceptoUP').modal({
+                backdrop: 'static',
+                keyboard: false
+            })
+        },
+        actualizaedit(){
+            this.array_concepto[ this.editarconceptos.index].textconcepto=this.editarconceptos.concepto
+            this.array_concepto[ this.editarconceptos.index].montoconcepto=this.editarconceptos.monto
+
+            this.Json_concepto[ this.editarconceptos.index]='{"idconcepto":"' + this.idconceptos + '","idformato":"' + this.idformato + '","textconcepto":"' + this.editarconceptos.concepto+ '","montoconcepto":"' + this.editarconceptos.monto + '"}';//this.editarconceptos.concepto
+
+            //alert(this.array_concepto[ this.editarconceptos.index].textconcepto);
+            $('#editarconceptoUP').modal("hide")
         },
         fechasistema() {
             const hoy = new Date();
@@ -406,14 +444,13 @@ export default {
             //alert(this.formdocumentos.fechatramite)
         },
         numeracion() {
-            var url = '/listaformatos/' + this.idformato
+            var url = '/cobranzasid'
             axios.get(url)
                 .then(response => {
-                    console.log(response.data[0].numeracion)
-                    this.codenumeracion = this.anioactual + '-' + this.zfill(response.data[0].numeracion, 6);
-                });
-
-            this.alllistaconceptos();
+                    console.log(response.data)
+                    this.codenumeracion = this.anioactual + '-' + this.zfill(response.data, 6);
+                })
+            //this.alllistaconceptos();
         },
         zfill(number, width) {
             var numberOutput = Math.abs(number); /* Valor absoluto del número */

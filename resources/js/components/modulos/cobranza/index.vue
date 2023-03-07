@@ -67,8 +67,9 @@
                                     <tbody>
                                         <tr v-for="(item, index) in listobjet.data" :key="item.idcobrazas">
                                             <td>{{ item.idcobrazas}}</td>
-                                            <td v-if="item.idformato==1"><small class="badge badge-success"><i class="far fa-clock"></i> {{ item.nomformato}}</small> <br> {{ item.codigorecibo}}</td>
-                                            <td v-else><small class="badge badge-info"><i class="far fa-clock"></i> {{ item.nomformato}}</small> <br> {{ item.codigorecibo}}</td>
+                                            <td>{{ item.codigorecibo}}</td>
+                                            <!-- <td v-if="item.idformato==1"><small class="badge badge-success"><i class="far fa-clock"></i> {{ item.nomformato}}</small> <br> {{ item.codigorecibo}}</td>
+                                            <td v-else><small class="badge badge-info"><i class="far fa-clock"></i> {{ item.nomformato}}</small> <br> {{ item.codigorecibo}}</td> -->
                                             <td>{{ item.fechaemision}}</td>
                                             <td v-if="item.ruc=='null'">{{ item.dni}}</td>
                                             <td v-else>{{ item.ruc}}</td>

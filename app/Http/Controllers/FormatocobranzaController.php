@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use App\Models\Formatocobranza;
+use App\Models\Cobranzas;
 use Illuminate\Http\Request;
+
 
 class FormatocobranzaController extends Controller
 {
@@ -24,12 +26,14 @@ class FormatocobranzaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function buscar($id)
+    public function buscar()
     {
-        //
-        $datos=Formatocobranza::where('idformato',$id)->get();
-        //return $datos;
-        return response()->json($datos, 200);
+        //cobranzasid
+        $datos=Cobranzas::orderBy('idcobrazas', 'desc')->limit(1)->value('idcobrazas');
+        $sum=$datos+1;
+
+        return $sum;
+        //return response()->json($datos, 200);
     }
 
     /**

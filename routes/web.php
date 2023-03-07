@@ -81,12 +81,12 @@ route::get('tramite/obtenerTotal',[TramitesController::class, 'obtenerTotal'])->
 
 // fromato cobranza
 route::get('listaformatos',[FormatocobranzaController::class, 'index'])->name('listaformatos');//listaformatos
-route::get('listaformatos/{id}',[FormatocobranzaController::class, 'buscar'])->name('buscar');
+route::get('cobranzasid',[FormatocobranzaController::class, 'buscar'])->name('buscar');
 route::post('nuevoformato',[FormatocobranzaController::class, 'nuevoformato'])->name('nuevoformato');
 route::post('updateformato',[FormatocobranzaController::class, 'update'])->name('updateformato');
 
 //concepto
-route::get('conceptocobranza/{idformato}',[ConceptocobranzaController::class, 'index'])->name('conceptocobranzas');
+route::get('conceptocobranzas',[ConceptocobranzaController::class, 'index'])->name('conceptocobranzas');
 route::get('listadoconcepto',[ConceptocobranzaController::class, 'listadoconcepto'])->name('listadoconcepto');
 route::get('conceptocobranzas/{id}',[ConceptocobranzaController::class, 'busqueda'])->name('busqueda');
 route::post('nuevoconcepto',[ConceptocobranzaController::class, 'nuevoconcepto'])->name('nuevoconcepto');

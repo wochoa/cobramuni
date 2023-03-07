@@ -20,34 +20,35 @@ class CobranzasController extends Controller
      */
     public function listacobranza()
     {
-        $lista=Cobranzas::join('formatocobranzas','cobranzas.idtipoformato','=','formatocobranzas.idformato')->paginate(10);
+        //$lista=Cobranzas::join('formatocobranzas','cobranzas.idtipoformato','=','formatocobranzas.idformato')->paginate(10);
+        $lista=Cobranzas::OrderBy('idcobrazas','DESC')->paginate(10);
         return response()->json($lista, 200);
     }
 
     public function buscarcobranza(Request $request)
     {
-        $cod_recibo=$request->codrecibo;
-        $fecha=$request->fecha;
+        // $cod_recibo=$request->codrecibo;
+        // $fecha=$request->fecha;
 
-        if($cod_recibo<>'' and $fecha<>'')
-        {
-            $lista=Cobranzas::join('formatocobranzas','cobranzas.idtipoformato','=','formatocobranzas.idformato')->where(['codigorecibo'=>$cod_recibo,'fechaemision'=>$fecha])->paginate(10);
-        }
+        // if($cod_recibo<>'' and $fecha<>'')
+        // {
+        //     $lista=Cobranzas::join('formatocobranzas','cobranzas.idtipoformato','=','formatocobranzas.idformato')->where(['codigorecibo'=>$cod_recibo,'fechaemision'=>$fecha])->paginate(10);
+        // }
         
-            if($cod_recibo<>''and  $fecha==''){
-                $lista=Cobranzas::join('formatocobranzas','cobranzas.idtipoformato','=','formatocobranzas.idformato')->where(['codigorecibo'=>$cod_recibo])->paginate(10);
-            }
-            if($fecha<>'' and $cod_recibo=='')
-            {
-                $lista=Cobranzas::join('formatocobranzas','cobranzas.idtipoformato','=','formatocobranzas.idformato')->where(['fechaemision'=>$fecha])->paginate(10); 
-            }
+        //     if($cod_recibo<>''and  $fecha==''){
+        //         $lista=Cobranzas::join('formatocobranzas','cobranzas.idtipoformato','=','formatocobranzas.idformato')->where(['codigorecibo'=>$cod_recibo])->paginate(10);
+        //     }
+        //     if($fecha<>'' and $cod_recibo=='')
+        //     {
+        //         $lista=Cobranzas::join('formatocobranzas','cobranzas.idtipoformato','=','formatocobranzas.idformato')->where(['fechaemision'=>$fecha])->paginate(10); 
+        //     }
         
-            if($cod_recibo=='' and $fecha==''){
-                $lista=Cobranzas::join('formatocobranzas','cobranzas.idtipoformato','=','formatocobranzas.idformato')->paginate(10);  
-            }
+        //     if($cod_recibo=='' and $fecha==''){
+        //         $lista=Cobranzas::join('formatocobranzas','cobranzas.idtipoformato','=','formatocobranzas.idformato')->paginate(10);  
+        //     }
 
         
-        return response()->json($lista, 200);
+        // return response()->json($lista, 200);
 
     }
 
@@ -87,7 +88,7 @@ class CobranzasController extends Controller
 
         $tram_cobramza=Cobranzas::create([
             'idusuario'=>$iduser,
-            'idtipoformato'=>$idtipoformato,
+            // 'idtipoformato'=>$idtipoformato,
             'codigorecibo'=>$codigorecibo,
             'fechaemision'=>$fechaemision,
             'ruc'=>$ruc,
@@ -113,9 +114,9 @@ class CobranzasController extends Controller
                 $det->save();
             }
 
-            $numeracion=Formatocobranza::where('idformato',$idtipoformato)->value('numeracion');
-            $numeracion=$numeracion+1;
-            DB::update('update formatocobranzas set numeracion = '.$numeracion.' where idformato = ?', [$idtipoformato]);
+            // $numeracion=Formatocobranza::where('idformato',$idtipoformato)->value('numeracion');
+            // $numeracion=$numeracion+1;
+            // DB::update('update formatocobranzas set numeracion = '.$numeracion.' where idformato = ?', [$idtipoformato]);
         
 
         return $idcobranza;
