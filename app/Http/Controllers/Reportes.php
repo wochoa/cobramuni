@@ -28,9 +28,19 @@ class Reportes extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function reporfecha_des(Request $request)
     {
-        //
+        $fec_i=$request->fechaini;
+        $fec_f=$request->fechafin;
+        $lista=Cobranzas::whereBetween('fechaemision',[$fec_i,$fec_f])->OrderBy('idcobrazas','DESC')->get();
+
+
+        $pdf = \PDF::loadView('reportefecha', compact('lista','fec_i','fec_f'));
+        // $paper_size = array(0,0,280,680);
+        // $pdf->set_paper($paper_size);
+        return $pdf->download('pdfview.pdf');  
+        //return $pdf->stream();
+        //return   $lista;
     }
 
     /**

@@ -68,7 +68,7 @@
                                         <th>DNI/RUC</th>
                                         <th>NOMBRE O RAZON SOCIAL</th>
                                         <th>TOTAL</th>
-                                       
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -82,7 +82,7 @@
                                         <td v-else>{{ item.ruc}}</td>
                                         <td>{{ item.nom_razonsocial}}</td>
                                         <td>{{ item.montonumero}}</td>
-                                        
+
                                     </tr>
                                 </tbody>
                             </table>
@@ -126,8 +126,8 @@ export default {
         return {
             listaClasificadors: [],
             fechaini: '',
-            fechafin:'',
-            verdescarga:false,
+            fechafin: '',
+            verdescarga: false,
 
             listobjet: {
                 current_page: null,
@@ -212,20 +212,35 @@ export default {
                 }
             }
         },
-        buscar(){
-            var url='/reporte/reporfecha'
-            axios.post(url,{
-                'fechaini':this.fechaini,
-                'fechafin':this.fechafin
-            })
-            .then(response=>{
-                console.log(response.data)
-                this.listobjet = response.data
-                this.verdescarga=true
-            })
+        buscar() {
+            var url = '/reporte/reporfecha'
+            axios.post(url, {
+                    'fechaini': this.fechaini,
+                    'fechafin': this.fechafin
+                })
+                .then(response => {
+                    //console.log(response.data)
+                    this.listobjet = response.data
+                    this.verdescarga = true
+                })
         },
-        descargar(){
-
+        descargar() {
+            var url = '/reporte/reporfecha_des'
+            axios.get(url, {
+                    params: {
+                        'fechaini': this.fechaini,
+                        'fechafin': this.fechafin,
+                    },
+                    responseType: 'blob'
+                })
+                .then((response) => {
+                    const url = window.URL.createObjectURL(new Blob([response.data]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', 'Reportexfechas.pdf');
+                    document.body.appendChild(link);
+                    link.click();
+                });
         }
 
     },

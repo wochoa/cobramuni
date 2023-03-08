@@ -114,6 +114,7 @@ route::get('imprimecobranza/{id}',[CobranzasController::class, 'imprimecobranza'
 //reportes
 
 route::post('/reporte/reporfecha',[Reportes::class, 'reporfecha'])->name('reporfecha');
+route::get('/reporte/reporfecha_des',[Reportes::class, 'reporfecha_des'])->name('reporfecha_des');
 
 //dashboar
 route::get('/resumen',[Resumen::class, 'index'])->name('resumen');
