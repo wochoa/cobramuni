@@ -94,6 +94,11 @@ export default new Router({
             component:nuevocobranza 
         },
         {
+            path:'/cobranzas/clasificador',
+            name:'Clasificador',
+            component:clasificador 
+        },
+        {
             path:'/reportes/formatos',
             name:'Reportes por formatos',
             component:ReportesFormato 

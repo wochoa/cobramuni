@@ -47,7 +47,7 @@
                                         <div class="form-group row">
                                             <label for="" class="col-sm-4">RECIBO CAJA N°</label>
                                             <div class="col-sm-8">
-                                                <input type="text" placeholder="2022-007454" class="form-control form-control-sm" v-model="codenumeracion" required>
+                                                <input type="text" placeholder="2022-007454" class="form-control form-control-sm" v-model="codenumeracion" disabled>
                                             </div>
                                         </div>
                                         <div class="form-group row">
