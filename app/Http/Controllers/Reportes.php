@@ -32,8 +32,9 @@ class Reportes extends Controller
     {
         $fec_i=$request->fechaini;
         $fec_f=$request->fechafin;
-        $sumas=$request->suma;
+        //$sumas=$request->suma;
         $lista=Cobranzas::whereBetween('fechaemision',[$fec_i,$fec_f])->OrderBy('idcobrazas','DESC')->get();
+        $sumas=Cobranzas::whereBetween('fechaemision',[$fec_i,$fec_f])->OrderBy('idcobrazas','DESC')->sum('montonumero');
 
 
         $pdf = \PDF::loadView('reportefecha', compact('lista','fec_i','fec_f','sumas'));
