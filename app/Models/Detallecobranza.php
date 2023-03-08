@@ -10,7 +10,7 @@ class Detallecobranza extends Model
     use HasFactory;
 
     protected $fillable = [
-		'codcobranza', 'concepto', 'monto', ];
+		'codcobranza', 'concepto', 'monto','idconcep', ];
 
     protected $table = 'detallecobranzas';
     protected $primaryKey = 'iddetalle_cobra';

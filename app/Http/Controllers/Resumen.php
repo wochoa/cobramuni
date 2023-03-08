@@ -17,7 +17,7 @@ class Resumen extends Controller
     
     public function index()
     {
-        $cobranzas=Detallecobranza::sum('monto');
+        $cobranzas=Cobranzas::sum('montonumero');
         $totalcobranzaformato8=Cobranzas::where('idtipoformato',1)->sum('montonumero');
         $totalcobranzaformato9=Cobranzas::where('idtipoformato',2)->sum('montonumero');
         $conceptos=Conceptocobranza::count();

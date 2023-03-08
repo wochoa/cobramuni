@@ -108,7 +108,8 @@ class CobranzasController extends Controller
 
                 $det = new Detallecobranza();
 
-                $det->codcobranza = $idcobranza;
+                $det->codcobranza = $idcobranza;//
+                $det->idconcep=$objeto->idconcepto;
                 $det->concepto = $objeto->textconcepto;
                 $det->monto = $objeto->montoconcepto;
                 $det->save();

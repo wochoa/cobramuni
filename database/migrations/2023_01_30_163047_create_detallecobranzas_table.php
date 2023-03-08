@@ -16,6 +16,7 @@ class CreateDetallecobranzasTable extends Migration
         Schema::create('detallecobranzas', function (Blueprint $table) {
             $table->increments('iddetalle_cobra');
             $table->integer('codcobranza');
+            $table->integer('idconcep')->nullable();//
             $table->text('concepto');// expdedicion de partidas: expediecion de partidas
             $table->decimal('monto');//10.60
             $table->timestamps();
