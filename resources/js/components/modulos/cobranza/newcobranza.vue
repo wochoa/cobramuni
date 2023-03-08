@@ -260,7 +260,7 @@
                         </div>
                         <div class="from-group">
                             <label for="">Monto</label>
-                            <input type="text" class="form-control" v-model="editarconceptos.monto">
+                            <input type="number" class="form-control" v-model="editarconceptos.monto">
                         </div>
 
                     </div>

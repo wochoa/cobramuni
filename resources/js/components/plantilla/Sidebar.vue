@@ -128,7 +128,7 @@
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <router-link :to="'/reportes/formatos'" class="nav-link">
-                                    <i class="fa-solid fa-signal nav-icon"></i>
+                                    <i class="fa-brands fa-wpforms nav-icon"></i>
                                     <p>Por fomatos</p>
                                 </router-link>
                             </li>

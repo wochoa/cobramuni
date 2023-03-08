@@ -5,8 +5,10 @@
 
     <!-- /.login-logo -->
     <div class="card card-outline card-primary">
-        <div class="card-header text-center">
-          <a href="../../index2.html" class="h1">Iniciar Sesión</a>{{-- <b>SGD</b> --}}
+     
+        <div class="card-header text-center bg-white">
+          {{-- <a href="../../index2.html" class="h1">Iniciar Sesión</a> --}}
+          <img src="{{asset('/img/logo3.png')}}" alt="" class="img-fluid">
         </div>
         <div class="card-body">
           <p class="login-box-msg">Ingresa tus credencias para iniciar session</p>

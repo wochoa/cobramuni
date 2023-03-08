@@ -17,7 +17,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="dist/css/adminlte.min.css"> --}}
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body class="hold-transition login-page">
+<body class="hold-transition login-page" style="background: #138ba3 !important;">
 <div class="login-box" id="app">
 
 
