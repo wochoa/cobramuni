@@ -21,9 +21,9 @@ class Resumen extends Controller
 
         $totalcobranzaformato8=Detallecobranza::join('conceptocobranzas','detallecobranzas.idconcep','=','conceptocobranzas.idconceptocobranza')->join('clasificador','conceptocobranzas.codclasificador','=','clasificador.idclasificador')->where('idformat',1)->sum('monto');
         $totalcobranzaformato9=Detallecobranza::join('conceptocobranzas','detallecobranzas.idconcep','=','conceptocobranzas.idconceptocobranza')->join('clasificador','conceptocobranzas.codclasificador','=','clasificador.idclasificador')->where('idformat',2)->sum('monto');
-        $conceptos=Conceptocobranza::count();
+        $conceptos=Conceptocobranza::where('estado_concepto',1)->count();
         $formatos=Formatocobranza::count();
-        $clasificador=Clasificador::count();
+        $clasificador=Clasificador::where('estado_cla',1)->count();
         $usuarios=User::count();
 
      return response()->json([
