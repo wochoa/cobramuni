@@ -50,14 +50,14 @@
                 <td>{{$det->fechaemision}}</td>
                 <td>{{$det->codigorecibo}}</td>
                 <td>{{$det->nom_razonsocial}}</td>
-                <td align="rigth">{{$det->montonumero}}</td>
+                <td align="right">{{$det->montonumero}}</td>
             </tr>
             @endforeach
         </tbody>
         <thead>
             <tr>
-                <td colspan="4" align="right"><b>Total npm(S/.): </b></td>
-                <td align="rigth"><b>{{$sumas}}</b></td>
+                <td colspan="4" align="right"><b>Total (S/.): </b></td>
+                <td align="right"><b>{{$sumas}}</b></td>
             </tr>
         </thead>
     </table>
