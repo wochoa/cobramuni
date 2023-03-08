@@ -225,11 +225,13 @@ export default {
                 })
         },
         descargar() {
-            var url = '/reporte/reporfecha_des'
+            var url = '/reporte/reporfecha_des';
+            var totalsuma=this.sumPrecios(this.listobjet.data).toFixed(2);
             axios.get(url, {
                     params: {
                         'fechaini': this.fechaini,
                         'fechafin': this.fechafin,
+                        'suma':totalsuma
                     },
                     responseType: 'blob'
                 })

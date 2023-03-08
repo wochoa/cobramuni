@@ -16,6 +16,7 @@
 </head>
 <body>
    <div align="center">
+    
     <table align="center">
         <tr>
             <td valign="center"><img src="{{asset('/img/logo.jpg')}}"   alt="" height="90"></td>
@@ -25,6 +26,7 @@
         </tr>
     </table>
     <br>
+    <p style="text-align: right">Impreso el : {{date('d/m/Y H:i:s')}}</p>
     <table width="100%" border="1" cellspacing="0" cellpadding="0">
         <thead>
             <tr>
@@ -48,10 +50,16 @@
                 <td>{{$det->fechaemision}}</td>
                 <td>{{$det->codigorecibo}}</td>
                 <td>{{$det->nom_razonsocial}}</td>
-                <td>{{$det->montonumero}}</td>
+                <td align="rigth">{{$det->montonumero}}</td>
             </tr>
             @endforeach
         </tbody>
+        <thead>
+            <tr>
+                <td colspan="4" align="right"><b>Total*(S/.): </b></td>
+                <td align="rigth"><b>{{$sumas}}</b></td>
+            </tr>
+        </thead>
     </table>
    </div>
 </body>
