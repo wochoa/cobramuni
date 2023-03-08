@@ -97,7 +97,7 @@
                             <p>Cobranzas</p>
                         </router-link>
                     </li>
-                   
+
                     <li class="nav-item">
                         <router-link :to="'/cobranzas/conceptos'" class="nav-link">
                             <i class="fa-solid fa-cubes nav-icon"></i>
@@ -118,13 +118,41 @@
                     </li>
 
                     <li class="nav-item">
-                        <router-link :to="'/reportes'" class="nav-link">
+                        <a href="#" class="nav-link">
                             <i class="fa-solid fa-signal nav-icon"></i>
-                            <p>Reportes</p>
-                        </router-link>
+                            <p>
+                                Reportes
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <router-link :to="'/reportes/formatos'" class="nav-link">
+                                    <i class="fa-solid fa-signal nav-icon"></i>
+                                    <p>Por fomatos</p>
+                                </router-link>
+                            </li>
+                            <li class="nav-item">
+                                <router-link :to="'/reportes/clasificador'" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Por clasificador</p>
+                                </router-link>
+                            </li>
+                            <li class="nav-item">
+                                <router-link :to="'/reportes/dniruc'" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Por RUC/DNI</p>
+                                </router-link>
+                            </li>
+                            <li class="nav-item">
+                                <router-link :to="'/reportes/fechas'" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Por fechas</p>
+                                </router-link>
+                            </li>
+                            
+                        </ul>
                     </li>
-                    
-                    
 
                     <li class="nav-item">
                         <a href="#" class="nav-link">

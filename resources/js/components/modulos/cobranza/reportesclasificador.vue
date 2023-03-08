@@ -74,7 +74,7 @@
                                         <th>DNI/RUC</th>
                                         <th>NOMBRE O RAZON SOCIAL</th>
                                         <th>TOTAL</th>
-                                        <th></th>
+                                        
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -88,10 +88,7 @@
                                         <td v-else>{{ item.ruc}}</td>
                                         <td>{{ item.nom_razonsocial}}</td>
                                         <td>{{ item.montonumero}}</td>
-                                        <td>
-                                            <router-link :to="'/'" class="btn btn-outline-primary btn-sm"> <i class="fa fa-edit"></i> </router-link>
-                                            <router-link class="btn btn-outline-danger btn-sm" :to="'/imprimecobranza/'+item.idcobrazas" target="_blank"> <i class="fa fa-print"></i> </router-link>
-                                        </td>
+                                        
                                     </tr>
                                 </tbody>
                             </table>
@@ -103,37 +100,7 @@
             </div>
         </div>
 
-        <!-- Modal -->
-        <div class="modal fade" id="editformato" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Editar formato</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form @submit.prevent="guardarUPformato">
-                        <div class="modal-body">
 
-                            <div class="form-group">
-                                <label for="">Ingresar formato</label>
-                                <input type="text" class="form-control form-control-sm text-uppercase" v-model="formupdate.nombre" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="">Ingresar numeración</label>
-                                <input type="text" class="form-control form-control-sm" v-model="formupdate.numera" required>
-                            </div>
-
-                        </div>
-                        <div class="modal-footer">
-
-                            <button type="submit" class="btn btn-sm btn-primary">Actualizar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
 
     </div>
 </div>
@@ -178,17 +145,9 @@ export default {
                 total: null
             },
 
-            listaformatos: [],
-            formato: '',
-            numeracion: '',
-            formupdate: {
-                idform: '',
-                nombre: '',
-                numera: ''
-            }
         };
     },
-    
+
     components: {
         'Pagination': LaravelVuePagination,
     },
@@ -196,7 +155,7 @@ export default {
     mounted() {
         this.alllistaClasificadors();
         this.fechasistema();
-        this.allformatos();
+        // this.allformatos();
         this.cargalistacobra()
     },
 
@@ -227,38 +186,10 @@ export default {
         },
         fechasistema() {
             const hoy = new Date();
-            // const year = hoy.getFullYear();
-            // const mes = hoy.getMonth();
-            // const dia = hoy.getDate();
-
-            // var mesdo = mes < 10 ? "0" + mes : mes;
-            // var diado = dia < 10 ? "0" + dia : dia;
-            //this.anioactual = hoy.getFullYear();
-
             this.fechacobranza = hoy.toISOString().substring(0, 10); // year + '-' + mesdo + '-' + diado;
             //alert(this.formdocumentos.fechatramite)
         },
 
-        guardafromato() {
-            var url = '/nuevoformato'
-            axios.post(url, {
-                    'formato': this.formato,
-                    'numeracion': this.numeracion
-                })
-                .then(response => {
-                    // console.log(response.data);
-                    this.toast('Fue agregado el nuevo formato', 'success');
-                    this.allformatos();
-                })
-        },
-
-        allformatos() {
-            var url = '/listaformatos';
-            axios.get(url)
-                .then(response => {
-                    this.listaformatos = response.data;
-                });
-        },
         zfill(number, width) {
             var numberOutput = Math.abs(number); /* Valor absoluto del número */
             var length = number.toString().length; /* Largo del número */
@@ -278,28 +209,8 @@ export default {
                 }
             }
         },
-        abrir(idfor, nom, num) {
-            $('#editformato').modal({
-                backdrop: 'static',
-                keyboard: false
-            });
-            this.formupdate.idform = idfor
-            this.formupdate.nombre = nom
-            this.formupdate.numera = num
-        },
-        guardarUPformato() {
-            var url = '/updateformato'
-            var up = {
-                'idfor': this.formupdate.idform,
-                'textformato': this.formupdate.nombre,
-                'numero': this.formupdate.numera
-            }
-            axios.post(url, up)
-                .then(response => {
-                    this.toast('Fue Actualizado el formato', 'info');
-                    this.allformatos();
-                })
-        }
+
+
 
     },
 };

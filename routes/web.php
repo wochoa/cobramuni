@@ -13,8 +13,9 @@ use App\Http\Controllers\FormatocobranzaController;
 use App\Http\Controllers\ConceptocobranzaController;
 use App\Http\Controllers\CobranzasController;
 use App\Http\Controllers\Resumen;
+use App\Http\Controllers\Reportes;
 use App\Http\Controllers\ClasificadorController;
-use App\Http\Controllers\HomeController;//ClasificadorController
+use App\Http\Controllers\HomeController;//Reportes
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -110,6 +111,11 @@ route::get('ruc/{rruc}',[CobranzasController::class, 'ruc'])->name('ruc');
 // impresion cobranza
 route::get('imprimecobranza/{id}',[CobranzasController::class, 'imprimecobranza'])->name('imprimecobranza');
 
+//reportes
+
+route::post('/reporte/reporfecha',[Reportes::class, 'reporfecha'])->name('reporfecha');
+
+//dashboar
 route::get('/resumen',[Resumen::class, 'index'])->name('resumen');
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
