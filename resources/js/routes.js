@@ -34,7 +34,7 @@ import Editardependencia  from './components/modulos/administracion/dependencia/
 import Veroficinas  from './components/modulos/administracion/dependencia/oficinas'// Veroficinas  
 import Crearoficina  from './components/modulos/administracion/dependencia/crearoficina'// Veroficinas
 import ReportesFormato  from './components/modulos/cobranza/reportesformato'// 
-import ReportesClasificador  from './components/modulos/cobranza/ReportesClasificador'//
+import ReportesClasificador  from './components/modulos/cobranza/reportesclasificador'//
 import Reportesrucdni  from './components/modulos/cobranza/reportesrucdni'//
 import ReportesFechas  from './components/modulos/cobranza/reportesfechas'//
 // usuarios

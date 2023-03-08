@@ -56,7 +56,7 @@
         </tbody>
         <thead>
             <tr>
-                <td colspan="4" align="right"><b>Total*(S/.): </b></td>
+                <td colspan="4" align="right"><b>Total npm(S/.): </b></td>
                 <td align="rigth"><b>{{$sumas}}</b></td>
             </tr>
         </thead>
