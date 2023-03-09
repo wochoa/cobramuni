@@ -67,7 +67,7 @@
                                         <th>FECHA DE EMISION</th>
                                         <th>DNI/RUC</th>
                                         <th>NOMBRE O RAZON SOCIAL</th>
-                                        <th>TOTAL</th>
+                                        <th>IMPORTE</th>
 
                                     </tr>
                                 </thead>
@@ -81,16 +81,19 @@
                                         <td v-if="item.ruc=='null'">{{ item.dni}}</td>
                                         <td v-else>{{ item.ruc}}</td>
                                         <td>{{ item.nom_razonsocial}}</td>
-                                        <td>{{ item.montonumero}}</td>
+                                        <td align="right">{{ item.montonumero}}</td>
 
                                     </tr>
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="5" align="right"><b>MONTO (S/.):</b></td>
+                                        <td nowrap align="right"><b>{{ sumPrecios(listobjet.data).toFixed(2) }}</b></td>
+                                    </tr>
+                                </tfoot>
                             </table>
                             <pagination :data="listobjet" :limit="3" @pagination-change-page="cargalistacobra" />
-                            <div class="row border-top mt-2 pt-3">
-                                <div class="col-sm-2"><b>MONTO TOTAL(S/.):</b></div>
-                                <div class="col-sm-2">{{ sumPrecios(listobjet.data).toFixed(2) }}</div>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>

@@ -95,7 +95,9 @@ class Reportes extends Controller
         $idformat=$request->formato;
 
         $lista=DB::table('vista_cobranzagral')->join('cobranzas','vista_cobranzagral.codcobranza','=','cobranzas.idcobrazas')->where(['idformat'=>$idformat,'fechaemision'=>$ifecha])->OrderBy('idcobrazas','DESC')->paginate(10);
-        return response()->json($lista, 200);
+
+        $sumas=DB::table('vista_cobranzagral')->join('cobranzas','vista_cobranzagral.codcobranza','=','cobranzas.idcobrazas')->where(['idformat'=>$idformat,'fechaemision'=>$ifecha])->OrderBy('idcobrazas','DESC')->sum('monto');
+        return response()->json(['lista'=>$lista,'sumatotal'=>$sumas], 200);
 
         //return $datos;
     }//
@@ -107,7 +109,7 @@ class Reportes extends Controller
         $nombreformato=Formatocobranza::where('idformato',$idformat)->value('nomformato');
 
          $lista=DB::table('vista_cobranzagral')->join('cobranzas','vista_cobranzagral.codcobranza','=','cobranzas.idcobrazas')->where(['idformat'=>$idformat,'fechaemision'=>$ifecha])->OrderBy('idcobrazas','DESC')->get();
-        $sumas=DB::table('vista_cobranzagral')->join('cobranzas','vista_cobranzagral.codcobranza','=','cobranzas.idcobrazas')->where(['idformat'=>$idformat,'fechaemision'=>$ifecha])->OrderBy('idcobrazas','DESC')->sum('monto');
+         $sumas=DB::table('vista_cobranzagral')->join('cobranzas','vista_cobranzagral.codcobranza','=','cobranzas.idcobrazas')->where(['idformat'=>$idformat,'fechaemision'=>$ifecha])->OrderBy('idcobrazas','DESC')->sum('monto');
 
 
         $pdf = \PDF::loadView('reporteformato', compact('lista','ifecha','nombreformato','sumas'));

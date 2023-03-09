@@ -28,7 +28,9 @@ class CobranzasController extends Controller
     public function listacobranzavista()
     {
         $lista=DB::table('vista_cobranzagral')->join('cobranzas','vista_cobranzagral.codcobranza','=','cobranzas.idcobrazas')->OrderBy('idcobrazas','DESC')->paginate(10);
-        return response()->json($lista, 200); 
+        $suma=DB::table('vista_cobranzagral')->join('cobranzas','vista_cobranzagral.codcobranza','=','cobranzas.idcobrazas')->OrderBy('idcobrazas','DESC')->sum('monto');
+
+        return response()->json(['lista'=>$lista,'sumatotal'=>$suma], 200);
     }
 
     public function buscarcobranza(Request $request)

@@ -73,7 +73,7 @@
                                         <th>FECHA DE EMISION</th>
                                         <th>DNI/RUC</th>
                                         <th>NOMBRE O RAZON SOCIAL</th>
-                                        <th>TOTAL</th>
+                                        <th>IMPORTE</th>
 
                                     </tr>
                                 </thead>
@@ -81,21 +81,25 @@
                                     <tr v-for="(item, index) in listobjet.data" :key="item.iddetalle_cobra">
                                         <td>{{ item.iddetalle_cobra}}</td>
                                         <td>{{ item.codigorecibo}}</td>
-                                        <!-- <td v-if="item.idformato==1"><small class="badge badge-success"><i class="far fa-clock"></i> {{ item.nomformato}}</small> <br> {{ item.codigorecibo}}</td>
-                                            <td v-else><small class="badge badge-info"><i class="far fa-clock"></i> {{ item.nomformato}}</small> <br> {{ item.codigorecibo}}</td> -->
                                         <td>{{ item.fechaemision}}</td>
                                         <td v-if="item.ruc=='null'">{{ item.dni}}</td>
                                         <td v-else>{{ item.ruc}}</td>
                                         <td>{{ item.nom_razonsocial}}</td>
-                                        <td>{{ item.monto}}</td>
+                                        <td align="right">{{ item.monto}}</td>
 
                                     </tr>
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="5" align="right"><b>MONTO (S/.):</b></td>
+                                        <td nowrap align="right"><b>{{ sumPrecios(listobjet.data).toFixed(2) }}</b></td>
+                                    </tr>
+                                </tfoot>
                             </table>
                             <pagination :data="listobjet" :limit="3" @pagination-change-page="cargalistacobra" />
-                            <div class="row border-top mt-2 pt-3">
+                            <div class="row border-top pt-2">
                                 <div class="col-sm-2"><b>MONTO TOTAL(S/.):</b></div>
-                                <div class="col-sm-2">{{ sumPrecios(listobjet.data).toFixed(2) }}</div>
+                                <div class="col-sm-2">{{ sumatotal }}</div>
                             </div>
                         </div>
                     </div>
@@ -134,6 +138,7 @@ export default {
             listaformatos: [],
             idformato: '',
             verdescarga: false,
+            sumatotal: 0,
 
             listobjet: {
                 current_page: null,
@@ -177,7 +182,8 @@ export default {
             axios.get(url)
                 .then(response => {
 
-                    this.listobjet = response.data
+                    this.listobjet = response.data.lista
+                    this.sumatotal = response.data.sumatotal
                 });
         },
         allformatos() {
@@ -225,7 +231,8 @@ export default {
                 })
                 .then(response => {
                     //console.log(response.data)
-                    this.listobjet = response.data
+                    this.listobjet = response.data.lista
+                    this.sumatotal = response.data.sumatotal
                     this.verdescarga = true
                 })
         },
