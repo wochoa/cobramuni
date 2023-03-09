@@ -116,6 +116,13 @@ route::get('imprimecobranza/{id}',[CobranzasController::class, 'imprimecobranza'
 route::post('/reporte/reporfecha',[Reportes::class, 'reporfecha'])->name('reporfecha');
 route::get('/reporte/reporfecha_des',[Reportes::class, 'reporfecha_des'])->name('reporfecha_des');
 
+route::post('/reporte/repordniruc',[Reportes::class, 'repordniruc'])->name('repordniruc');//
+route::get('/reporte/repordniruc_des',[Reportes::class, 'repordniruc_des'])->name('repordniruc_des');//
+
+route::get('/listacobranzavista',[CobranzasController::class, 'listacobranzavista'])->name('listacobranzavista');
+route::post('/reporte/reporformato',[Reportes::class, 'reporformato'])->name('reporformato');//
+route::get('/reporte/reporformato_des',[Reportes::class, 'reporformato_des'])->name('reporformato_des');
+
 //dashboar
 route::get('/resumen',[Resumen::class, 'index'])->name('resumen');
 

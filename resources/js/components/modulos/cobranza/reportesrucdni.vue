@@ -38,7 +38,10 @@
                             </div>
 
                             <div class="col-sm-3">
-                                <button class="btn btn-info btn-sm mt-4">Buscar</button>
+                                <button class="btn btn-info btn-sm mt-4" @click.prevent="buscar">Buscar</button>
+                            </div>
+                            <div class="col-sm-3" v-show="verdescarga">
+                                <button class="btn btn-danger btn-sm mt-4" @click.prevent="descargar"><i class="fa-solid fa-file-pdf"></i> Descargar reporte</button>
                             </div>
                         </div>
                     </div>
@@ -61,7 +64,7 @@
                                         <th>DNI/RUC</th>
                                         <th>NOMBRE O RAZON SOCIAL</th>
                                         <th>TOTAL</th>
-                                        
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -75,7 +78,7 @@
                                         <td v-else>{{ item.ruc}}</td>
                                         <td>{{ item.nom_razonsocial}}</td>
                                         <td>{{ item.montonumero}}</td>
-                                        
+
                                     </tr>
                                 </tbody>
                             </table>
@@ -119,6 +122,7 @@ export default {
         return {
             listaClasificadors: [],
             dniruc: '',
+            verdescarga: false,
 
             listobjet: {
                 current_page: null,
@@ -170,18 +174,7 @@ export default {
                 return a + Number(b['montonumero']);
             }, 0);
         },
-        // alllistaClasificadors() {
-        //     var url = '/clasificador';
-        //     axios.get(url)
-        //         .then(response => {
-        //             this.listaClasificadors = response.data;
-        //         });
-        // },
-        // fechasistema() {
-        //     const hoy = new Date();
-        //     this.fechacobranza = hoy.toISOString().substring(0, 10); // year + '-' + mesdo + '-' + diado;
-        //     //alert(this.formdocumentos.fechatramite)
-        // },
+
 
         zfill(number, width) {
             var numberOutput = Math.abs(number); /* Valor absoluto del número */
@@ -202,6 +195,37 @@ export default {
                 }
             }
         },
+
+        buscar() {
+            var url = '/reporte/repordniruc'
+            axios.post(url, {
+                    'dniruc': this.dniruc,
+                })
+                .then(response => {
+                    //console.log(response.data)
+                    this.listobjet = response.data
+                    this.verdescarga = true
+                })
+        },
+        descargar() {
+            var url = '/reporte/repordniruc_des';
+            var totalsuma = this.sumPrecios(this.listobjet.data).toFixed(2);
+            axios.get(url, {
+                    params: {
+                        'dniruc': this.dniruc,
+                        'suma': totalsuma
+                    },
+                    responseType: 'blob'
+                })
+                .then((response) => {
+                    const url = window.URL.createObjectURL(new Blob([response.data]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', 'Reportexdniruc.pdf');
+                    document.body.appendChild(link);
+                    link.click();
+                });
+        }
 
     },
 };

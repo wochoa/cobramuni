@@ -32,26 +32,26 @@
                 <div class="card-body">
                     <div class="form-group">
                         <div class="row">
-                            <div class="col-sm-3">
-                                <label for="">Recibo</label>
-                                <input type="text" class="form-control form-control-sm" v-model="codigoRecibo">
-                            </div>
+
                             <div class="col-sm-3">
                                 <label for="">FECHA</label>
                                 <input type="date" class="form-control form-control-sm" v-model="fechacobranza">
                             </div>
                             <div class="col-sm-3">
-                                <label for="">Clasificador</label>
-                                <el-select v-model="idclasificador" filterable placeholder="Seleccione el clasificador" size="small" style="width: 100%;">
+                                <label for="">Formato</label>
+                                <el-select v-model="idformato" filterable placeholder="Seleccione el clasificador" size="small" style="width: 100%;">
                                     <!-- <select class="form-control form-control-sm" v-model="idconceptos" @change="datosconceptoxitem"> -->
-                                    <el-option v-for="con in listaClasificadors" :key="con.idclasificador" :label="con.codigoclasificador+' - '+con.text_clasificador" :value="con.idclasificador" required>
+                                    <el-option v-for="con in listaformatos" :key="con.idformato" :label="con.nomformato" :value="con.idformato">
                                     </el-option>
 
                                     <!-- <option v-for="con in listaconceptos" :value="con.idconceptocobranza">{{ con.text_concepto }} ({{ con.nomto_concepto }})</option> -->
                                 </el-select>
                             </div>
                             <div class="col-sm-3">
-                                <button class="btn btn-info btn-sm mt-4">Buscar</button>
+                                <button class="btn btn-info btn-sm mt-4" @click.prevent="buscar">Buscar</button>
+                            </div>
+                            <div class="col-sm-3" v-show="verdescarga">
+                                <button class="btn btn-danger btn-sm mt-4" @click.prevent="descargar"><i class="fa-solid fa-file-pdf"></i> Descargar reporte</button>
                             </div>
                         </div>
                     </div>
@@ -74,12 +74,12 @@
                                         <th>DNI/RUC</th>
                                         <th>NOMBRE O RAZON SOCIAL</th>
                                         <th>TOTAL</th>
-                                        
+
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="(item, index) in listobjet.data" :key="item.idcobrazas">
-                                        <td>{{ item.idcobrazas}}</td>
+                                    <tr v-for="(item, index) in listobjet.data" :key="item.iddetalle_cobra">
+                                        <td>{{ item.iddetalle_cobra}}</td>
                                         <td>{{ item.codigorecibo}}</td>
                                         <!-- <td v-if="item.idformato==1"><small class="badge badge-success"><i class="far fa-clock"></i> {{ item.nomformato}}</small> <br> {{ item.codigorecibo}}</td>
                                             <td v-else><small class="badge badge-info"><i class="far fa-clock"></i> {{ item.nomformato}}</small> <br> {{ item.codigorecibo}}</td> -->
@@ -88,19 +88,21 @@
                                         <td v-else>{{ item.ruc}}</td>
                                         <td>{{ item.nom_razonsocial}}</td>
                                         <td>{{ item.montonumero}}</td>
-                                        
+
                                     </tr>
                                 </tbody>
                             </table>
                             <pagination :data="listobjet" :limit="3" @pagination-change-page="cargalistacobra" />
+                            <div class="row border-top mt-2 pt-3">
+                                <div class="col-sm-2"><b>MONTO TOTAL(S/.):</b></div>
+                                <div class="col-sm-2">{{ sumPrecios(listobjet.data).toFixed(2) }}</div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
             </div>
         </div>
-
-
 
     </div>
 </div>
@@ -127,10 +129,11 @@ export default {
 
     data() {
         return {
-            listaClasificadors: [],
-            idclasificador: '',
+
             fechacobranza: '',
-            codigoRecibo: '',
+            listaformatos: [],
+            idformato: '',
+            verdescarga: false,
 
             listobjet: {
                 current_page: null,
@@ -153,9 +156,9 @@ export default {
     },
 
     mounted() {
-        this.alllistaClasificadors();
+        // this.alllistaClasificadors();
         this.fechasistema();
-        // this.allformatos();
+        this.allformatos();
         this.cargalistacobra()
     },
 
@@ -170,18 +173,18 @@ export default {
             });
         },
         cargalistacobra(Page = 1) {
-            var url = '/listacobranza/?page=' + Page; //?page=' + page
+            var url = '/listacobranzavista/?page=' + Page; //?page=' + page
             axios.get(url)
                 .then(response => {
 
                     this.listobjet = response.data
                 });
         },
-        alllistaClasificadors() {
-            var url = '/clasificador';
+        allformatos() {
+            var url = '/listaformatos';
             axios.get(url)
                 .then(response => {
-                    this.listaClasificadors = response.data;
+                    this.listaformatos = response.data;
                 });
         },
         fechasistema() {
@@ -209,8 +212,43 @@ export default {
                 }
             }
         },
-
-
+        sumPrecios(items) {
+            return items.reduce((a, b) => {
+                return a + Number(b['montonumero']);
+            }, 0);
+        },
+        buscar() {
+            var url = '/reporte/reporformato'
+            axios.post(url, {
+                    'fecha': this.fechacobranza,
+                    'formato': this.idformato,
+                })
+                .then(response => {
+                    //console.log(response.data)
+                    this.listobjet = response.data
+                    this.verdescarga = true
+                })
+        },
+        descargar() {
+            var url = '/reporte/reporformato_des';
+            var totalsuma = this.sumPrecios(this.listobjet.data).toFixed(2);
+            axios.get(url, {
+                    params: {
+                        'fecha': this.fechacobranza,
+                        'formato': this.idformato,
+                        'suma': totalsuma
+                    },
+                    responseType: 'blob'
+                })
+                .then((response) => {
+                    const url = window.URL.createObjectURL(new Blob([response.data]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', 'Reporteformato.pdf');
+                    document.body.appendChild(link);
+                    link.click();
+                });
+        }
 
     },
 };

@@ -163,7 +163,7 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <router-link :to="'/Administracion/entidaexterna'" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Entidades externas</p>
@@ -192,7 +192,7 @@
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Documento correlativo</p>
                                 </router-link>
-                            </li>
+                            </li> -->
                             <li class="nav-item">
                                 <router-link :to="'/Administracion/usuarios'" class="nav-link">
                                     <i class="fa-regular fa-circle-user nav-icon"></i>
