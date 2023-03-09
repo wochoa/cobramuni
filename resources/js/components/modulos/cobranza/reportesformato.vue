@@ -87,7 +87,7 @@
                                         <td v-if="item.ruc=='null'">{{ item.dni}}</td>
                                         <td v-else>{{ item.ruc}}</td>
                                         <td>{{ item.nom_razonsocial}}</td>
-                                        <td>{{ item.montonumero}}</td>
+                                        <td>{{ item.monto}}</td>
 
                                     </tr>
                                 </tbody>
@@ -214,7 +214,7 @@ export default {
         },
         sumPrecios(items) {
             return items.reduce((a, b) => {
-                return a + Number(b['montonumero']);
+                return a + Number(b['monto']);
             }, 0);
         },
         buscar() {
