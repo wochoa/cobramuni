@@ -21,7 +21,8 @@ import Inicio  from './components/dashboard/index.vue';
 // import Archivados  from './components/modulos/tramites/Archivados'// documentos por recepcionar
 
 // cobranzas
-import cobranzas  from './components/modulos/cobranza/index'
+import cobranzas  from './components/modulos/cobranza/index'//
+import editcobranzas  from './components/modulos/cobranza/editarcobranza'
 import formatos  from './components/modulos/cobranza/formatos'
 import conceptos  from './components/modulos/cobranza/conceptos'
 import nuevocobranza  from './components/modulos/cobranza/newcobranza'
@@ -77,6 +78,11 @@ export default new Router({
             path:'/cobranzas/index',
             name:'Area de cobranzas',
             component:cobranzas 
+        },
+        {
+            path:'/cobranzas/index/:id/edit',
+            name:'Editar cobranzas',
+            component:editcobranzas 
         },
         {
             path:'/cobranzas/formatos',

@@ -59,6 +59,13 @@ class CobranzasController extends Controller
         // return response()->json($lista, 200);
 
     }
+    public function buscarcobranzaid($id)
+    {
+        $cobra=Cobranzas::where('idcobrazas',$id)->get();
+        $detalle=Detallecobranza::where('codcobranza',$id)->get();
+        $datos=['dat_cobra'=>$cobra,'det_cobra'=>$detalle];
+        return response()->json($datos, 200);
+    }
 
     /**
      * Show the form for creating a new resource.

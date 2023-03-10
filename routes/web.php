@@ -102,7 +102,9 @@ route::post('updateclasificador-estado',[ClasificadorController::class, 'updatee
 
 // generar cobranza
 route::get('/listacobranza',[CobranzasController::class, 'listacobranza'])->name('listacobranza');
-route::get('/buscarcobranza',[CobranzasController::class, 'buscarcobranza'])->name('buscarcobranza');
+route::get('/buscarcobranza',[CobranzasController::class, 'buscarcobranza'])->name('buscarcobranza');// buscar cobranza por recibo
+route::get('/buscarcobranzaid/{id}',[CobranzasController::class, 'buscarcobranzaid'])->name('buscarcobranzaid');// buscar cobranza por id
+
 route::post('generarcobranza',[CobranzasController::class, 'generarcobranza'])->name('generarcobranza');
 
 //pide consultas

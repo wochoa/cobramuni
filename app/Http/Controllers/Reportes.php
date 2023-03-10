@@ -109,6 +109,7 @@ class Reportes extends Controller
         $nombreformato=Formatocobranza::where('idformato',$idformat)->value('nomformato');
 
          $lista=DB::table('vista_cobranzagral')->join('cobranzas','vista_cobranzagral.codcobranza','=','cobranzas.idcobrazas')->where(['idformat'=>$idformat,'fechaemision'=>$ifecha])->OrderBy('idcobrazas','DESC')->get();
+         
          $sumas=DB::table('vista_cobranzagral')->join('cobranzas','vista_cobranzagral.codcobranza','=','cobranzas.idcobrazas')->where(['idformat'=>$idformat,'fechaemision'=>$ifecha])->OrderBy('idcobrazas','DESC')->sum('monto');
 
 

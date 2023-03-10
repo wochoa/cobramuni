@@ -76,18 +76,24 @@
                                             <td>{{ item.nom_razonsocial}}</td>
                                             <td>{{ item.montonumero}}</td>
                                             <td>
-                                                <router-link :to="'/'" class="btn btn-outline-primary btn-sm"> <i class="fa fa-edit"></i> </router-link>
+                                                <router-link :to="{name:'Editar cobranzas', params:{id: item.idcobrazas} }" class="btn btn-outline-primary btn-sm"> <i class="fa fa-edit"></i> </router-link>
                                                 <router-link class="btn btn-outline-danger btn-sm" :to="'/imprimecobranza/'+item.idcobrazas" target="_blank"> <i class="fa fa-print"></i> </router-link>
                                             </td>
                                         </tr>
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="5" align="right"><b>MONTO (S/.):</b></td>
+                                            <td nowrap align="right"><b>{{ sumPrecios(listobjet.data).toFixed(2) }}</b></td>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                                 <pagination :data="listobjet" :limit="3" @pagination-change-page="cargalistacobra" />
                             </div>
-                            <div class="row border-top pt-2">
+                            <!-- <div class="row border-top pt-2">
                                 <div class="col-sm-2"><b>MONTO TOTAL(S/.):</b></div>
                                 <div class="col-sm-2">{{ sumPrecios(listobjet.data).toFixed(2) }}</div>
-                            </div>
+                            </div> -->
 
                         </div>
 
@@ -137,7 +143,7 @@ export default {
 
     data() {
         return {
-            
+
             listobjet: {
                 current_page: null,
                 data: [],
@@ -150,8 +156,8 @@ export default {
                 to: null,
                 total: null
             },
-            bfecha:'',
-            codrecibo:''
+            bfecha: '',
+            codrecibo: ''
 
         };
     },
@@ -168,7 +174,7 @@ export default {
             var url = '/listacobranza/?page=' + Page; //?page=' + page
             axios.get(url)
                 .then(response => {
-                   
+
                     this.listobjet = response.data
                 });
         },
@@ -177,16 +183,15 @@ export default {
                 return a + Number(b['montonumero']);
             }, 0);
         },
-        buscar()
-        {
-            var url='/buscarcobranza'
-            axios.get(url,{
-              'codrecibo':this.codrecibo,
-              'fecha':this.bfecha 
-            })
-            .then(response=>{
-                this.listobjet = response.data
-            })
+        buscar() {
+            var url = '/buscarcobranza'
+            axios.get(url, {
+                    'codrecibo': this.codrecibo,
+                    'fecha': this.bfecha
+                })
+                .then(response => {
+                    this.listobjet = response.data
+                })
         }
     },
 };
