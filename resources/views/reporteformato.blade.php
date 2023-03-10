@@ -52,7 +52,7 @@
                 <td>{{$det->codigoclasificador}}</td>
                 <td>{{$det->codigorecibo}}</td>
                 <td>{{$det->nom_razonsocial}}</td>
-                <td align="right">{{$det->montonumero}}</td>
+                <td align="right">{{$det->monto}}</td>
             </tr>
             @endforeach
         </tbody>
