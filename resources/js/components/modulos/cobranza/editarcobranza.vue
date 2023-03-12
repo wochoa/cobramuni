@@ -149,7 +149,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" @click="guardaractualizado"><i class="fa-regular fa-file"></i> Actualizar</button>
+                        <button type="button" class="btn btn-primary" @click.prevent="guardaractualizado"><i class="fa-regular fa-file"></i> Actualizar</button>
                         <!-- <a class="btn btn-outline-danger" :href="'/imprimecobranza/'+idcobranza" target="_blank"> <i class="fa-regular fa-file-pdf fa-2x"></i><br>Imprimir</a> -->
                     </div>
                 </div>
@@ -293,10 +293,16 @@ export default {
                 })
                 .then(response => {
                     console.log(response.data);
-                    this.toast('Fue generado la cobranza exitosamente', 'success');
-                    $('#detalle').modal("hide");
+                    this.cerrarmodal();
+                    
                    
                 })
+        },
+        cerrarmodal()
+        {
+            location.reload();
+            this.toast('Fue generado la cobranza exitosamente', 'success');
+            //$('#detalle').modal("hide");
         }
 
     },
