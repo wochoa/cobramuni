@@ -32,7 +32,7 @@
                         <div class="info-box-content">
                             <span class="info-box-text">TOTAL DE COBRANZAS</span>
                             <span class="info-box-number">
-                                <small>S/. </small>{{ resumen.totalcobranzas }}
+                                <small>S/. </small>{{ formatomoneda(resumen.totalcobranzas) }}
                                 <!-- <small>%</small> -->
                             </span>
                         </div>
@@ -108,8 +108,8 @@
                             <h5>Cobranzas formato 8</h5>
                             <radial-progress-bar :diameter="180" :completed-steps="resumen.totalformato8s" :total-steps="resumen.totalcobranzas == 0 ? 1 : resumen.totalcobranzas" startColor="#20c997" stopColor="#20c997" innerStrokeColor="#d3d3d3" stroke-linecap="round">
 
-                                <p><strong>Total S/. </strong> <br>{{ resumen.totalcobranzas }}</p>
-                                <p><strong>Formato 8 S/. </strong><br>{{ resumen.totalformato8s }}</p>
+                                <p><strong>Total S/. </strong> <br>{{ formatomoneda(resumen.totalcobranzas) }}</p>
+                                <p><strong>Formato 8 S/. </strong><br>{{ formatomoneda(resumen.totalformato8s) }}</p>
                                 
                                 <!-- <strong>Pendientes: </strong>{{ getInicio.usuarioProceso - getInicio.usuarioDerivadosProceso }} -->
                                 
@@ -123,8 +123,8 @@
                         <!-- <router-link :to="'/'" class="text-decoration-none"> -->
                             <h5>Cobranzas formato 9</h5>
                             <radial-progress-bar :diameter="180" :completed-steps="resumen.totalformato9s" :total-steps="resumen.totalcobranzas == 0 ? 1 : resumen.totalcobranzas" startColor="#6f42c1" stopColor="#6f42c1" innerStrokeColor="#d3d3d3">
-                                <p><strong>Total S/. </strong> <br>{{ resumen.totalcobranzas }}</p>
-                                <p><strong>Formato 9 S/. </strong><br>{{ resumen.totalformato9s }}</p>
+                                <p><strong>Total S/. </strong> <br>{{ formatomoneda(resumen.totalcobranzas) }}</p>
+                                <p><strong>Formato 9 S/. </strong><br>{{ formatomoneda(resumen.totalformato9s) }}</p>
                             </radial-progress-bar>
                         <!-- </router-link> -->
 
@@ -233,13 +233,13 @@ export default {
             .then(response=>{
                 var datos=response.data.datos;
                 console.log(response.data.totalcobranza)
-                this.resumen.totalcobranzas=this.formatomoneda(parseFloat(response.data.totalcobranza));
+                this.resumen.totalcobranzas=parseFloat(response.data.totalcobranza);
                 this.resumen.totalconcepto=response.data.totalconceptos;
                 this.resumen.totalformatos=response.data.totalformato;
                 this.resumen.totalclasificadores=response.data.totalclasificador;
                 this.resumen.totalusuarios=response.data.totalusuarios;
-                this.resumen.totalformato8s=this.formatomoneda(parseFloat(response.data.totalformato8));
-                this.resumen.totalformato9s=this.formatomoneda(parseFloat(response.data.totalformato9));
+                this.resumen.totalformato8s=parseFloat(response.data.totalformato8);
+                this.resumen.totalformato9s=parseFloat(response.data.totalformato9);
             });
         },
         formatomoneda(num)
