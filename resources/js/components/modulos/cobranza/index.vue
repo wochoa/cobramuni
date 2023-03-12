@@ -41,12 +41,10 @@
                                     <input type="text" class="form-control form-control-sm" v-model="codrecibo" @keypress.enter="buscar">
 
                                 </div>
-                                <div class="col-sm-1 border-right">
+                                <div class="col-sm-2 ">
                                     <button class="btn btn-primary btn-sm" @click.prevent="buscar"><i class="fa fa-search"></i> Buscar</button>
                                 </div>
-                                <div class="col-sm-2">
-                                    <input type="date" class="form-control form-control-sm" v-model="bfecha" @change.prevent="buscar">
-                                </div>
+                                
 
                             </div>
 
@@ -156,7 +154,6 @@ export default {
                 to: null,
                 total: null
             },
-            bfecha: '',
             codrecibo: ''
 
         };
@@ -184,14 +181,29 @@ export default {
             }, 0);
         },
         buscar() {
+            //this.limpiaformulario()
             var url = '/buscarcobranza'
-            axios.get(url, {
+            axios.post(url, {
                     'codrecibo': this.codrecibo,
-                    'fecha': this.bfecha
                 })
                 .then(response => {
                     this.listobjet = response.data
                 })
+        },
+        limpiaformulario()
+        {
+             listobjet={
+                current_page: null,
+                data: [],
+                from: null,
+                last_page: null,
+                next_page_url: null,
+                path: null,
+                per_page: null,
+                prev_page_url: null,
+                to: null,
+                total: null
+            }  
         }
     },
 };

@@ -9,6 +9,7 @@ use App\Http\Controllers\Administrador\UserController;
 use App\Http\Controllers\Tipodocumento\TipodocumentoController; 
 
 // cobranzas
+use App\Http\Controllers\DetallecobranzaController;
 use App\Http\Controllers\FormatocobranzaController;
 use App\Http\Controllers\ConceptocobranzaController;
 use App\Http\Controllers\CobranzasController;
@@ -78,7 +79,7 @@ route::get('tramite/porRecibir',[TramitesController::class, 'porRecibir'])->name
 route::get('tramite/archivados',[TramitesController::class, 'archivados'])->name('archivados');
 route::get('tramite/obtenerTotal',[TramitesController::class, 'obtenerTotal'])->name('obtenerTotal');
 
-
+// *************************** SISTEMA DE COBRANZAS *********************************************
 
 // fromato cobranza
 route::get('listaformatos',[FormatocobranzaController::class, 'index'])->name('listaformatos');//listaformatos
@@ -102,7 +103,7 @@ route::post('updateclasificador-estado',[ClasificadorController::class, 'updatee
 
 // generar cobranza
 route::get('/listacobranza',[CobranzasController::class, 'listacobranza'])->name('listacobranza');
-route::get('/buscarcobranza',[CobranzasController::class, 'buscarcobranza'])->name('buscarcobranza');// buscar cobranza por recibo
+route::post('/buscarcobranza',[CobranzasController::class, 'buscarcobranza'])->name('buscarcobranza');// buscar cobranza por recibo
 route::get('/buscarcobranzaid/{id}',[CobranzasController::class, 'buscarcobranzaid'])->name('buscarcobranzaid');// buscar cobranza por id
 
 route::post('generarcobranza',[CobranzasController::class, 'generarcobranza'])->name('generarcobranza');
@@ -112,6 +113,9 @@ route::get('reniec/{dni}',[CobranzasController::class, 'reniec'])->name('reniec'
 route::get('ruc/{rruc}',[CobranzasController::class, 'ruc'])->name('ruc');
 // impresion cobranza
 route::get('imprimecobranza/{id}',[CobranzasController::class, 'imprimecobranza'])->name('imprimecobranza');
+
+// editar detalle concepto
+route::post('/update-detalleconcepto',[DetallecobranzaController::class,'updatedetalleconcepto'])->name('updatedetalleconcepto');
 
 //reportes
 

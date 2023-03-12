@@ -33,9 +33,18 @@ class DetallecobranzaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function updatedetalleconcepto(Request $request)
     {
-        //
+
+        $iddetalle=$request->iddetalle;
+        $idconcepto=$request->idconcepto;
+
+        $det = Detallecobranza::find($iddetalle);
+        $det->idconcep=$idconcepto;
+
+        $det->save();
+
+        return $det;
     }
 
     /**

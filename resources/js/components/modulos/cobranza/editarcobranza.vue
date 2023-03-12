@@ -130,16 +130,13 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <el-select v-model="form_up.idconcep" filterable placeholder="Seleccione el concepto"  size="small" style="width: 100%;">
+                            <label for="">Elejir concepto</label>
+                            <el-select v-model="form_up.idconcep" filterable placeholder="Seleccione el concepto" size="small" style="width: 100%;">
                                 <!-- <select class="form-control form-control-sm" v-model="idconceptos" @change="datosconceptoxitem"> -->
                                 <el-option v-for="con in listaconceptos" :key="con.idconceptocobranza" v-if="con.estado_concepto==1" :label="con.text_concepto" :value="con.idconceptocobranza">
                                 </el-option>
-
-                                <!-- <option v-for="con in listaconceptos" :value="con.idconceptocobranza">{{ con.text_concepto }} ({{ con.nomto_concepto }})</option> -->
                             </el-select>
-                            <!-- <select v-model="form_up.idconcep">
-                                <option v-for="con in listaconceptos" :key="con.idconceptocobranza" :value="con.idconceptocobranza" class="form-control form-control-sm">{{ con.text_concepto }}</option>
-                            </select> -->
+
                         </div>
                         <div class="form-group">
                             <label for="">Concepto</label>
@@ -152,7 +149,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <!-- <button type="button" class="btn btn-primary" @click="actualizaedit"><i class="fa-regular fa-file"></i> Actualizar</button> -->
+                        <button type="button" class="btn btn-primary" @click="guardaractualizado"><i class="fa-regular fa-file"></i> Actualizar</button>
                         <!-- <a class="btn btn-outline-danger" :href="'/imprimecobranza/'+idcobranza" target="_blank"> <i class="fa-regular fa-file-pdf fa-2x"></i><br>Imprimir</a> -->
                     </div>
                 </div>
@@ -166,6 +163,21 @@
 <script>
 import axios from 'axios';
 import LaravelVuePagination from 'laravel-vue-pagination'
+
+import Swal from 'sweetalert2';
+// window.$ = window.jQuery = require('jquery')
+
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    onOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        //toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+});
 
 export default {
     name: 'Cobranzas',
@@ -205,6 +217,15 @@ export default {
     },
 
     methods: {
+        toast(texto_anuncio, icono) {
+
+            Toast.fire({
+                // title:texto_titulo,
+                title: '<small><strong>' + texto_anuncio + '</strong></small>',
+                icon: icono,
+                // text: texto_anuncio
+            });
+        },
         buscarcobranza() {
             var url = '/buscarcobranzaid/' + this.idcobra;
             axios.get(url)
@@ -259,11 +280,24 @@ export default {
             this.form_up.iddetalle = iddetalle
             this.form_up.idconcep = idconcepto
 
-            this.datoconceptoid();
+            //this.datoconceptoid();
         },
-        datoconceptoid(idconcepto) {
-            var url = ''
-        },
+        // datoconceptoid(idconcepto) {
+        //     var url = ''
+        // },
+        guardaractualizado() {
+            var url = '/update-detalleconcepto'
+            axios.post(url, {
+                    'iddetalle': this.form_up.iddetalle,
+                    'idconcepto': this.form_up.idconcep
+                })
+                .then(response => {
+                    console.log(response.data);
+                    this.toast('Fue generado la cobranza exitosamente', 'success');
+                    $('#detalle').modal("hide");
+                   
+                })
+        }
 
     },
 };
