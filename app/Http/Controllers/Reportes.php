@@ -95,9 +95,13 @@ class Reportes extends Controller
         $idformat=$request->formato;
 
         $lista=DB::table('vista_cobranzagral')->join('cobranzas','vista_cobranzagral.codcobranza','=','cobranzas.idcobrazas')->where(['idformat'=>$idformat,'fechaemision'=>$ifecha])->OrderBy('idcobrazas','DESC')->paginate(10);
-
+        $anulacion=DB::table('vista_cobranzagral')->join('cobranzas','vista_cobranzagral.codcobranza','=','cobranzas.idcobrazas')->where(['idformat'=>$idformat,'fechaemision'=>$ifecha])->where('anular',0)->sum('monto');
+        if(empty($anulacion))
+        {
+            $anulacion="0.00"; 
+        }
         $sumas=DB::table('vista_cobranzagral')->join('cobranzas','vista_cobranzagral.codcobranza','=','cobranzas.idcobrazas')->where(['idformat'=>$idformat,'fechaemision'=>$ifecha])->OrderBy('idcobrazas','DESC')->sum('monto');
-        return response()->json(['lista'=>$lista,'sumatotal'=>$sumas], 200);
+        return response()->json(['lista'=>$lista,'sumatotal'=>$sumas,'sumaanulacion'=>$anulacion], 200);
 
         //return $datos;
     }//
@@ -109,11 +113,17 @@ class Reportes extends Controller
         $nombreformato=Formatocobranza::where('idformato',$idformat)->value('nomformato');
 
          $lista=DB::table('vista_cobranzagral')->join('cobranzas','vista_cobranzagral.codcobranza','=','cobranzas.idcobrazas')->where(['idformat'=>$idformat,'fechaemision'=>$ifecha])->OrderBy('idcobrazas','DESC')->get();
+
+         $anulacion=DB::table('vista_cobranzagral')->join('cobranzas','vista_cobranzagral.codcobranza','=','cobranzas.idcobrazas')->where(['idformat'=>$idformat,'fechaemision'=>$ifecha])->where('anular',0)->sum('monto');
+        if(empty($anulacion))
+        {
+            $anulacion="0.00"; 
+        }
          
          $sumas=DB::table('vista_cobranzagral')->join('cobranzas','vista_cobranzagral.codcobranza','=','cobranzas.idcobrazas')->where(['idformat'=>$idformat,'fechaemision'=>$ifecha])->OrderBy('idcobrazas','DESC')->sum('monto');
 
 
-        $pdf = \PDF::loadView('reporteformato', compact('lista','ifecha','nombreformato','sumas'));
+        $pdf = \PDF::loadView('reporteformato', compact('lista','ifecha','nombreformato','sumas','anulacion'));
         // $paper_size = array(0,0,280,680);
         // $pdf->set_paper($paper_size);
         return $pdf->download('pdfview.pdf');  

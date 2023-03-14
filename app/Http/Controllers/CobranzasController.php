@@ -28,9 +28,14 @@ class CobranzasController extends Controller
     public function listacobranzavista()
     {
         $lista=DB::table('vista_cobranzagral')->join('cobranzas','vista_cobranzagral.codcobranza','=','cobranzas.idcobrazas')->OrderBy('idcobrazas','DESC')->paginate(10);
+        $anulacion=DB::table('vista_cobranzagral')->join('cobranzas','vista_cobranzagral.codcobranza','=','cobranzas.idcobrazas')->where('anular',0)->sum('monto');
+        if(empty($anulacion))
+        {
+            $anulacion="0.00";
+        }
         $suma=DB::table('vista_cobranzagral')->join('cobranzas','vista_cobranzagral.codcobranza','=','cobranzas.idcobrazas')->OrderBy('idcobrazas','DESC')->sum('monto');
 
-        return response()->json(['lista'=>$lista,'sumatotal'=>$suma], 200);
+        return response()->json(['lista'=>$lista,'sumatotal'=>$suma,'sumaanulacion'=>$anulacion], 200);
     }
 
     public function buscarcobranza(Request $request)
@@ -63,9 +68,17 @@ class CobranzasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function anular(Request $request)
     {
-        //
+        $idcobra=$request->idcobranza;
+        $anulacion=$request->codanul;
+
+        $det = Cobranzas::find($idcobra);
+        $det->anular=$anulacion;
+
+        $det->save();
+
+        return $det;
     }
 
     /**

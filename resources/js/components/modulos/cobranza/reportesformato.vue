@@ -29,15 +29,15 @@
                 </div> -->
 
             <div class="card">
-                <div class="card-body">
-                    <div class="form-group">
+                <div class="card-body pb-0 pt-1">
+                    
                         <div class="row">
 
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                                 <label for="">FECHA</label>
                                 <input type="date" class="form-control form-control-sm" v-model="fechacobranza">
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                                 <label for="">Formato</label>
                                 <el-select v-model="idformato" filterable placeholder="Seleccione el clasificador" size="small" style="width: 100%;">
                                     <!-- <select class="form-control form-control-sm" v-model="idconceptos" @change="datosconceptoxitem"> -->
@@ -47,14 +47,32 @@
                                     <!-- <option v-for="con in listaconceptos" :value="con.idconceptocobranza">{{ con.text_concepto }} ({{ con.nomto_concepto }})</option> -->
                                 </el-select>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                                 <button class="btn btn-info btn-sm mt-4" @click.prevent="buscar">Buscar</button>
                             </div>
-                            <div class="col-sm-3" v-show="verdescarga">
+                            <div class="col-sm-2" v-show="verdescarga">
                                 <button class="btn btn-danger btn-sm mt-4" @click.prevent="descargar"><i class="fa-solid fa-file-pdf"></i> Descargar reporte</button>
                             </div>
+                            <div class="col-sm-4">
+                                <table class="table table-bordered table-sm" style="font-size: 10px;">
+                                        <tbody>
+                                            <tr>
+                                                <td> <b>MONTO COBRANZA(S/.):</b> </td>
+                                                <td style="font-size: 12px;">{{ sumatotal }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td> <b>MONTOS ANULADOS(S/.):</b> </td>
+                                                <td style="font-size: 12px;">{{ sumaanulacion }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td> <b>TOTAL(S/.):</b> </td>
+                                                <td style="font-size: 12px;">{{ (sumatotal-sumaanulacion).toFixed(2) }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
                         </div>
-                    </div>
+                    
                 </div>
             </div>
             <div class="row mt-2">
@@ -85,7 +103,9 @@
                                         <td v-if="item.ruc=='null'">{{ item.dni}}</td>
                                         <td v-else>{{ item.ruc}}</td>
                                         <td>{{ item.nom_razonsocial}}</td>
-                                        <td align="right">{{ item.monto}}</td>
+                                        <!-- <td align="right">{{ item.monto}}</td> -->
+                                        <td v-if="item.anular==0" align="right"><del>{{ item.monto}}</del></td>
+                                        <td v-else align="right">{{ item.monto}}</td>
 
                                     </tr>
                                 </tbody>
@@ -97,10 +117,7 @@
                                 </tfoot>
                             </table>
                             <pagination :data="listobjet" :limit="3" @pagination-change-page="cargalistacobra" />
-                            <div class="row border-top pt-2">
-                                <div class="col-sm-2"><b>MONTO TOTAL(S/.):</b></div>
-                                <div class="col-sm-2">{{ sumatotal }}</div>
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -139,6 +156,7 @@ export default {
             idformato: '',
             verdescarga: false,
             sumatotal: 0,
+            sumaanulacion: 0,
 
             listobjet: {
                 current_page: null,
@@ -184,6 +202,7 @@ export default {
 
                     this.listobjet = response.data.lista
                     this.sumatotal = response.data.sumatotal
+                    this.sumaanulacion = response.data.sumaanulacion
                 });
         },
         allformatos() {
@@ -233,6 +252,7 @@ export default {
                     //console.log(response.data)
                     this.listobjet = response.data.lista
                     this.sumatotal = response.data.sumatotal
+                    this.sumaanulacion = response.data.sumaanulacion
                     this.verdescarga = true
                 })
         },

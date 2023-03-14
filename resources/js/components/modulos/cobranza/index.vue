@@ -44,7 +44,6 @@
                                 <div class="col-sm-2 ">
                                     <button class="btn btn-primary btn-sm" @click.prevent="buscar"><i class="fa fa-search"></i> Buscar</button>
                                 </div>
-                                
 
                             </div>
 
@@ -59,6 +58,7 @@
                                             <th>DNI/RUC</th>
                                             <th>NOMBRE O RAZON SOCIAL</th>
                                             <th>TOTAL</th>
+                                            <th>ANULAR</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -72,7 +72,14 @@
                                             <td v-if="item.ruc=='null'">{{ item.dni}}</td>
                                             <td v-else>{{ item.ruc}}</td>
                                             <td>{{ item.nom_razonsocial}}</td>
-                                            <td>{{ item.montonumero}}</td>
+                                            <td v-if="item.anular==0" align="right"><del>{{ item.montonumero}}</del></td>
+                                            <td v-else align="right">{{ item.montonumero}}</td>
+                                            <td v-if="item.anular==1" class="text-center text-success">
+                                                <a href="#" @click="anularcobranza(item.idcobrazas,0)"><i class="fa-solid fa-toggle-on"></i></a>
+                                            </td>
+                                            <td v-else class="text-center text-danger">
+                                                <a href="#" @click="anularcobranza(item.idcobrazas,1)"><i class="fa-solid fa-toggle-off"></i></a>
+                                            </td>
                                             <td>
                                                 <router-link :to="{name:'Editar cobranzas', params:{id: item.idcobrazas} }" class="btn btn-outline-primary btn-sm"> <i class="fa fa-edit"></i> </router-link>
                                                 <router-link class="btn btn-outline-danger btn-sm" :to="'/imprimecobranza/'+item.idcobrazas" target="_blank"> <i class="fa fa-print"></i> </router-link>
@@ -135,6 +142,20 @@
 
 <script>
 import LaravelVuePagination from 'laravel-vue-pagination'
+import Swal from 'sweetalert2';
+window.$ = window.jQuery = require('jquery')
+
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    onOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        //toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+});
 
 export default {
     name: 'Cobranzas',
@@ -167,6 +188,15 @@ export default {
     },
 
     methods: {
+        toast(texto_anuncio, icono) {
+
+            Toast.fire({
+                // title:texto_titulo,
+                title: '<small><strong>' + texto_anuncio + '</strong></small>',
+                icon: icono,
+                // text: texto_anuncio
+            });
+        },
         cargalistacobra(Page = 1) {
             var url = '/listacobranza/?page=' + Page; //?page=' + page
             axios.get(url)
@@ -190,9 +220,8 @@ export default {
                     this.listobjet = response.data
                 })
         },
-        limpiaformulario()
-        {
-             listobjet={
+        limpiaformulario() {
+            listobjet = {
                 current_page: null,
                 data: [],
                 from: null,
@@ -203,7 +232,21 @@ export default {
                 prev_page_url: null,
                 to: null,
                 total: null
-            }  
+            }
+        },
+        anularcobranza(idcobra, anul) {
+            var url = '/anular'
+            axios.post(url, {
+                    'idcobranza': idcobra,
+                    'codanul': anul
+                })
+                .then(response => {
+                    console.log(response.data)
+                    this.toast('Fue Actualizado el nuevo concepto', 'info');
+                    // this.limpiaformulario();
+                    this.cargalistacobra();
+
+                })
         }
     },
 };
