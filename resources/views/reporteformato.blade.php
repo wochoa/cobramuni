@@ -48,11 +48,16 @@
             @endphp
             <tr>
                 <td>{{$i}}</td>
-                <td>{{$det->fechaemision}}</td>
-                <td>{{$det->codigoclasificador}}</td>
-                <td>{{$det->codigorecibo}}</td>
+                <td nowrap>{{$det->fechaemision}}</td>
+                <td nowrap>{{$det->codigoclasificador}}</td>
+                <td nowrap>{{$det->codigorecibo}}</td>
                 <td>{{$det->nom_razonsocial}}</td>
-                <td align="right">{{$det->monto}}</td>
+                {{-- <td align="right">{{$det->monto}}</td> --}}
+                @if ($det->anular==0)
+                <td align="right"><del>{{$det->monto}}</del></td> 
+                @else
+                <td align="right">{{$det->monto}}</td>  
+                @endif
             </tr>
             @endforeach
         </tbody>

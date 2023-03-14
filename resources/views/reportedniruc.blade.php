@@ -47,10 +47,15 @@
             @endphp
             <tr>
                 <td>{{$i}}</td>
-                <td>{{$det->fechaemision}}</td>
-                <td>{{$det->codigorecibo}}</td>
-                <td>{{$det->nom_razonsocial}}</td>
-                <td align="right">{{$det->montonumero}}</td>
+                <td nowrap>{{$det->fechaemision}}</td>
+                <td nowrap>{{$det->codigorecibo}}</td>
+                <td nowrap>{{$det->nom_razonsocial}}</td>
+                @if ($det->anular==0)
+                <td align="right"><del>{{$det->montonumero}}</del></td> 
+                @else
+                <td align="right">{{$det->montonumero}}</td>  
+                @endif
+                
             </tr>
             @endforeach
         </tbody>
