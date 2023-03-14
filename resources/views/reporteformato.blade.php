@@ -56,7 +56,7 @@
             </tr>
             @endforeach
         </tbody>
-        <thead>
+        <tfoot>
             <tr>
                 <td colspan="5" align="right"><b>Total (S/.): </b></td>
                 <td align="right"><b>{{$sumas}}</b></td>
@@ -69,7 +69,7 @@
                 <td colspan="5" align="right"><b>Total caja (S/.): </b></td>
                 <td align="right"><b>{{$sumas-$anulacion}}</b></td>
             </tr>
-        </thead>
+        </tfoot>
     </table>
    </div>
 </body>

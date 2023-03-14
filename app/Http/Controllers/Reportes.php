@@ -36,10 +36,15 @@ class Reportes extends Controller
         $fec_f=$request->fechafin;
         //$sumas=$request->suma;
         $lista=Cobranzas::whereBetween('fechaemision',[$fec_i,$fec_f])->OrderBy('idcobrazas','DESC')->get();
+        $anulacion=Cobranzas::whereBetween('fechaemision',[$fec_i,$fec_f])->where('anular',0)->OrderBy('idcobrazas','DESC')->sum('montonumero');
+        if(empty($anulacion))
+            {
+                $anulacion="0.00"; 
+            }
         $sumas=Cobranzas::whereBetween('fechaemision',[$fec_i,$fec_f])->OrderBy('idcobrazas','DESC')->sum('montonumero');
 
 
-        $pdf = \PDF::loadView('reportefecha', compact('lista','fec_i','fec_f','sumas'));
+        $pdf = \PDF::loadView('reportefecha', compact('lista','fec_i','fec_f','sumas','anulacion'));
         // $paper_size = array(0,0,280,680);
         // $pdf->set_paper($paper_size);
         return $pdf->download('pdfview.pdf');  
@@ -72,18 +77,28 @@ class Reportes extends Controller
         {
             //ruc
             $lista=Cobranzas::where('ruc',$rucdni)->OrderBy('idcobrazas','DESC')->get();
+            $anulacion=Cobranzas::where(['ruc'=>$rucdni,'anular'=>0])->OrderBy('idcobrazas','DESC')->sum('montonumero');
+            if(empty($anulacion))
+            {
+                $anulacion="0.00"; 
+            }
             $sumas=Cobranzas::where('ruc',$rucdni)->OrderBy('idcobrazas','DESC')->sum('montonumero');
         }
         else{
             //dni
             $lista=Cobranzas::where('dni',$rucdni)->OrderBy('idcobrazas','DESC')->get();
+            $anulacion=Cobranzas::where('anular',0)->OrderBy('idcobrazas','DESC')->sum('montonumero');
+            if(empty($anulacion))
+            {
+                $anulacion="0.00"; 
+            }
             $sumas=Cobranzas::where('dni',$rucdni)->OrderBy('idcobrazas','DESC')->sum('montonumero');
         }
 
         
 
 
-        $pdf = \PDF::loadView('reportedniruc', compact('lista','rucdni','sumas'));
+        $pdf = \PDF::loadView('reportedniruc', compact('lista','rucdni','sumas','anulacion'));
       
         return $pdf->download('pdfview.pdf');  
 

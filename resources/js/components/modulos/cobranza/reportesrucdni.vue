@@ -77,7 +77,9 @@
                                         <td v-if="item.ruc=='null'">{{ item.dni}}</td>
                                         <td v-else>{{ item.ruc}}</td>
                                         <td>{{ item.nom_razonsocial}}</td>
-                                        <td align="right">{{ item.montonumero}}</td>
+                                        <!-- <td align="right">{{ item.montonumero}}</td> -->
+                                        <td v-if="item.anular==0" align="right"><del>{{ item.montonumero}}</del></td>
+                                        <td v-else align="right">{{ item.montonumero}}</td>
 
                                     </tr>
                                 </tbody>

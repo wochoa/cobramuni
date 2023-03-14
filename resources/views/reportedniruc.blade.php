@@ -54,12 +54,26 @@
             </tr>
             @endforeach
         </tbody>
-        <thead>
+        {{-- <tfoot>
             <tr>
                 <td colspan="4" align="right"><b>Total (S/.): </b></td>
                 <td align="right"><b>{{$sumas}}</b></td>
             </tr>
-        </thead>
+        </tfoot> --}}
+        <tfoot>
+            <tr>
+                <td colspan="5" align="right"><b>Total (S/.): </b></td>
+                <td align="right"><b>{{$sumas}}</b></td>
+            </tr>
+            <tr>
+                <td colspan="5" align="right"><b>Anuladas (S/.): </b></td>
+                <td align="right"><b>{{$anulacion}}</b></td>
+            </tr>
+            <tr>
+                <td colspan="5" align="right"><b>Total caja (S/.): </b></td>
+                <td align="right"><b>{{$sumas-$anulacion}}</b></td>
+            </tr>
+        </tfoot>
     </table>
    </div>
 </body>
