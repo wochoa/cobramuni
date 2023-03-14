@@ -87,7 +87,7 @@ class Reportes extends Controller
         else{
             //dni
             $lista=Cobranzas::where('dni',$rucdni)->OrderBy('idcobrazas','DESC')->get();
-            $anulacion=Cobranzas::where('anular',0)->OrderBy('idcobrazas','DESC')->sum('montonumero');
+            $anulacion=Cobranzas::where(['dni'=>$rucdni,'anular'=>0])->OrderBy('idcobrazas','DESC')->sum('montonumero');
             if(empty($anulacion))
             {
                 $anulacion="0.00"; 
