@@ -448,7 +448,7 @@ export default {
             var url = '/cobranzasid'
             axios.get(url)
                 .then(response => {
-                    console.log(response.data)
+                    //console.log(response.data)
                     this.codenumeracion = this.anioactual + '-' + this.zfill(response.data, 6);
                 })
             //this.alllistaconceptos();

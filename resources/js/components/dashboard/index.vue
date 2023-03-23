@@ -86,65 +86,51 @@
                 <!-- /.col -->
             </div>
 
-            <div class="card pt-3 pb-3">
-                <div class="row ">
-                    <!-- <div class="col-md-3" align="center">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card pt-3 pb-3">
+                        <div class="row ">
+                            
 
-                        <router-link :to="'/Tramites/Enproceso'" class="text-decoration-none">
-                            <h4>Documentos en Proceso de la Oficina</h4>
-                            <radial-progress-bar :diameter="180" :completed-steps="resumen.totalcobranzas" :total-steps="getInicio.totalProceso == 0 ? 1 : getInicio.totalProceso" startColor="#007bff" stopColor="#007bff" innerStrokeColor="#d3d3d3" stroke-linecap="round">
+                            <div class="col-md-6" align="center">
 
-                                <p><strong>Total: </strong>{{ getInicio.totalProceso }}</p>
-                                <p><strong>Derivados: </strong>{{ getInicio.derivadosProceso }}</p>
-                                <p><strong>Pendientes: </strong>{{ getInicio.totalProceso - getInicio.derivadosProceso }}</p>
-                            </radial-progress-bar>
-                        </router-link>
+                                <!-- <router-link :to="'/'" class="text-decoration-none"> -->
+                                <h5>Cobranzas formato 8</h5>
+                                <radial-progress-bar :diameter="180" :completed-steps="resumen.totalformato8s" :total-steps="resumen.totalcobranzas == 0 ? 1 : resumen.totalcobranzas" startColor="#20c997" stopColor="#20c997" innerStrokeColor="#d3d3d3" stroke-linecap="round">
 
-                    </div> -->
+                                    <p><strong>Total S/. </strong> <br>{{ formatomoneda(resumen.totalcobranzas) }}</p>
+                                    <p><strong>Formato 8 S/. </strong><br>{{ formatomoneda(resumen.totalformato8s) }}</p>
 
-                    <div class="col-md-3" align="center">
+                                    <!-- <strong>Pendientes: </strong>{{ getInicio.usuarioProceso - getInicio.usuarioDerivadosProceso }} -->
 
-                        <!-- <router-link :to="'/'" class="text-decoration-none"> -->
-                            <h5>Cobranzas formato 8</h5>
-                            <radial-progress-bar :diameter="180" :completed-steps="resumen.totalformato8s" :total-steps="resumen.totalcobranzas == 0 ? 1 : resumen.totalcobranzas" startColor="#20c997" stopColor="#20c997" innerStrokeColor="#d3d3d3" stroke-linecap="round">
+                                </radial-progress-bar>
+                                <!-- </router-link> -->
 
-                                <p><strong>Total S/. </strong> <br>{{ formatomoneda(resumen.totalcobranzas) }}</p>
-                                <p><strong>Formato 8 S/. </strong><br>{{ formatomoneda(resumen.totalformato8s) }}</p>
-                                
-                                <!-- <strong>Pendientes: </strong>{{ getInicio.usuarioProceso - getInicio.usuarioDerivadosProceso }} -->
-                                
-                            </radial-progress-bar>
-                        <!-- </router-link> -->
+                            </div>
 
+                            <div class="col-md-6" align="center">
+
+                                <!-- <router-link :to="'/'" class="text-decoration-none"> -->
+                                <h5>Cobranzas formato 9</h5>
+                                <radial-progress-bar :diameter="180" :completed-steps="resumen.totalformato9s" :total-steps="resumen.totalcobranzas == 0 ? 1 : resumen.totalcobranzas" startColor="#6f42c1" stopColor="#6f42c1" innerStrokeColor="#d3d3d3">
+                                    <p><strong>Total S/. </strong> <br>{{ formatomoneda(resumen.totalcobranzas) }}</p>
+                                    <p><strong>Formato 9 S/. </strong><br>{{ formatomoneda(resumen.totalformato9s) }}</p>
+                                </radial-progress-bar>
+                                <!-- </router-link> -->
+
+                            </div>
+
+                            
+                        </div>
                     </div>
-
-                    <div class="col-md-3" align="center">
-
-                        <!-- <router-link :to="'/'" class="text-decoration-none"> -->
-                            <h5>Cobranzas formato 9</h5>
-                            <radial-progress-bar :diameter="180" :completed-steps="resumen.totalformato9s" :total-steps="resumen.totalcobranzas == 0 ? 1 : resumen.totalcobranzas" startColor="#6f42c1" stopColor="#6f42c1" innerStrokeColor="#d3d3d3">
-                                <p><strong>Total S/. </strong> <br>{{ formatomoneda(resumen.totalcobranzas) }}</p>
-                                <p><strong>Formato 9 S/. </strong><br>{{ formatomoneda(resumen.totalformato9s) }}</p>
-                            </radial-progress-bar>
-                        <!-- </router-link> -->
-
+                </div>
+                <div class="col-sm-6">
+                    <div class="card">
+                        hola
                     </div>
-
-                    <!-- <div class="col-md-3" align="center">
-
-                        <router-link :to="'/Tramites/Archivados'" class="text-decoration-none">
-                            <h4>Documentos archivados</h4>
-
-                            <radial-progress-bar :diameter="180" :completed-steps="getInicio.usuarioArchivados" :total-steps="getInicio.totalArchivado == 0 ? 1 : getInicio.totalArchivado" startColor="#dc3545" stopColor="#dc3545" innerStrokeColor="#d3d3d3">
-                                <p><strong>Total S/. </strong> {{ resumen.totalcobranzas }}</p>
-                                <p><strong>Formato 8 S/. </strong>{{ resumen.totalformato9s }}</p>
-                            </radial-progress-bar>
-                        </router-link>
-
-                    </div> -->
                 </div>
             </div>
-            
+
             <!-- <div class="row">
                 <div class="col-md-3">
                     <small class="bg-info pl-2 pr-2 rounded">Total Documento ingresado MPV: {{ getInicio.totalMpv }}</small><br>
@@ -186,14 +172,14 @@ export default {
             //     totalMpv: 0,
             //     usuariosMpv: 0
             // },
-            resumen:{
-                totalcobranzas:0,
-                totalconcepto:0,
-                totalformatos:0,
-                totalclasificadores:0,
-                totalusuarios:0,
-                totalformato8s:0,
-                totalformato9s:0
+            resumen: {
+                totalcobranzas: 0,
+                totalconcepto: 0,
+                totalformatos: 0,
+                totalclasificadores: 0,
+                totalusuarios: 0,
+                totalformato8s: 0,
+                totalformato9s: 0
             }
         };
     },
@@ -226,25 +212,23 @@ export default {
         //             this.getInicio.usuariosMpv = response.data.usuariosMpv
         //         });
         // },
-        cargaresumen()
-        {
-            var url='/resumen';
+        cargaresumen() {
+            var url = '/resumen';
             axios.get(url)
-            .then(response=>{
-                var datos=response.data.datos;
-                console.log(response.data.totalcobranza)
-                this.resumen.totalcobranzas=parseFloat(response.data.totalcobranza);
-                this.resumen.totalconcepto=response.data.totalconceptos;
-                this.resumen.totalformatos=response.data.totalformato;
-                this.resumen.totalclasificadores=response.data.totalclasificador;
-                this.resumen.totalusuarios=response.data.totalusuarios;
-                this.resumen.totalformato8s=parseFloat(response.data.totalformato8);
-                this.resumen.totalformato9s=parseFloat(response.data.totalformato9);
-            });
+                .then(response => {
+                    var datos = response.data.datos;
+                    console.log(response.data.totalcobranza)
+                    this.resumen.totalcobranzas = parseFloat(response.data.totalcobranza);
+                    this.resumen.totalconcepto = response.data.totalconceptos;
+                    this.resumen.totalformatos = response.data.totalformato;
+                    this.resumen.totalclasificadores = response.data.totalclasificador;
+                    this.resumen.totalusuarios = response.data.totalusuarios;
+                    this.resumen.totalformato8s = parseFloat(response.data.totalformato8);
+                    this.resumen.totalformato9s = parseFloat(response.data.totalformato9);
+                });
         },
-        formatomoneda(num)
-        {
-            const v=new Intl.NumberFormat('en-IN').format(num);
+        formatomoneda(num) {
+            const v = new Intl.NumberFormat('en-IN').format(num);
             return v;
         }
 

@@ -103,12 +103,21 @@ class CobranzasController extends Controller
         $montonumero=$request->montonumero;
         $montotexto=$formatter->toInvoice($montonumero, 2, 'soles');
 
+         //cobranzasid
+         $datos=Cobranzas::orderBy('idcobrazas', 'desc')->first();
+         $suma=intval($datos->idcobrazas)+1;
+
+         $codrecibo=date('Y').'-'.str_pad($suma, 6, "0", STR_PAD_LEFT);
+ 
+        //  return $sum;
+
         
 
         $tram_cobramza=Cobranzas::create([
             'idusuario'=>$iduser,
             // 'idtipoformato'=>$idtipoformato,
-            'codigorecibo'=>$codigorecibo,
+            // 'codigorecibo'=>$codigorecibo,
+            'codigorecibo'=>$codrecibo,
             'fechaemision'=>$fechaemision,
             'ruc'=>$ruc,
             'dni'=>$dni,
