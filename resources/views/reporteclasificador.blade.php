@@ -46,14 +46,14 @@
             @for($cla=0;$cla<count($grupoclasificador);$cla++)
 
             @php
-            $iclasificador=$grupoclasificador[$cla]->idclasificador;
+            $iclasificador=$grupoclasificador[$cla]->codigoclasificador;
             $monto=0;
             $nombreclasificador='';
             @endphp
                 
                 @foreach($lista as $det)
 
-                    @if($det->idclasificador==$iclasificador)
+                    @if($det->codigoclasificador==$iclasificador)
 
                     @php
                     $i++;

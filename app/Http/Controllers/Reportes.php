@@ -184,8 +184,8 @@ class Reportes extends Controller
          $sumas=DB::table('vista_cobranzagral')->join('cobranzas','vista_cobranzagral.codcobranza','=','cobranzas.idcobrazas')->whereBetween('fechaemision',[$fechaini,$fechafin])->where(['idformat'=>$idformat])->OrderBy('idcobrazas','DESC')->sum('monto');
 
         $grupoclasificador=DB::table('vista_cobranzagral')->join('cobranzas','vista_cobranzagral.codcobranza','=','cobranzas.idcobrazas')
-        ->select('idclasificador', DB::raw('count(*) as total'))->whereBetween('fechaemision',[$fechaini,$fechafin])->where(['idformat'=>$idformat])
-        ->groupBy('idclasificador')
+        ->select('codigoclasificador', DB::raw('count(*) as total'))->whereBetween('fechaemision',[$fechaini,$fechafin])->where(['idformat'=>$idformat])
+        ->groupBy('codigoclasificador')
         ->get();
 
         $pdf = \PDF::loadView('reporteclasificador', compact('lista','fechaini','fechafin','nombreformato','sumas','anulacion','grupoclasificador'));
