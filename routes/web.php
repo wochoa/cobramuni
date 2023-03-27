@@ -132,6 +132,9 @@ route::get('/listacobranzavista',[CobranzasController::class, 'listacobranzavist
 route::post('/reporte/reporformato',[Reportes::class, 'reporformato'])->name('reporformato');//
 route::get('/reporte/reporformato_des',[Reportes::class, 'reporformato_des'])->name('reporformato_des');
 
+route::post('/reporte/reporclasificador',[Reportes::class, 'reporclasificador'])->name('reporclasificador');
+route::get('/reporte/reporclasificador_des',[Reportes::class, 'reporclasificador_des'])->name('reporclasificador_des');
+
 //dashboar
 route::get('/resumen',[Resumen::class, 'index'])->name('resumen');
 

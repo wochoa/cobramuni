@@ -152,9 +152,49 @@ class Reportes extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function reporclasificador(Request $request)
     {
-        //
+        $fechaini=$request->fechaini;// fecha inicio
+        $fechafin=$request->fechafin;// fecha fin
+        $idformat=$request->formato;
+
+        $lista=DB::table('vista_cobranzagral')->join('cobranzas','vista_cobranzagral.codcobranza','=','cobranzas.idcobrazas')->whereBetween('fechaemision',[$fechaini,$fechafin])->where(['idformat'=>$idformat])->OrderBy('idcobrazas','DESC')->paginate(10);
+
+        return response()->json(['lista'=>$lista], 200);
+        
+    }
+
+    public function reporclasificador_des(Request $request)
+    {
+        $fechaini=$request->fechaini;// fecha inicio
+        $fechafin=$request->fechafin;// fecha fin
+        $idformat=$request->formato;
+
+        $nombreformato=Formatocobranza::where('idformato',$idformat)->value('nomformato');
+
+        $lista=DB::table('vista_cobranzagral')->join('cobranzas','vista_cobranzagral.codcobranza','=','cobranzas.idcobrazas')->whereBetween('fechaemision',[$fechaini,$fechafin])->where(['idformat'=>$idformat])->OrderBy('idcobrazas','DESC')->get();
+
+        $anulacion=DB::table('vista_cobranzagral')->join('cobranzas','vista_cobranzagral.codcobranza','=','cobranzas.idcobrazas')->whereBetween('fechaemision',[$fechaini,$fechafin])->where(['idformat'=>$idformat,'anular'=>0])->sum('monto');
+
+        if(empty($anulacion))
+        {
+            $anulacion="0.00"; 
+        }
+         
+         $sumas=DB::table('vista_cobranzagral')->join('cobranzas','vista_cobranzagral.codcobranza','=','cobranzas.idcobrazas')->whereBetween('fechaemision',[$fechaini,$fechafin])->where(['idformat'=>$idformat])->OrderBy('idcobrazas','DESC')->sum('monto');
+
+        $grupoclasificador=DB::table('vista_cobranzagral')->join('cobranzas','vista_cobranzagral.codcobranza','=','cobranzas.idcobrazas')
+        ->select('idclasificador', DB::raw('count(*) as total'))->whereBetween('fechaemision',[$fechaini,$fechafin])->where(['idformat'=>$idformat])
+        ->groupBy('idclasificador')
+        ->get();
+
+        $pdf = \PDF::loadView('reporteclasificador', compact('lista','fechaini','fechafin','nombreformato','sumas','anulacion','grupoclasificador'));
+        // $paper_size = array(0,0,280,680);
+        // $pdf->set_paper($paper_size);
+        return $pdf->download('pdfview.pdf');  
+
+        
+        
     }
 
     /**
