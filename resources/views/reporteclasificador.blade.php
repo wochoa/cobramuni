@@ -67,9 +67,9 @@
                             <td>{{$det->nom_razonsocial}}</td>
                             
                             @if ($det->anular==0)
-                            <td align="right"><del>{{$det->monto}}</del></td> 
+                            <td align="right"><del>{{number_format($det->monto,2)}}</del></td> 
                             @else
-                            <td align="right">{{$det->monto}}</td>
+                            <td align="right">{{number_format($det->monto,2)}}</td>
                             @php
                                   $monto=$monto+$det->monto;
                                  
@@ -81,7 +81,7 @@
                 @endforeach
                 <tr style="background: #ccc">
                     <td colspan="5" align="right"><b> {{$nombreclasificador}} - Total (S/.): </b></td>
-                    <td align="right"><b>{{$monto}}</b></td>
+                    <td align="right"><b>{{number_format($monto,2)}}</b></td>
                 </tr>
             @endfor
             
@@ -94,15 +94,15 @@
             </tr>
             <tr>
                 <td colspan="5" align="right"><b>Total (S/.): </b></td>
-                <td align="right"><b>{{$sumas}}</b></td>
+                <td align="right"><b>{{number_format($sumas,2)}}</b></td>
             </tr>
             <tr>
                 <td colspan="5" align="right"><b>Anuladas (S/.): </b></td>
-                <td align="right"><b>{{$anulacion}}</b></td>
+                <td align="right"><b>{{number_format($anulacion,2)}}</b></td>
             </tr>
             <tr>
                 <td colspan="5" align="right"><b>Total caja (S/.): </b></td>
-                <td align="right"><b>{{$sumas-$anulacion}}</b><</td>
+                <td align="right"><b>{{number_format($sumas-$anulacion,2)}}</b><</td>
             </tr>
         </tfoot>
     </table>
