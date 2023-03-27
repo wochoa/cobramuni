@@ -80,7 +80,7 @@
                     @endif   
                 @endforeach
                 <tr style="background: #ccc">
-                    <td colspan="5" align="right"><b> {{$nombreclasificador}} - Total (S/.): </b></td>
+                    <td colspan="5" align="right"><b> {{$nombreclasificador}}({{$iclasificador}}) - Total (S/.): </b></td>
                     <td align="right"><b>{{number_format($monto,2)}}</b></td>
                 </tr>
             @endfor
