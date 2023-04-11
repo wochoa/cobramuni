@@ -27,7 +27,7 @@
             <div class="row">
                 <div class="col-12 col-sm-6 col-md-3">
                     <div class="info-box">
-                        <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
+                        <span class="info-box-icon bg-info elevation-1"><i class="fa-solid fa-sack-dollar"></i></span>
 
                         <div class="info-box-content">
                             <span class="info-box-text">TOTAL DE COBRANZAS</span>
@@ -43,7 +43,21 @@
                 <!-- /.col -->
                 <div class="col-12 col-sm-6 col-md-3">
                     <div class="info-box mb-3">
-                        <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
+                        <span class="info-box-icon bg-danger elevation-1"><i class="fa-solid fa-sack-xmark"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">TOTAL COBRANZAS ANULADAS</span>
+                            <span class="info-box-number">{{ formatomoneda(resumen.anuladas) }}</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
+                        <span class="info-box-icon bg-warning elevation-1"><i class="fa-solid fa-receipt"></i></span>
 
                         <div class="info-box-content">
                             <span class="info-box-text">TOTAL CONCEPTOS</span>
@@ -60,18 +74,18 @@
 
                 <div class="col-12 col-sm-6 col-md-3">
                     <div class="info-box mb-3">
-                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+                        <span class="info-box-icon bg-success elevation-1"><i class="fa-solid fa-list"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">TOTAL DE FORMATOS</span>
-                            <span class="info-box-number">{{ resumen.totalformatos }}</span>
+                            <span class="info-box-text">TOTAL DE CLASIFICADORES</span>
+                            <span class="info-box-number">{{ resumen.totalclasificadores }}</span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
                     <!-- /.info-box -->
                 </div>
                 <!-- /.col -->
-                <div class="col-12 col-sm-6 col-md-3">
+                <!-- <div class="col-12 col-sm-6 col-md-3">
                     <div class="info-box mb-3">
                         <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
 
@@ -79,19 +93,19 @@
                             <span class="info-box-text">TOTAL DE USUARIOS</span>
                             <span class="info-box-number">{{ resumen.totalusuarios }}</span>
                         </div>
-                        <!-- /.info-box-content -->
+                       
                     </div>
-                    <!-- /.info-box -->
-                </div>
-                <!-- /.col -->
+                    
+                </div> -->
+                
             </div>
 
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-9">
                     <div class="card pt-3 pb-3">
                         <div class="row ">
 
-                            <div class="col-md-6" align="center">
+                            <div class="col-md-4" align="center">
 
                                 <!-- <router-link :to="'/'" class="text-decoration-none"> -->
                                 <h5>Cobranzas formato 8</h5>
@@ -107,7 +121,7 @@
 
                             </div>
 
-                            <div class="col-md-6" align="center">
+                            <div class="col-md-4" align="center">
 
                                 <!-- <router-link :to="'/'" class="text-decoration-none"> -->
                                 <h5>Cobranzas formato 9</h5>
@@ -118,15 +132,26 @@
                                 <!-- </router-link> -->
 
                             </div>
+                            <div class="col-md-4" align="center">
+
+                                <!-- <router-link :to="'/'" class="text-decoration-none"> -->
+                                <h5>Cobranzas anuladas</h5>
+                                <radial-progress-bar :diameter="180" :completed-steps="resumen.anuladas" :total-steps="resumen.totalcobranzas == 0 ? 1 : resumen.totalcobranzas" startColor="#dc3545" stopColor="#dc3545" innerStrokeColor="#d3d3d3">
+                                    <p><strong>Total S/. </strong> <br>{{ formatomoneda(resumen.totalcobranzas) }}</p>
+                                    <p><strong>Anuladas S/. </strong><br>{{ formatomoneda(resumen.anuladas) }}</p>
+                                </radial-progress-bar>
+                                <!-- </router-link> -->
+
+                            </div>
 
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6">
+                <!-- <div class="col-sm-6">
                     <div class="card">
                         <apexchart type="line" height="350" :options="chartOptions" :series="series"></apexchart>
                     </div>
-                </div>
+                </div> -->
             </div>
 
             <!-- <div class="row">
@@ -155,23 +180,7 @@ export default {
             completedSteps: 5,
             totalSteps: 10,
             gradientAnimation: 10,
-            // getInicio: {
-            //     totalDocGenerados: 1,
-            //     usuarioDocGenerados: 0,
-            //     totalPlantilla: 1,
-            //     usuarioPlantilla: 0,
-            //     totalArchivados: 1,
-            //     usuarioArchivados: 0,
-            //     totalRecibir: 1,
-            //     usuarioRecibir: 0,
-            //     totalProceso: 1,
-            //     derivadosProceso: 0,
-            //     usuarioProceso: 1,
-            //     usuarioDerivadosProceso: 0,
-            //     usuariosArchivadosTemporal: 0,
-            //     totalMpv: 0,
-            //     usuariosMpv: 0
-            // },
+
             resumen: {
                 totalcobranzas: 0,
                 totalconcepto: 0,
@@ -179,7 +188,10 @@ export default {
                 totalclasificadores: 0,
                 totalusuarios: 0,
                 totalformato8s: 0,
-                totalformato9s: 0
+                totalformato9s: 0,
+                // min_monto:0,
+                // max_monto:0,
+                anuladas: 0
             },
             ///
             series: [{
@@ -229,7 +241,7 @@ export default {
                     size: 1
                 },
                 xaxis: {
-                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                    categories: ['Mar', 'Apr', 'May', 'Jun', 'Jul', 'Ago', 'Set', 'Oct', 'Nov', 'Dic'],
                     title: {
                         text: 'Month'
                     }
@@ -265,23 +277,7 @@ export default {
     },
 
     methods: {
-        // datosparagrafico() {
-        //     var url = '/tramite/obtenerTotal';
-        //     axios.get(url)
-        //         .then(response => {
-        //             this.getInicio.totalProceso = response.data.totalProceso
-        //             this.getInicio.derivadosProceso = response.data.derivadosProceso
-        //             this.getInicio.usuarioProceso = response.data.usuarioProceso
-        //             this.getInicio.totalRecibir = response.data.totalRecibir
-        //             this.getInicio.usuarioRecibir = response.data.usuarioRecibir
-        //             this.getInicio.totalArchivado = response.data.totalArchivado
-        //             this.getInicio.usuarioArchivados = response.data.usuarioArchivados
-        //             this.getInicio.usuarioDerivadosProceso = response.data.usuarioDerivadosProceso
-        //             this.getInicio.usuariosArchivadosTemporal = response.data.usuariosArchivadosTemporal
-        //             this.getInicio.totalMpv = response.data.totalMpv
-        //             this.getInicio.usuariosMpv = response.data.usuariosMpv
-        //         });
-        // },
+
         cargaresumen() {
             var url = '/resumen';
             axios.get(url)
@@ -295,6 +291,9 @@ export default {
                     this.resumen.totalusuarios = response.data.totalusuarios;
                     this.resumen.totalformato8s = parseFloat(response.data.totalformato8);
                     this.resumen.totalformato9s = parseFloat(response.data.totalformato9);
+                    // this.resumen.min_monto=parseFloat(response.data.minimo_monto);
+                    // this.resumen.max_monto=parseFloat(response.data.maximo_monto);
+                    this.resumen.anuladas = parseFloat(response.data.anulada);
                 });
         },
         formatomoneda(num) {

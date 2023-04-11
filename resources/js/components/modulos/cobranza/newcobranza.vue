@@ -46,8 +46,11 @@
                                         </div> -->
                                         <div class="form-group row">
                                             <label for="" class="col-sm-4">RECIBO CAJA N°</label>
-                                            <div class="col-sm-8">
+                                            <div class="col-sm-5">
                                                 <input type="text" placeholder="2022-007454" class="form-control form-control-sm" v-model="codenumeracion" disabled>
+                                            </div>
+                                            <div class="col-sm-3">                                               
+                                                <el-checkbox v-model="manual" @change="habilitarecibo()">Manual</el-checkbox>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -89,7 +92,7 @@
                                             </div>
                                         </div>
                                         <div class="row border-bottom pb-2" style="display: none;">
-                                            <div class="col-sm-8" >
+                                            <div class="col-sm-8">
                                                 <div class="form-group">
                                                     <label for="">Concepto:</label>
                                                     <input type="text" class="form-control form-control-sm" v-model="concepto.text_conceptoc">
@@ -305,6 +308,7 @@ export default {
             idformato: null,
             idconceptos: null,
             fechacobranza: null,
+            manual: false,
             anioactual: null,
             codenumeracion: null,
             concepto: {
@@ -409,23 +413,23 @@ export default {
                     this.concepto.nomto_conceptoc = response.data[0].nomto_concepto;
                 })
         },
-        editarconcepto(indice, concepto, monto,idconcep,idofrm) {
+        editarconcepto(indice, concepto, monto, idconcep, idofrm) {
             this.editarconceptos.index = indice
             this.editarconceptos.concepto = concepto
             this.editarconceptos.monto = monto
-            this.idconceptos=idconcep
-            this.idformato=idofrm
+            this.idconceptos = idconcep
+            this.idformato = idofrm
 
             $('#editarconceptoUP').modal({
                 backdrop: 'static',
                 keyboard: false
             })
         },
-        actualizaedit(){
-            this.array_concepto[ this.editarconceptos.index].textconcepto=this.editarconceptos.concepto
-            this.array_concepto[ this.editarconceptos.index].montoconcepto=this.editarconceptos.monto
+        actualizaedit() {
+            this.array_concepto[this.editarconceptos.index].textconcepto = this.editarconceptos.concepto
+            this.array_concepto[this.editarconceptos.index].montoconcepto = this.editarconceptos.monto
 
-            this.Json_concepto[ this.editarconceptos.index]='{"idconcepto":"' + this.idconceptos + '","idformato":"' + this.idformato + '","textconcepto":"' + this.editarconceptos.concepto+ '","montoconcepto":"' + this.editarconceptos.monto + '"}';//this.editarconceptos.concepto
+            this.Json_concepto[this.editarconceptos.index] = '{"idconcepto":"' + this.idconceptos + '","idformato":"' + this.idformato + '","textconcepto":"' + this.editarconceptos.concepto + '","montoconcepto":"' + this.editarconceptos.monto + '"}'; //this.editarconceptos.concepto
 
             //alert(this.array_concepto[ this.editarconceptos.index].textconcepto);
             $('#editarconceptoUP').modal("hide")
@@ -541,6 +545,9 @@ export default {
 
             formData.append("idtipoformato", this.idformato); // forma de registro
             formData.append("codigorecibo", this.codenumeracion); // numeraciuon de recibo
+            var tipomanual=this.manual?'-M':''
+            // alert(tipomanual)
+            formData.append("manual", tipomanual); // identificador manual
             formData.append("fechaemision", this.fechacobranza); // captura de tabla admin a donde pertenece el usuario
 
             formData.append("nom_razonsocial", this.nombreorazon); // captura de tabla admin a donde pertenece el usuario
@@ -572,6 +579,16 @@ export default {
                     console.log('FAILURE!!');
                 });
         },
+        habilitarecibo()
+        {
+           
+            if(this.manual==true){
+                this.codenumeracion = this.codenumeracion +'-M';
+            }
+            else{
+                 this.numeracion();
+            }
+        }
 
     },
 };

@@ -96,6 +96,7 @@ class CobranzasController extends Controller
 
         $idtipoformato=$request->idtipoformato;
         $codigorecibo=$request->codigorecibo;
+        $manual=$request->manual;
         $fechaemision=$request->fechaemision;
         $ruc=$request->ruc;
         $dni=$request->dni;
@@ -104,10 +105,10 @@ class CobranzasController extends Controller
         $montotexto=$formatter->toInvoice($montonumero, 2, 'soles');
 
          //cobranzasid
-         $datos=Cobranzas::orderBy('idcobrazas', 'desc')->first();
-         $suma=intval($datos->idcobrazas)+1;
+        //  $datos=Cobranzas::orderBy('idcobrazas', 'desc')->first();
+        //  $suma=intval($datos->idcobrazas)+1;
 
-         $codrecibo=date('Y').'-'.str_pad($suma, 6, "0", STR_PAD_LEFT);
+        //  $codrecibo=date('Y').'-'.str_pad($suma, 6, "0", STR_PAD_LEFT);
  
         //  return $sum;
 
@@ -116,8 +117,8 @@ class CobranzasController extends Controller
         $tram_cobramza=Cobranzas::create([
             'idusuario'=>$iduser,
             // 'idtipoformato'=>$idtipoformato,
-            // 'codigorecibo'=>$codigorecibo,
-            'codigorecibo'=>$codrecibo,
+            'codigorecibo'=>$codigorecibo,
+            // 'codigorecibo'=>$codrecibo,// 
             'fechaemision'=>$fechaemision,
             'ruc'=>$ruc,
             'dni'=>$dni,
@@ -127,6 +128,20 @@ class CobranzasController extends Controller
         ]);
 
         $idcobranza=$tram_cobramza->idcobrazas;
+
+        // ESTO SE AGREGO ULTIMO
+        $codrecibo=date('Y').'-'.str_pad($idcobranza, 6, "0", STR_PAD_LEFT).$manual;
+        // if($manual==true){
+        //     $codrecibo.='-M';
+        // }
+        // else{
+        //     $codrecibo=$codrecibo; 
+        //         
+        $upd = Cobranzas::find($idcobranza);
+        $upd->codigorecibo = $codrecibo;
+        $upd->save();
+        // HASTA AQUI SOLO PARA CATUALIZAR CUANDO SE AGREGA
+
         
         $fconceptos=$request->conceptos;
 
