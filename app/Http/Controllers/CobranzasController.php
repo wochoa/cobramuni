@@ -112,7 +112,9 @@ class CobranzasController extends Controller
  
         //  return $sum;
 
-        
+        if($manual=='-M'){
+            $codrecibo=$codigorecibo;
+        }
 
         $tram_cobramza=Cobranzas::create([
             'idusuario'=>$iduser,
@@ -130,16 +132,15 @@ class CobranzasController extends Controller
         $idcobranza=$tram_cobramza->idcobrazas;
 
         // ESTO SE AGREGO ULTIMO
-        $codrecibo=date('Y').'-'.str_pad($idcobranza, 6, "0", STR_PAD_LEFT).$manual;
-        // if($manual==true){
-        //     $codrecibo.='-M';
-        // }
-        // else{
-        //     $codrecibo=$codrecibo; 
-        //         
-        $upd = Cobranzas::find($idcobranza);
-        $upd->codigorecibo = $codrecibo;
-        $upd->save();
+        if($manual<>'-M')
+        {
+            $codrecibo=date('Y').'-'.str_pad($idcobranza, 6, "0", STR_PAD_LEFT).$manual;
+      
+            $upd = Cobranzas::find($idcobranza);
+            $upd->codigorecibo = $codrecibo;
+            $upd->save();
+        }
+       
         // HASTA AQUI SOLO PARA CATUALIZAR CUANDO SE AGREGA
 
         

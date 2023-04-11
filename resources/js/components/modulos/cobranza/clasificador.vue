@@ -79,7 +79,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="lis in listaClasificadors">
+                                    <tr v-for="lis in listaClasificadors" v-if="lis.estado_cla==1">
                                         <td>{{ lis.idclasificador }}</td>
                                         <td>{{ lis.nomformato }}</td>
                                         <td>{{ lis.codigoclasificador }}</td>

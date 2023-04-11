@@ -79,7 +79,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="lis in listaconceptos">
+                                    <tr v-for="lis in listaconceptos" v-if="lis.estado_concepto==1">
                                         <td>{{ lis.idconceptocobranza }}</td>
                                         <td>{{ lis.codigoclasificador }} - {{ lis.text_clasificador }}</td>
                                         <td>{{ lis.text_concepto }}</td>

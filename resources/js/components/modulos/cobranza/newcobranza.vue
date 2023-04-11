@@ -47,7 +47,7 @@
                                         <div class="form-group row">
                                             <label for="" class="col-sm-4">RECIBO CAJA N°</label>
                                             <div class="col-sm-5">
-                                                <input type="text" placeholder="2022-007454" class="form-control form-control-sm" v-model="codenumeracion" disabled>
+                                                <input type="text" placeholder="2022-007454" class="form-control form-control-sm" v-model="codenumeracion" :disabled="numreaciondisabled == 1">
                                             </div>
                                             <div class="col-sm-3">                                               
                                                 <el-checkbox v-model="manual" @change="habilitarecibo()">Manual</el-checkbox>
@@ -311,6 +311,7 @@ export default {
             manual: false,
             anioactual: null,
             codenumeracion: null,
+            numreaciondisabled:1,
             concepto: {
                 idconceptoc: null,
                 text_conceptoc: null,
@@ -581,12 +582,14 @@ export default {
         },
         habilitarecibo()
         {
-           
+            
             if(this.manual==true){
                 this.codenumeracion = this.codenumeracion +'-M';
+                this.numreaciondisabled=0;
             }
             else{
                  this.numeracion();
+                 this.numreaciondisabled=1;
             }
         }
 
