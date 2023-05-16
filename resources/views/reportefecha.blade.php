@@ -66,15 +66,15 @@
         </tfoot> --}}
         <tfoot>
             <tr>
-                <td colspan="5" align="right"><b>Total (S/.): </b></td>
+                <td colspan="4" align="right"><b>Total (S/.): </b></td>
                 <td align="right"><b>{{number_format($sumas,2)}}</b></td>
             </tr>
             <tr>
-                <td colspan="5" align="right"><b>Anuladas (S/.): </b></td>
+                <td colspan="4" align="right"><b>Anuladas (S/.): </b></td>
                 <td align="right"><b>{{number_format($anulacion,2)}}</b></td>
             </tr>
             <tr>
-                <td colspan="5" align="right"><b>Total caja (S/.): </b></td>
+                <td colspan="4" align="right"><b>Total caja (S/.): </b></td>
                 <td align="right"><b>{{number_format($sumas-$anulacion,2)}}</b><</td>
             </tr>
         </tfoot>
