@@ -49,7 +49,7 @@
                 <td>{{$i}}</td>
                 <td nowrap>{{$det->fechaemision}}</td>
                 <td nowrap>{{$det->codigorecibo}}</td>
-                <td nowrap>{{$det->nom_razonsocial}}</td>
+                <td>{{$det->nom_razonsocial}}</td>
                 @if ($det->anular==0)
                 <td align="right"><del>{{number_format($det->montonumero,2)}}</del></td> 
                 @else
