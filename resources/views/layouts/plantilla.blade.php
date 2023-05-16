@@ -15,7 +15,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css"> --}}
-  <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+  <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 <body class="sidebar-mini layout-fixed control-sidebar-slide-open text-sm">
 <div class="wrapper" id="app">
@@ -49,6 +49,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script> --}}
 
-<script type="module" src="{{ asset('js/app.js') }}" ></script>
+<script type="module" src="{{ mix('js/app.js') }}" ></script>
 </body>
 </html>
