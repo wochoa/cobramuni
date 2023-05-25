@@ -509,7 +509,7 @@ export default {
             var url = '/reniec/' + dni
             axios.get(url)
                 .then(response => {
-                    this.nombreorazon = response.data.prenombres + ' ' + response.data.apPrimer + ' ' + response.data.apSegundo
+                    this.nombreorazon = response.data.nombres + ' ' + response.data.apellidoPaterno + ' ' + response.data.apellidoMaterno
                 })
         },
         consultaruc(ruc) {
@@ -519,7 +519,7 @@ export default {
                 .then(response => {
                     //this.nombreorazon = response.data.ddp_nombre
                     console.log(response.data)
-                    this.nombreorazon = response.data.ddp_nombre
+                    this.nombreorazon = response.data.nombre
                 })
 
         },

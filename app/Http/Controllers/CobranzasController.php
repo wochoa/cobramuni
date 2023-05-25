@@ -201,7 +201,8 @@ class CobranzasController extends Controller
      */
     public function reniec($dni)//rruc
     {
-        $url='http://app.regionhuanuco.gob.pe/soap_pruebas/reniec.php?cdni='.$dni;
+        // $url='http://app.regionhuanuco.gob.pe/soap_pruebas/reniec.php?cdni='.$dni;
+        $url='https://api.apis.net.pe/v1/dni?numero='.$dni;
 
         //$wsdl = file_get_contents($url);
         $wsdl = getRemoteFile($url);
@@ -209,7 +210,9 @@ class CobranzasController extends Controller
     }
     public function ruc($rruc)//
     {
-        $url='http://app.regionhuanuco.gob.pe/soap_pruebas/sunat.php?ruc='.$rruc;
+        // $url='http://app.regionhuanuco.gob.pe/soap_pruebas/sunat.php?ruc='.$rruc;
+        $url='https://api.apis.net.pe/v1/ruc?numero='.$rruc;
+
 
         //$wsdl = file_get_contents($url);
         $wsdl = getRemoteFile($url);
