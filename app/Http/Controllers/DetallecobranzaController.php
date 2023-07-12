@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Cobranzas;
 use App\Models\Detallecobranza;
 use Illuminate\Http\Request;
 
@@ -38,6 +38,8 @@ class DetallecobranzaController extends Controller
 
         $iddetalle=$request->iddetalle;
         $idconcepto=$request->idconcepto;
+        
+
 
         $det = Detallecobranza::find($iddetalle);
         $det->idconcep=$idconcepto;
@@ -45,6 +47,24 @@ class DetallecobranzaController extends Controller
         $det->save();
 
         return $det;
+    }
+    public function updatedetalleconceptouser(Request $request)
+    {
+
+        // para modificar al usuario 
+        $idrucdni=$request->ruc;
+        $nombreorazon=$request->nombreorazon;
+        $idcobranzas=$request->idcobranzas;
+        // para contar carateres de numero doc// dni o ruc
+        // if(strlen($idrucdni)>=11){$ruc=$idrucdni;$dni='null';}
+        // else{$dni=$idrucdni;$ruc='null';}
+
+        $cob = Cobranzas::find($idcobranzas);
+        $cob->nom_razonsocial=$nombreorazon;
+        // $cob->ruc=$ruc;
+        // $cob->dni=$dni;
+        $cob->save();
+        return $cob;
     }
 
     /**

@@ -116,6 +116,7 @@ route::get('imprimecobranza/{id}',[CobranzasController::class, 'imprimecobranza'
 
 // editar detalle concepto
 route::post('/update-detalleconcepto',[DetallecobranzaController::class,'updatedetalleconcepto'])->name('updatedetalleconcepto');
+route::post('/updatedetalleconceptouser',[DetallecobranzaController::class,'updatedetalleconceptouser'])->name('updatedetalleconceptouser');
 
 // anulacion de cobranza
 route::post('/anular',[CobranzasController::class, 'anular'])->name('anular');

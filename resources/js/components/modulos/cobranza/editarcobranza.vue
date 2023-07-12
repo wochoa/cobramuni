@@ -54,16 +54,21 @@
                                     <div class="form-group row">
                                         <label for="" class="col-sm-4">RUC/DNI:</label>
                                         <div class="col-sm-6">
-                                            <input type="number" placeholder="Nro doc" class="form-control form-control-sm" v-model="nrodocumento" readonly>
+                                            <input type="number" placeholder="Nro doc" class="form-control form-control-sm" v-model="nrodocumento" @keyup.enter="consultadoc">
                                         </div>
-                                        <!-- <div class="col-sm-2">
+                                        <div class="col-sm-2">
                                                 <button type="button" class="btn btn-primary btn-sm" @click.prevent="consultadoc"><i class="fa fa-search"></i></button>
-                                            </div> -->
+                                        </div>
                                     </div>
+                                    
                                     <div class="form-group">
                                         <label for="">NOMBRE O RAZON SOCIAL:</label>
-                                        <input type="text" placeholder="Nombre o razon social" v-model="nombreorazon" class="form-control form-control-sm text-uppercase" readonly>
+                                        <input type="text" placeholder="Nombre o razon social" v-model="nombreorazon" class="form-control form-control-sm text-uppercase" >
 
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-primary" @click.prevent="guardaractualizadouser"><i class="fa-regular fa-file"></i> Actualizar</button>
                                     </div>
                                 </div>
 
@@ -180,7 +185,7 @@ const Toast = Swal.mixin({
 });
 
 export default {
-    name: 'Cobranzas',
+    name: 'Editarcobranzas',
 
     data() {
         return {
@@ -230,7 +235,7 @@ export default {
             var url = '/buscarcobranzaid/' + this.idcobra;
             axios.get(url)
                 .then(response => {
-                    console.log(response.data)
+                    // console.log(response.data)
                     this.datocobranzas = response.data.dat_cobra[0],
                         this.codenumeracion = this.datocobranzas.codigorecibo
                     this.fechacobranza = this.datocobranzas.fechaemision
@@ -285,11 +290,29 @@ export default {
         // datoconceptoid(idconcepto) {
         //     var url = ''
         // },
+        guardaractualizadouser() {
+            var url = '/updatedetalleconceptouser'
+            axios.post(url, {
+                    'ruc':this.nrodocumento,
+                    'nombreorazon':this.nombreorazon,
+                    'idcobranzas':this.idcobra
+                })
+                .then(response => {
+                    console.log(response.data);
+                    this.toast('Fue actualizado la cobranza exitosamente', 'info');
+                    
+                   
+                })
+        },
+
         guardaractualizado() {
             var url = '/update-detalleconcepto'
             axios.post(url, {
                     'iddetalle': this.form_up.iddetalle,
-                    'idconcepto': this.form_up.idconcep
+                    'idconcepto': this.form_up.idconcep,
+                    'ruc':this.nrodocumento,
+                    'nombreorazon':this.nombreorazon,
+                    'idcobranzas':this.idcobra
                 })
                 .then(response => {
                     console.log(response.data);
@@ -301,9 +324,43 @@ export default {
         cerrarmodal()
         {
             location.reload();
-            this.toast('Fue generado la cobranza exitosamente', 'success');
+            this.toast('Fue actualizado la cobranza exitosamente', 'info');
             //$('#detalle').modal("hide");
-        }
+        },
+        consultadoc() {
+            if (this.nrodocumento.length <= 8) {
+
+                if (this.nrodocumento.length == 8) {
+                    this.consultadni(this.nrodocumento)
+                } else {
+                    alert('No corresponde a Nro. DNI')
+                }
+            } else {
+                if (this.nrodocumento.length == 11) {
+                    this.consultaruc(this.nrodocumento)
+                } else {
+                    alert('No corresponde a Nro. RUC')
+                }
+            }
+        },
+        consultadni(dni) {
+            var url = '/reniec/' + dni
+            axios.get(url)
+                .then(response => {
+                    this.nombreorazon = response.data.nombres + ' ' + response.data.apellidoPaterno + ' ' + response.data.apellidoMaterno
+                })
+        },
+        consultaruc(ruc) {
+
+            var url = '/ruc/' + ruc
+            axios.get(url)
+                .then(response => {
+                    //this.nombreorazon = response.data.ddp_nombre
+                    console.log(response.data)
+                    this.nombreorazon = response.data.nombre
+                })
+
+        },
 
     },
 };
