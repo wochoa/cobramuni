@@ -210,6 +210,17 @@ class CobranzasController extends Controller
         //$wsdl = file_get_contents($url);
         //$wsdl = getRemoteFile($url);
         return $wsdl;
+
+        $url='https://api.apis.net.pe/v1/dni';
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+            'Access-Control-Allow-Origin'=>'http://cobranzas.regionhuanuco.gob.pe',
+            'Access-Control-Allow-Headers'=>'X-Requested-With, Content-Type, X-Token-Auth, Authorization'
+        ])->get($url, [
+            'numero'=>$dni
+        ]);
+
     }
     public function ruc($rruc)//
     {
