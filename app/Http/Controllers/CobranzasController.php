@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cobranzas;
-use Illuminate\Support\Facades\Http;
 use App\Models\Detallecobranza;
 use App\Models\Formatocobranza;
 use Illuminate\Support\Facades\DB;
@@ -203,33 +202,20 @@ class CobranzasController extends Controller
     public function reniec($dni)//rruc
     {
         // $url='http://app.regionhuanuco.gob.pe/soap_pruebas/reniec.php?cdni='.$dni;
-        //$url=.$dni;
-        $wsdl=Http::get('https://api.apis.net.pe/v1/dni',[
-            'numero'=>$dni
-        ]);
+        $url='https://api.apis.net.pe/v1/dni?numero='.$dni;
+
         //$wsdl = file_get_contents($url);
-        //$wsdl = getRemoteFile($url);
+        $wsdl = getRemoteFile($url);
         return $wsdl;
-
-        $url='https://api.apis.net.pe/v1/dni';
-        $response = Http::withHeaders([
-            'Content-Type' => 'application/json',
-            'Accept' => 'application/json',
-            'Access-Control-Allow-Origin'=>'http://cobranzas.regionhuanuco.gob.pe',
-            'Access-Control-Allow-Headers'=>'X-Requested-With, Content-Type, X-Token-Auth, Authorization'
-        ])->get($url, [
-            'numero'=>$dni
-        ]);
-
     }
     public function ruc($rruc)//
     {
         // $url='http://app.regionhuanuco.gob.pe/soap_pruebas/sunat.php?ruc='.$rruc;
         $url='https://api.apis.net.pe/v1/ruc?numero='.$rruc;
-        $wsdl=Http::get($url);
+
 
         //$wsdl = file_get_contents($url);
-        //$wsdl = getRemoteFile($url);
+        $wsdl = getRemoteFile($url);
         return $wsdl;
     }
 
