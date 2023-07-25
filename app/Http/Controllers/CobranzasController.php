@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cobranzas;
+use Illuminate\Support\Facades\Http;
 use App\Models\Detallecobranza;
 use App\Models\Formatocobranza;
 use Illuminate\Support\Facades\DB;
@@ -203,19 +204,19 @@ class CobranzasController extends Controller
     {
         // $url='http://app.regionhuanuco.gob.pe/soap_pruebas/reniec.php?cdni='.$dni;
         $url='https://api.apis.net.pe/v1/dni?numero='.$dni;
-
+        $wsdl=Http::get($url);
         //$wsdl = file_get_contents($url);
-        $wsdl = getRemoteFile($url);
+        //$wsdl = getRemoteFile($url);
         return $wsdl;
     }
     public function ruc($rruc)//
     {
         // $url='http://app.regionhuanuco.gob.pe/soap_pruebas/sunat.php?ruc='.$rruc;
         $url='https://api.apis.net.pe/v1/ruc?numero='.$rruc;
-
+        $wsdl=Http::get($url);
 
         //$wsdl = file_get_contents($url);
-        $wsdl = getRemoteFile($url);
+        //$wsdl = getRemoteFile($url);
         return $wsdl;
     }
 
