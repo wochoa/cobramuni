@@ -203,8 +203,10 @@ class CobranzasController extends Controller
     public function reniec($dni)//rruc
     {
         // $url='http://app.regionhuanuco.gob.pe/soap_pruebas/reniec.php?cdni='.$dni;
-        $url='https://api.apis.net.pe/v1/dni?numero='.$dni;
-        $wsdl=Http::get($url);
+        //$url=.$dni;
+        $wsdl=Http::get('https://api.apis.net.pe/v1/dni',[
+            'numero'=>$dni
+        ]);
         //$wsdl = file_get_contents($url);
         //$wsdl = getRemoteFile($url);
         return $wsdl;
